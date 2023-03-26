@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% block styles %}
+    {% endblock %}
+    <title>Milestone Project</title>
+</head>
+<body>
+	<header>
+        <h1>HEADER - in base.html</h1>
+        <!-- navigation bar -->
+	</header>
+
+    <main class="container">
+        <h2>MAIN container in base.html</h2>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+    <footer>
+        <h2>FOOTER inside base.html</h2>
+    </footer>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
