@@ -38,3 +38,4 @@ You can now use the `heroku` CLI program - try running `heroku apps` to confirm 
 
 ## **Credits**
 - [Tilig's password generator](https://www.tilig.com/password-generator?network=g)
+- [Materialize Library](https://materializecss.com/)
