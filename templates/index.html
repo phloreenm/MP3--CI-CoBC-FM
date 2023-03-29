@@ -1,4 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Inside index.html</h1>
+
+<h1>Inside index.html</h1>
+<table>
+    <tr>
+        <th>category_name</th>
+        <th>task_name</th>
+    </tr>
+    {% for sample in tasks %}
+        <tr>
+            <td>{{ sample.category_name }}</td>
+            <td>{{ sample.task_name }}</td>
+        </tr>
+    {% endfor %}
+    
+</table>
+
 {% endblock %}
