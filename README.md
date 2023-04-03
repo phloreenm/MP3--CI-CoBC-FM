@@ -51,3 +51,5 @@ You can now use the `heroku` CLI program - try running `heroku apps` to confirm 
 - [Materialize Library](https://materializecss.com/)
 - [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 - [MongoDB Shell](https://www.mongodb.com/try/download/shell)
+- [Materialize Register Page Sample](https://codepen.io/HaldunA/pen/eJxRPG)
+- [Flask flash() method – How to Flash Messages in Flask?](https://www.askpython.com/python-modules/flask/flask-flash-method)

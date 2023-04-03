@@ -2,98 +2,101 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Import Google Icon Font-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- Materialize Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-    {% block styles %}
-    {% endblock %}
-    <title>{% block title %}{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--Import Google Icon Font-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Materialize Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+  {% block styles %}
+  {% endblock %}
+  <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
-    <header>
-        <!-- navigation bar -->
-        <!-- SOURCE base code: https://materializecss.com/navbar.html -->
-        <!-- Dropdown Structure -->
-        <ul id="user_menu" class="dropdown-content grey darken-4">
-            <li><a href="{{ url_for('index') }}">Log In</a></li>
-            <li><a href="{{ url_for('index') }}">Log Out</a></li>
-            <li class="divider"></li>
-            <li><a href="{{ url_for('index') }}">Register</a></li>
-        </ul>
-        <!-- main navigation -->
-        <nav>
-            <div class="nav-wrapper text-white grey darken-4">
-                <a href="/" class="brand-logo"><i class="fa-duotone fa-books">MP3</i></a>
-                <a href="#" data-target="mobile_menu" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i>Home</a></li>
-                    <li><a href="{{ url_for('procedures') }}"><i class="fa-solid fa-user"></i> Procedures</a></li>
-                    <li><a href="{{ url_for('tasks') }}"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
-                    <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Users</a></li>
-                    <!-- Dropdown Trigger -->
-                    <li><a class="dropdown-trigger" href="#!" data-target="user_menu"><i
-                        class="fa-solid fa-caret-down"></i>User Menu</a></li>
-                </ul>
-            </div>
-        </nav>
-        <!-- mobile sidenav -->
-        <ul class="sidenav text-white grey darken-4" id="mobile_menu">
+  <header>
+    <!-- navigation bar -->
+    <!-- SOURCE base code: https://materializecss.com/navbar.html -->
+    <!-- Dropdown Structure -->
+    <ul id="user_menu" class="dropdown-content grey darken-4">
+      <li><a href="{{ url_for('index') }}">Log In</a></li>
+      <li><a href="{{ url_for('index') }}">Log Out</a></li>
+      <li class="divider"></li>
+      <li><a href="{{ url_for('index') }}">Register</a></li>
+    </ul>
+    <!-- main navigation -->
+    <nav>
+      <div class="nav-wrapper text-white grey darken-4">
+        <a href="/" class="brand-logo"><i class="fa-duotone fa-books">MP3</i></a>
+        <a href="#" data-target="mobile_menu" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
+        <ul class="right hide-on-med-and-down">
           <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i>Home</a></li>
           <li><a href="{{ url_for('procedures') }}"><i class="fa-solid fa-user"></i> Procedures</a></li>
           <li><a href="{{ url_for('tasks') }}"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
-            <!-- Dropdown Trigger -->
-            <li><a class="dropdown-trigger" href="#!" data-target="user_menu"><i
-                        class="fa-solid fa-caret-down"></i>User Menu</a></li>
+          <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Users</a></li>
+          <li><a href="{{ url_for('register') }}"><i class="fa-solid fa-user"></i> Register</a></li>
+          <!-- Dropdown Trigger -->
+          <li><a class="dropdown-trigger" href="#!" data-target="user_menu"><i class="fa-solid fa-caret-down"></i>User
+              Menu</a></li>
         </ul>
+      </div>
+    </nav>
+    <!-- mobile sidenav -->
+    <ul class="sidenav text-white grey darken-4" id="mobile_menu">
+      <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i>Home</a></li>
+      <li><a href="{{ url_for('procedures') }}"><i class="fa-solid fa-user"></i> Procedures</a></li>
+      <li><a href="{{ url_for('tasks') }}"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
+      <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Users</a></li>
+      <li><a href="{{ url_for('register') }}"><i class="fa-solid fa-user"></i> Register</a></li>
+      <!-- Dropdown Trigger -->
+      <li><a class="dropdown-trigger" href="#!" data-target="user_menu"><i class="fa-solid fa-caret-down"></i>User
+          Menu</a></li>
+    </ul>
 
-    </header>
+  </header>
 
-    <main class="container">
-        {% block content %}
+  <main class="container">
+    {% block content %}
 
-        {% endblock %}
-    </main>
-    <footer class="page-footer grey darken-2">
-        <div class="container">
-          <div class="row">
-            <div class="col l6 s12">
-              <h5 class="white-text">Footer Content</h5>
-              <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-              <h5 class="white-text">Links</h5>
-              <ul>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="footer-copyright">
-          <div class="container">
-          © 2023 Copyright Text
-          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-          </div>
-        </div>
-      </footer>
-    <!-- jquery CDN link -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
-        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Font Awesome Kit -->
-    <script src="https://kit.fontawesome.com/96ce8820ba.js" crossorigin="anonymous"></script>
-    <!-- Materialize Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
-    {% block scripts %}
     {% endblock %}
+  </main>
+  <footer class="page-footer grey darken-2">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Footer Content</h5>
+          <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2023 Copyright Text
+        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+      </div>
+    </div>
+  </footer>
+  <!-- jquery CDN link -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+    integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Font Awesome Kit -->
+  <script src="https://kit.fontawesome.com/96ce8820ba.js" crossorigin="anonymous"></script>
+  <!-- Materialize Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+  {% block scripts %}
+  {% endblock %}
 </body>
 
 </html>

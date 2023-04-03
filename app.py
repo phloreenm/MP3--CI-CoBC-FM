@@ -3,8 +3,9 @@ from pymongo import MongoClient
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 from flask import (
-    Flask, flask, render_template, request, redirect, url_for, session)
+    Flask, flash, render_template, request, redirect, url_for, session)
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 
 if os.path.exists('env.py'):
@@ -41,7 +42,6 @@ daily_tasks_coll = db['daily_tasks']
 @app.route('/index')
 def index():
     try:
-        
         return render_template('index.html')
     except Exception as e:
         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
@@ -49,10 +49,46 @@ def index():
         return render_template('error.html', error_message=error_message)
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    users = list(users_coll.find())
+    if request.method == 'POST':
+        # Check if username has been used
+        user = users_coll.find_one(
+            {'un': request.form.get('un').lower()}
+            )
+        if user:
+            # print(f'Username {user["un"]} already exists')
+            flash(
+                'User already exists. Please choose a different username',
+                'info')
+            return redirect(url_for('register'))
+
+        new_user = {
+            'role': request.form.get('role'),
+            'un': request.form.get('un').lower(),
+            'pw': generate_password_hash(request.form.get('password1')),
+            'fname': request.form.get('first_name').lower(),
+            'lname': request.form.get('last_name').lower(),
+            'email': request.form.get('email1').lower(),
+            'company': request.form.get('company').lower()
+        }
+        users_coll.insert_one(new_user)
+        flash(f'{new_user["un"]} added to database', 'success')
+        
+        session['user'] = request.form.get('un').lower()
+        flash(f'\nUser {session["user"]} logged in!', 'success')
+        print(request.form.keys())
+        return redirect(url_for('users'))
+    
+    return render_template('register_user.html', users=users)
+
+
+
 @app.route('/users')
 def users():
     try:
-        users = list(users_coll.find())
+        users = list(users_coll.find().sort('role', 1))
         return render_template('users.html', users=users)
     except Exception as e:
         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
