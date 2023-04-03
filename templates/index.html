@@ -2,18 +2,40 @@
 {% block content %}
 
 <h1>Inside index.html</h1>
+<ul>
+    <li><a href="{{ url_for('procedures') }}">Manage Procedures</a></li>
+    <li><a href="{{ url_for('tasks') }}">Manage Tasks</a></li>
+</ul>
+{% if users %}
 <table>
     <tr>
-        <th>category_name</th>
-        <th>task_name</th>
+        <th>user.role</th>
+        <th>user.un</th>
+        <th>user.fname</th>
+        <th>user.lname</th>
+        <th>user.email</th>
+        <th>user.company</th>
     </tr>
-    {% for sample in tasks %}
-        <tr>
-            <td>{{ sample.category_name }}</td>
-            <td>{{ sample.task_name }}</td>
-        </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.role }}</td>
+        <td>{{ user.un }}</td>
+        <td>{{ user.fname }}</td>
+        <td>{{ user.lname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.company }}</td>
+    </tr>
     {% endfor %}
-    
+
 </table>
+{% elif doc_count %}
+<p>{{ doc_count }}</p>
+{% elif document %}
+<p>{{ doc_count }}</p>
+{% endif %}
+{% for doc in document%}
+print(doc)
+
+{% endfor %}
 
 {% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Inside tasks.html</h1>
+<ul>
+    <li><a href="{{ url_for('index') }}">Index</a></li>
+    <li><a href="{{ url_for('procedures') }}">Manage Procedures</a></li>
+</ul>
+{% if tasks %}
+    <table>
+        <tr>
+            <th>procedures.t_name</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.t_name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock %}
