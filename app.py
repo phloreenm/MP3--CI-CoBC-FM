@@ -2,7 +2,9 @@ import os
 from pymongo import MongoClient
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import (
+    Flask, flask, render_template, request, redirect, url_for, session)
+from bson.objectid import ObjectId
 import logging
 
 if os.path.exists('env.py'):
@@ -11,7 +13,6 @@ if os.path.exists('env.py'):
 load_dotenv()
 
 MONGO_URI = os.getenv('MONGO_URI')
-# CERT_FILE_PATH = os.getenv('CERT_FILE_PATH')
 MONGO_DBNAME = os.getenv('MONGO_DBNAME')
 SECRET_KEY = os.getenv('SECRET_KEY')
 IP = os.getenv('IP')
@@ -22,21 +23,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['MONGO_URI'] = MONGO_URI
 app.config['MONGO_DBNAME'] = MONGO_DBNAME
-# app.config['CERT_FILE_PATH'] = CERT_FILE_PATH
 app.config['IP'] = IP
 app.config['PORT'] = PORT
 
-# client = MongoClient(
-#     app.config['MONGO_URI'],
-#     tls=True,
-#     tlsCertificateKeyFile=app.config['CERT_FILE_PATH'],
-#     appname=app.name
-# )
 client = MongoClient(
     app.config['MONGO_URI'],
     appname=app.name
 )
-
 
 db = client.get_database(app.config['MONGO_DBNAME'])
 users_coll = db['users']
@@ -48,8 +41,19 @@ daily_tasks_coll = db['daily_tasks']
 @app.route('/index')
 def index():
     try:
+        
+        return render_template('index.html')
+    except Exception as e:
+        logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
+        error_message = e
+        return render_template('error.html', error_message=error_message)
+
+
+@app.route('/users')
+def users():
+    try:
         users = list(users_coll.find())
-        return render_template('index.html', users=users)
+        return render_template('users.html', users=users)
     except Exception as e:
         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
         error_message = e

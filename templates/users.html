@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Users - Restaurant Manager{% endblock %}
+
+{% block content %}
+
+<h1>Inside index.html</h1>
+{% if users %}
+<table>
+    <tr>
+        <th>user.role</th>
+        <th>user.un</th>
+        <th>user.fname</th>
+        <th>user.lname</th>
+        <th>user.email</th>
+        <th>user.company</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.role }}</td>
+        <td>{{ user.un }}</td>
+        <td>{{ user.fname }}</td>
+        <td>{{ user.lname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.company }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endif %}
+{% for doc in document%}
+print(doc)
+
+{% endfor %}
+
+{% endblock %}
