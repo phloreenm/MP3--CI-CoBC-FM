@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Restaurant Manager{% endblock %}
+
+{% block content %}
+
+<h1>Inside dashboard.html</h1>
+<div class="container col s12"></div>
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+      <div class="row">
+            <div class="col s12">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    <span class="title">Message:</span>
+                    <p>
+                        {{ message }}
+                    </p>
+                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+      {% endfor %}
+    {% else %}
+    <div class="row">
+        <div class="col s12">
+            <h3 class="brand-logo col s8">New user registration</h3>
+        </div>
+    </div>
+   {% endif %}
+{% endwith %}
+</div>
+
+{% endblock %}

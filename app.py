@@ -74,15 +74,19 @@ def register():
             'company': request.form.get('company').lower()
         }
         users_coll.insert_one(new_user)
-        flash(f'{new_user["un"]} added to database', 'success')
+        # flash(f'{new_user["un"]} added to database', 'success')
         
         session['user'] = request.form.get('un').lower()
         flash(f'\nUser {session["user"]} logged in!', 'success')
         print(request.form.keys())
-        return redirect(url_for('users'))
+        return redirect(url_for('dashboard'))
     
     return render_template('register_user.html', users=users)
 
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
 
 
 @app.route('/users')
