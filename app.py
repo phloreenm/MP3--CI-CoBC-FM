@@ -27,10 +27,6 @@ app.config['CERT_FILE_PATH'] = CERT_FILE_PATH
 app.config['IP'] = IP
 app.config['PORT'] = PORT
 
-
-if os.path.exists('env.py'):
-    import env
-
 # print(f'IP: {IP}')
 # print(f'PORT: {PORT}')
 # print(f'MONGO_URI: {MONGO_URI}')
