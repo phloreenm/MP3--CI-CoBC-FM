@@ -11,7 +11,7 @@ if os.path.exists('env.py'):
 load_dotenv()
 
 MONGO_URI = os.getenv('MONGO_URI')
-CERT_FILE_PATH = os.getenv('CERT_FILE_PATH')
+# CERT_FILE_PATH = os.getenv('CERT_FILE_PATH')
 MONGO_DBNAME = os.getenv('MONGO_DBNAME')
 SECRET_KEY = os.getenv('SECRET_KEY')
 IP = os.getenv('IP')
@@ -22,14 +22,18 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['MONGO_URI'] = MONGO_URI
 app.config['MONGO_DBNAME'] = MONGO_DBNAME
-app.config['CERT_FILE_PATH'] = CERT_FILE_PATH
+# app.config['CERT_FILE_PATH'] = CERT_FILE_PATH
 app.config['IP'] = IP
 app.config['PORT'] = PORT
 
+# client = MongoClient(
+#     app.config['MONGO_URI'],
+#     tls=True,
+#     tlsCertificateKeyFile=app.config['CERT_FILE_PATH'],
+#     appname=app.name
+# )
 client = MongoClient(
     app.config['MONGO_URI'],
-    tls=True,
-    tlsCertificateKeyFile=app.config['CERT_FILE_PATH'],
     appname=app.name
 )
 
