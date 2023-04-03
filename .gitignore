@@ -9,3 +9,5 @@ node_modules/
 cloudinary_python.txt
 .vscode/
 old/
+certificates/
+*.pem

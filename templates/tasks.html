@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Daily Tasks{% endblock %}
+
+{% block content %}
+
+<h1>Inside tasks.html</h1>
+
+{% if tasks %}
+    <table>
+        <tr>
+            <th>procedures.t_name</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.t_name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock %}

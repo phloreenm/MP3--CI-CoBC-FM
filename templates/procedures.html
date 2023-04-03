@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Procedures{% endblock %}
+
+{% block content %}
+
+<h1>Inside procedures.html</h1>
+
+{% if procedures %}
+    <table>
+        <tr>
+            <th>procedures.name</th>
+        </tr>
+        {% for proc in procedures %}
+            <tr>
+                <td>{{ proc.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock %}

@@ -1,31 +1,77 @@
 import os
-from flask import (
-    Flask, flash, render_template,
-    redirect, request, session, url_for)
+from pymongo import MongoClient
 from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
-from werkzeug.security import generate_password_hash, check_password_hash
-if os.path.exists("env.py"):
+from dotenv import load_dotenv
+from flask import Flask, render_template, request, redirect, url_for, session
+import logging
+
+if os.path.exists('env.py'):
     import env
 
+load_dotenv()
+
+MONGO_URI = os.getenv('MONGO_URI')
+CERT_FILE_PATH = os.getenv('CERT_FILE_PATH')
+MONGO_DBNAME = os.getenv('MONGO_DBNAME')
+SECRET_KEY = os.getenv('SECRET_KEY')
+IP = os.getenv('IP')
+PORT = os.getenv('PORT')
 
 app = Flask(__name__)
 
-app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
-app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
-app.secret_key = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = SECRET_KEY
+app.config['MONGO_URI'] = MONGO_URI
+app.config['MONGO_DBNAME'] = MONGO_DBNAME
+app.config['CERT_FILE_PATH'] = CERT_FILE_PATH
+app.config['IP'] = IP
+app.config['PORT'] = PORT
 
-mongo = PyMongo(app)
+client = MongoClient(
+    app.config['MONGO_URI'],
+    tls=True,
+    tlsCertificateKeyFile=app.config['CERT_FILE_PATH'],
+    appname=app.name
+)
 
 
-@app.route("/")
-@app.route("/index")
+db = client.get_database(app.config['MONGO_DBNAME'])
+users_coll = db['users']
+procedures_coll = db['procedures']
+daily_tasks_coll = db['daily_tasks']
+
+
+@app.route('/')
+@app.route('/index')
 def index():
-    tasks = list(mongo.db.tasks.find())
-    return render_template("index.html", tasks=tasks)
+    try:
+        users = list(users_coll.find())
+        return render_template('index.html', users=users)
+    except Exception as e:
+        logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
+        error_message = e
+        return render_template('error.html', error_message=error_message)
 
 
-if __name__ == "__main__":
-    app.run(host=os.environ.get("IP"),
-            port=int(os.environ.get("PORT")),
-            debug=True)
+@app.route('/procedures')
+def procedures():
+    try:
+        procedures = list(procedures_coll.find())
+        return render_template('procedures.html', procedures=procedures)
+    except Exception as e:
+        logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
+        error_message = e
+        return render_template('error.html', error_message=error_message)
+
+
+@app.route('/tasks')
+def tasks():
+    tasks = list(daily_tasks_coll.find())
+    return render_template('tasks.html', tasks=tasks)
+
+
+if __name__ == '__main__':
+    app.run(
+        host=app.config['IP'],
+        port=int(app.config['PORT']),
+        debug=True
+    )
