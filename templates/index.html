@@ -1,11 +1,10 @@
 {% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
 {% block content %}
 
 <h1>Inside index.html</h1>
-<ul>
-    <li><a href="{{ url_for('procedures') }}">Manage Procedures</a></li>
-    <li><a href="{{ url_for('tasks') }}">Manage Tasks</a></li>
-</ul>
 {% if users %}
 <table>
     <tr>

@@ -11,7 +11,6 @@ if os.path.exists('env.py'):
 load_dotenv()
 
 MONGO_URI = os.getenv('MONGO_URI')
-# print(f"os.getenv(MONGO_URI): {os.getenv('MONGO_URI')}")
 CERT_FILE_PATH = os.getenv('CERT_FILE_PATH')
 MONGO_DBNAME = os.getenv('MONGO_DBNAME')
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -27,13 +26,6 @@ app.config['CERT_FILE_PATH'] = CERT_FILE_PATH
 app.config['IP'] = IP
 app.config['PORT'] = PORT
 
-# print(f'IP: {IP}')
-# print(f'PORT: {PORT}')
-# print(f'MONGO_URI: {MONGO_URI}')
-# print(f'CERT_FILE_PATH: {CERT_FILE_PATH}')
-# print(f'MONGO_DBNAME: {MONGO_DBNAME}')
-# print(f'SECRET_KEY: {SECRET_KEY}')
-
 client = MongoClient(
     app.config['MONGO_URI'],
     tls=True,
@@ -41,10 +33,8 @@ client = MongoClient(
     appname=app.name
 )
 
-# print(f'client: {client}')
-# print(f'MONGO_DBNAME: {MONGO_DBNAME}')
+
 db = client.get_database(app.config['MONGO_DBNAME'])
-# print(f'db: {db}')
 users_coll = db['users']
 procedures_coll = db['procedures']
 daily_tasks_coll = db['daily_tasks']
@@ -55,8 +45,6 @@ daily_tasks_coll = db['daily_tasks']
 def index():
     try:
         users = list(users_coll.find())
-        for user in users:
-            print(f'User: {user}')
         return render_template('index.html', users=users)
     except Exception as e:
         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
@@ -68,8 +56,6 @@ def index():
 def procedures():
     try:
         procedures = list(procedures_coll.find())
-        for procedure in procedures:
-            print(f'Procedure: {procedure}')
         return render_template('procedures.html', procedures=procedures)
     except Exception as e:
         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
@@ -80,8 +66,6 @@ def procedures():
 @app.route('/tasks')
 def tasks():
     tasks = list(daily_tasks_coll.find())
-    for task in tasks:
-        print(f'Task: {task}')
     return render_template('tasks.html', tasks=tasks)
 
 

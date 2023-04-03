@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% block styles %}
     {% endblock %}
-    <title>Milestone Project</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
@@ -31,22 +31,23 @@
                 <a href="/" class="brand-logo"><i class="fa-duotone fa-books">MP3</i></a>
                 <a href="#" data-target="mobile_menu" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i>Page X</a></li>
-                    <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-user"></i>Page Y</a></li>
+                    <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i>Home</a></li>
+                    <li><a href="{{ url_for('procedures') }}"><i class="fa-solid fa-user"></i> Procedures</a></li>
+                    <li><a href="{{ url_for('tasks') }}"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-trigger" href="#!" data-target="user_menu"><i
-                        class="fa-solid fa-caret-down"></i>Pages XYZ</a></li>
+                        class="fa-solid fa-caret-down"></i>User Menu</a></li>
                 </ul>
             </div>
         </nav>
         <!-- mobile sidenav -->
         <ul class="sidenav text-white grey darken-4" id="mobile_menu">
-            <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i></a></li>
-            <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i>Page X</a></li>
-            <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-user"></i>Page Y</a></li>
+          <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="{{ url_for('procedures') }}"><i class="fa-solid fa-user"></i> Procedures</a></li>
+          <li><a href="{{ url_for('tasks') }}"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
             <!-- Dropdown Trigger -->
             <li><a class="dropdown-trigger" href="#!" data-target="user_menu"><i
-                        class="fa-solid fa-caret-down"></i>Pages XYZ</a></li>
+                        class="fa-solid fa-caret-down"></i>User Menu</a></li>
         </ul>
 
     </header>
