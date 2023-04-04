@@ -93,3 +93,5 @@ You can now use the `heroku` CLI program - try running `heroku apps` to confirm 
 - [Flask flash() method – How to Flash Messages in Flask?](https://www.askpython.com/python-modules/flask/flask-flash-method)
 - [Used registration and login procedures from Code Institute Flask Mini Project](https://github.com/Code-Institute-Solutions/TaskManagerAuth/tree/main/02-UserAuthenticationAndAuthorization/04-login_functionality)
 - [materialize CSS](https://materializecss.com/collections.html)
+- [User access in Flask](https://blog.teclado.com/learn-python-defining-user-access-roles-in-flask/)
+- [Hide Flash Flash messages](https://stackoverflow.com/questions/21993661/css-auto-hide-elements-after-5-seconds/21994053#21994053)

@@ -55,7 +55,7 @@ def register():
         return redirect(url_for('index'))
     users = list(users_coll.find())
     if request.method == 'POST':
-        # Check if username has been used
+        # Check if username or email have been used
         user = users_coll.find_one(
             {'un': request.form.get('un').lower()}
             )
@@ -63,7 +63,6 @@ def register():
             {'email': request.form.get('email1').lower()}
             )
         if user or email:
-            # print(f'Username {user["un"]} already exists')
             if user:
                 flash(f'Username {user["un"]} already exists. Please choose a different username.', 'info')
             elif email:
@@ -78,16 +77,10 @@ def register():
             'email': request.form.get('email1').lower(),
             'company': request.form.get('company').lower()
         }
+        # If new user, add it to the database:
         users_coll.insert_one(new_user)
-        # flash(f'{new_user["un"]} added to database', 'success')
         session['user'] = request.form.get('un').lower()
-        flash(f'\nUser {session["user"]} logged in!', 'success')
-        # print(request.form.keys())
-        # print(session['user'])
-        # user_db = users_coll.find_one(
-        #     {'un': session['user'].lower()}
-        #     )
-        # print(user_db)
+        flash(f'\nUser {session["user"]} successfully logged in!', 'success')
         return redirect(
             url_for('dashboard', role=user_db['role']))
     

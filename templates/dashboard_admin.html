@@ -5,11 +5,11 @@
 {% block content %}
 
     <h1>Inside SYS ADMIN dashboard_admin.html</h1>
-    <div class="container col s12"></div>
+    <div id="flash_msg" class="container col s12">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
-            <div class="row">
+                <div class="row">
                     <div class="col s12">
                         <ul class="collection">
                             <li class="collection-item avatar">
