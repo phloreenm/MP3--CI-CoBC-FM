@@ -5,11 +5,11 @@
 {% block content %}
 
     <h1>Inside EMPLOYEE dashboard_employee.html</h1>
-    <div id="flash_msg" class="container col s12">
+    <div class="container col s12">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
-                <div class="row">
+                <div id="flash_msg" class="row">
                     <div class="col s12">
                         <ul class="collection">
                             <li class="collection-item avatar">
