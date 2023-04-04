@@ -68,8 +68,7 @@
             <div class="row">
                 <div class="input-field hoverable col s6">
                     <i class="material-icons prefix">email</i>
-                    <input id="email1" name="email1" type="email" class="validate" pattern="\A(?=[a-z0-9@.!#$%&'*+/=?^_‘{|}~-]{6,254}\z)(?=[a-z0-9.!#$%&'*+/=?^_‘{|}~-]{1,64}@)
-                    [a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@ (?:(?=[a-z0-9-]{1,63}\.)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?=[a-z0-9-]{1,63}\z)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z" autocomplete="on" required>
+                    <input id="email1" name="email1" type="email" class="validate"  autocomplete="on" required>
                     <label for="email1" data-error="Please use a valid email"
                         data-success="That is a valid e-mail address">E-mail</label>
                 </div>
@@ -109,30 +108,6 @@
     </form>
 
 </div>
-
-{% if users %}
-<table>
-    <caption>Users list - for debbuging</caption>
-    <tr>
-        <th>user.role</th>
-        <th>user.un</th>
-        <th>user.fname</th>
-        <th>user.lname</th>
-        <th>user.email</th>
-        <th>user.company</th>
-    </tr>
-    {% for user in users %}
-    <tr>
-        <td>{{ user.role }}</td>
-        <td>{{ user.un }}</td>
-        <td>{{ user.fname }}</td>
-        <td>{{ user.lname }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.company }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif %}
 
 {% endblock %}
 

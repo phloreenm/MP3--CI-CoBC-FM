@@ -95,3 +95,4 @@ You can now use the `heroku` CLI program - try running `heroku apps` to confirm 
 - [materialize CSS](https://materializecss.com/collections.html)
 - [User access in Flask](https://blog.teclado.com/learn-python-defining-user-access-roles-in-flask/)
 - [Hide Flash Flash messages](https://stackoverflow.com/questions/21993661/css-auto-hide-elements-after-5-seconds/21994053#21994053)
+- [Favicon source](https://pngtree.com/element/down?id=NDE3MTMxNg==&type=1&time=1680618631&token=MjcwZjRjNzlkNmY5MjEzMzkwOGQyYWYzMjQzYTU5YWI=)

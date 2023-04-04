@@ -53,7 +53,6 @@ def index():
 def register():
     if 'user' in session:
         return redirect(url_for('index'))
-    users = list(users_coll.find())
     if request.method == 'POST':
         # Check if username or email have been used
         user = users_coll.find_one(
@@ -80,11 +79,12 @@ def register():
         # If new user, add it to the database:
         users_coll.insert_one(new_user)
         session['user'] = request.form.get('un').lower()
-        flash(f'\nUser {session["user"]} successfully logged in!', 'success')
+        session['role'] = request.form.get('role')
+        flash(f'\nUser {session["user"]} successfully registered and logged in!', 'success')
         return redirect(
-            url_for('dashboard', role=user_db['role']))
+            url_for('dashboard', role=session['role'], username=session['user']))
     
-    return render_template('register_user.html', users=users)
+    return render_template('register_user.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -102,12 +102,11 @@ def login():
             if check_password_hash(user['pw'], request.form.get('password')):
                 session['user'] = request.form.get('un').lower()
                 flash(f'\nUser {session["user"]} logged in!', 'success')
-                 # return to the dashboard specific to user's role:
+                # return to the dashboard specific to user's role:
                 role = user['role']
                 # print(role)
                 return redirect(url_for('dashboard', role=role))
                 # url_for('dashboard', role=role, username=session["user"]))
-                    
             else:
                 flash('Incorrect Username and/or Password', 'danger')
                 return redirect(url_for('login'))

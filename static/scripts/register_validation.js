@@ -1,5 +1,7 @@
 // Registration page password validation:
 // Base Source Code: [Materialize Register Page Sample](https://codepen.io/HaldunA/pen/eJxRPG)
+
+// Password field validation:
 let pw1 = document.getElementById("password1"),
   pw2 = document.getElementById("password2");
 
@@ -10,10 +12,10 @@ function validatePassword() {
     pw2.setCustomValidity('');
   }
 }
-pw1.onchange = validatePassword;
-pw2.onkeydown = validatePassword;
+pw1.addEventListener("input", validatePassword);
+pw2.addEventListener("input", validatePassword);
 
-// Registration page e-mail validation:
+// Email field validation:
 let email1 = document.getElementById("email1"),
   email2 = document.getElementById("email2");
 
@@ -29,5 +31,5 @@ function validateEmail() {
     email2.setCustomValidity('');
   }
 }
-email1.onchange = validateEmail;
-email2.onkeydown = validateEmail;
+email1.addEventListener("input", validateEmail);
+email2.addEventListener("input", validateEmail);
