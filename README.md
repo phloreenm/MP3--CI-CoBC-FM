@@ -1,8 +1,46 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 
+
+
+## ** ** 
+
+
+
+
+# **The idea behind 'Restaurant Manager'**
+
+The idea of developing this web application is a result of a discussion I had with a friend of mine, about his need to use a tool to organize the flow in the activity of his restaurant. We've sketched on paper some ideas and we concluded to a simple application, for the beginning, to see how it would work in real life. Basically the app should perform as a tool both for the employees in their daily duties, but also for the managers, which could verify daily reports of the events had place during the day.
+
+Being a web application would allow any active employee to access it with just a smartphone, tablet or a laptop and proceed with his tasks. The access to the dashboard would be done though a login page. 
+
+#**Features**
+I designed three levels of Role-based Access Control:
+- **System Administrator** or the 'admin' role:
+  - Is the owner of the app providing the services to its clients (restaurant owners)
+  - Has the right to CRUD:
+    - New Restaurant managers in the users' list
+- **Restaurant Manager** or 'manager' role:
+  - Has the right to CRUD:
+    - Restaurant's employees
+    - Daily tasks
+    - Hazards procedures
+    - Create new forms
+- **Employee** or 'user' role:
+  - Has the right to:
+    - Read:
+      - Daily Tasks
+      - Hazard Procedures
+      - Submit/Fil Daily Tasks Predefined Forms
+
+Obviously the application has the potential to be developed even further to match other business models or to incorporate even more capabilities, but in future releases.
+
+# **Application feasibility**
+'Restaurant Manager' is a tool designed to simplify and improve daily tasks, practical and user-friendly, that simplifies and streamlines daily tasks for restaurant managers and their employees. With its intuitive interface and useful features, it offers a feasible solution for managing specific aspects of a restaurant's operations, from employee task assignments to hazard procedures and daily reports management.
+
+
 # **Needed to be installed**
-- The env.py file is read using the dotenv library in Python. This library allows you to load environment variables from a file named .env located in the same directory as your Python script.
+- The ```env.py``` file is read using the ```dotenv``` library in Python. This library allows you to load environment variables from a file named .env located in the same directory as your Python script.
 ```pip install python-dotenv```
 
 
@@ -53,3 +91,5 @@ You can now use the `heroku` CLI program - try running `heroku apps` to confirm 
 - [MongoDB Shell](https://www.mongodb.com/try/download/shell)
 - [Materialize Register Page Sample](https://codepen.io/HaldunA/pen/eJxRPG)
 - [Flask flash() method – How to Flash Messages in Flask?](https://www.askpython.com/python-modules/flask/flask-flash-method)
+- [Used registration and login procedures from Code Institute Flask Mini Project](https://github.com/Code-Institute-Solutions/TaskManagerAuth/tree/main/02-UserAuthenticationAndAuthorization/04-login_functionality)
+- [materialize CSS](https://materializecss.com/collections.html)

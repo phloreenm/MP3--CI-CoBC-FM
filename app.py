@@ -51,19 +51,24 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if 'user' in session:
+        return redirect(url_for('index'))
     users = list(users_coll.find())
     if request.method == 'POST':
         # Check if username has been used
         user = users_coll.find_one(
             {'un': request.form.get('un').lower()}
             )
-        if user:
+        email = users_coll.find_one(
+            {'email': request.form.get('email1').lower()}
+            )
+        if user or email:
             # print(f'Username {user["un"]} already exists')
-            flash(
-                'User already exists. Please choose a different username',
-                'info')
+            if user:
+                flash(f'Username {user["un"]} already exists. Please choose a different username.', 'info')
+            elif email:
+                flash(f'Email {email["email"]} already used. Please choose a different email.', 'info')
             return redirect(url_for('register'))
-
         new_user = {
             'role': request.form.get('role'),
             'un': request.form.get('un').lower(),
@@ -75,18 +80,79 @@ def register():
         }
         users_coll.insert_one(new_user)
         # flash(f'{new_user["un"]} added to database', 'success')
-        
         session['user'] = request.form.get('un').lower()
         flash(f'\nUser {session["user"]} logged in!', 'success')
-        print(request.form.keys())
-        return redirect(url_for('dashboard'))
+        # print(request.form.keys())
+        # print(session['user'])
+        # user_db = users_coll.find_one(
+        #     {'un': session['user'].lower()}
+        #     )
+        # print(user_db)
+        return redirect(
+            url_for('dashboard', role=user_db['role']))
     
     return render_template('register_user.html', users=users)
 
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template('dashboard.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Check if user is already logged in and redirect him to first page:
+    if 'user' in session:
+        return redirect(url_for('index'))
+    if request.method == 'POST':
+        # Check if username is already registered
+        user = users_coll.find_one(
+            {'un': request.form.get('un').lower()}
+            )
+        if user:
+            # Check if password is correct
+            if check_password_hash(user['pw'], request.form.get('password')):
+                session['user'] = request.form.get('un').lower()
+                flash(f'\nUser {session["user"]} logged in!', 'success')
+                 # return to the dashboard specific to user's role:
+                role = user['role']
+                # print(role)
+                return redirect(url_for('dashboard', role=role))
+                # url_for('dashboard', role=role, username=session["user"]))
+                    
+            else:
+                flash('Incorrect Username and/or Password', 'danger')
+                return redirect(url_for('login'))
+        else:
+            # Username not registered
+            flash('Incorrect Username and/or Password', 'danger')
+            return redirect(url_for('login'))
+
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    # Remove user from session cookies
+    flash(f'\nUser {session["user"]} logged out!', 'success')
+    session.pop('user')
+    return redirect(url_for('index'))
+
+
+@app.route('/dashboard/<role>')
+def dashboard(role):
+    # username = session['user']
+    # Check if user is logged in:
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    # set user's role in session:
+    session['user_role'] = role
+    # Check user's role and redirect if not logged in:
+    if role not in ['admin', 'manager', 'employee']:
+        flash('You\'re not authorized to acces this page', 'danger')
+        return redirect(url_for('login'))
+    # Render dashboard template based on users's role:
+    if role == 'admin':
+        return render_template('dashboard_admin.html')
+    elif role == 'manager':
+        return render_template('dashboard_manager.html')
+    else:
+        return render_template('dashboard_employee.html')
 
 
 @app.route('/users')

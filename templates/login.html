@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Login user - Restaurant Manager{% endblock %}
+
+{% block content %}
+
+
+<div class="container col s12"></div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="row">
+    <div class="col s12">
+        <ul class="collection">
+            <li class="collection-item avatar">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span class="title">Message:</span>
+                <p>
+                    {{ message }}
+                </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="row">
+    <div class="col s12">
+        <h3 class="brand-logo col s8">New user registration</h3>
+    </div>
+</div>
+{% endif %}
+{% endwith %}
+<!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
+
+<form class="col s12" method="POST" action="{{ url_for('login') }}">
+    <div class="row">
+        <div class="row">
+            <div class="input-field hoverable col s12">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="un" name="un" type="text" class="validate" autocomplete="on" required>
+                <label for="un">Username</label>
+            </div>
+            <div class="input-field hoverable col s6">
+                <i class="material-icons prefix">vpn_key</i>
+                <input id="password" name="password" type="password" class="validate" required>
+                <label for="password">Password</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 center-align">
+                <button type="submit" class="waves-effect waves-light btn right hoverable">
+                    Log In <i class="fas fa-plus-square right"></i>
+                </button>
+            </div>
+            <div class="row">
+                <div class="col s12 center-align">
+                    <a href="{{ url_for('register') }}" class="waves-effect waves-light btn right hoverable">
+                        Register new account<i class="fas fa-plus-square right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+</form>
+
+</div>
+
+{% if users %}
+<table>
+    <caption>Users list - for debbuging</caption>
+    <tr>
+        <th>user.role</th>
+        <th>user.un</th>
+        <th>user.fname</th>
+        <th>user.lname</th>
+        <th>user.email</th>
+        <th>user.company</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.role }}</td>
+        <td>{{ user.un }}</td>
+        <td>{{ user.fname }}</td>
+        <td>{{ user.lname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.company }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ url_for('static',filename='scripts/register_validation.js') }}"></script>
+{% endblock %}
