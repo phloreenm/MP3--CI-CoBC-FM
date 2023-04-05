@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Users - Restaurant Manager{% endblock %}
+
+{% block content %}
+
+{% if users %}
+<table class="striped">
+    {% if session['role'] == 'admin' %}
+        <caption>System Administrator - users list</caption>
+    {% elif session['role'] == 'manager' %}
+        <caption>Restaurant Manager - Employees list</caption>
+    {% elif session['role'] == 'employee' %}
+        <caption>Users list</caption>
+    {% endif %}
+    <tr>
+        <th>user.role</th>
+        <th>user.un</th>
+        <th>user.fname</th>
+        <th>user.lname</th>
+        <th>user.email</th>
+        <th>user.company</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        {% if session['role'] == 'admin' %}
+            <td>{{ user['role'] }}</td>
+            <td>{{ user['un'] }}</td>
+            <td>{{ user['fname'] }}</td>
+            <td>{{ user['lname'] }}</td>
+            <td>{{ user['email'] }}</td>
+            <td>{{ user['company'] }}</td>
+        {% elif session['role'] == 'manager' %}
+            {% if user['role'] == 'employee' or user['role'] == 'manager' %}
+                <td>{{ user['role'] }}</td>
+                <td>{{ user['un'] }}</td>
+                <td>{{ user['fname'] }}</td>
+                <td>{{ user['lname'] }}</td>
+                <td>{{ user['email'] }}</td>
+                <td>{{ user['company'] }}</td>
+            {% endif %}
+        {% elif session['role'] == 'employee' %}
+            {% if user['role'] == 'employee' %}
+                <td>{{ user['role'] }}</td>
+                <td>{{ user['un'] }}</td>
+                <td>{{ user['fname'] }}</td>
+                <td>{{ user['lname'] }}</td>
+                <td>{{ user['email'] }}</td>
+                <td>{{ user['company'] }}</td>
+            {% endif %}
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+</table>
+{% endif %}
+
+{% endblock %}
