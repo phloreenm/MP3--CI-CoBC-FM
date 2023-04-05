@@ -27,7 +27,13 @@
     {% endwith %}
     <div class="row">
         <div class="col s12">
-            <h3 class="brand-logo col s12">New user registration</h3>
+            <h5 class="brand-logo col s12">
+                {%- if session['role'] == 'admin' %}
+                    New Restaurant Manager registration
+                {%- elif session['role'] == 'manager' %}
+                    New User registration
+                {%- endif %}
+            </h5>
         </div>
     </div>
     <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
@@ -42,9 +48,9 @@
                     {%- for r in db_roles %}
                         <!-- SysAdmin may add any access level users -->
                         {%- if session['role'] == 'admin' %}
-                        {% if r.role_name == 'manager' %}
-                        <option value="{{- r.role_name }}">{{- r.role_name.title() }}</option>
-                    {% endif %}  
+                            {%- if r.role_name == 'manager' %}
+                                <option value="{{- r.role_name }}">{{- r.role_name.title() }}</option>
+                            {% endif %}  
                         <!-- Manager may add only employees and managers -->
                         {%- elif session['role'] == 'manager' %}
                             {% if r.role_name == 'manager' or r.role_name == 'employee' %}
