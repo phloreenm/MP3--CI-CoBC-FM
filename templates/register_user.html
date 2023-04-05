@@ -40,14 +40,15 @@
                 <select id="role" name="role" class="validate" required>
                     <option value="" disabled selected>Select Role</option>
                     {%- for r in db_roles %}
+                        <!-- SysAdmin may add any access level users -->
                         {%- if session['role'] == 'admin' %}
-                        <option value="{{- r.role_name }}">{{- r.role_name }}</option>
+                            <option value="{{- r.role_name }}">{{- r.role_name }}</option>
+                        <!-- Manager may add only employees and managers -->
                         {%- elif session['role'] == 'manager' %}
                             {% if r.role_name == 'manager' or r.role_name == 'employee' %}
-                            <option value="{{ r.role_name }}">{{ r.role_name }}</option>
+                                <option value="{{- r.role_name }}">{{- r.role_name }}</option>
                             {% endif %}                       
                         {% endif %}
-                    <!-- <option value="{{ r.role_name }}">{{ r.role_name }}</option> -->
                     {% endfor %}
                 </select>
                 <label for="role">Choose Role</label>
@@ -55,7 +56,11 @@
             <!-- company -->
             <div class="input-field hoverable col s4">
                 <i class="material-icons prefix">contacts</i>
-                <input id="company" name="company" type="text" class="validate" autocomplete="on" required>
+                <!-- manager may only add employees at his company -->
+                {% if session['role'] == 'manager' %}
+                    <input id="company" name="company" type="text" class="validate" value="{{ restaurant }}" disabled required>
+                {% endif %}
+                
                 <label for="company">Company</label>
             </div>
             <!-- username -->

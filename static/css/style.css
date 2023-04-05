@@ -9,6 +9,6 @@ main {
 }
 
 .current {
-    color: rgb(255, 0, 0) !important;
-    font-size: 1.5em !important;
+    color: rgb(255, 0, 0);
+    font-size: 1.5em;
 }

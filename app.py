@@ -94,22 +94,28 @@ def register():
         }
         # If new user, add it to the database:
         users_coll.insert_one(new_user)
+        # Add user to session cookie
         session['user'] = request.form.get('un').lower()
         print(f"session['user'] in register route: {session['user']}")
+        # Add role to session cookie
         session['role'] = request.form.get('role').lower()
         print(f"session['role'] in register route: {session['role']}")
         role = session['role']
         flash(f'\nUser {session["user"]} successfully registered and logged in!', 'success')
         return redirect(url_for('dashboard', role=role))
     db_roles = list(roles_coll.find())
-    # for r in range(len(db_roles)):
-    #     print(f'Role: {db_roles[r]["role_name"]}')
-    return render_template('register_user.html', db_roles=db_roles)
+    db_user_comp = users_coll.find_one(
+        {'un': session['user']}
+        )
+    restaurant = db_user_comp['company']
+    return render_template(
+        'register_user.html', db_roles=db_roles, restaurant=restaurant)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Check if user is already logged in and redirect him to first page:
+    # may be removed, as id user is session it's redirected to index and the login link is not shown anymore
     if 'user' in session:
         return redirect(url_for('index'))
     if request.method == 'POST':
