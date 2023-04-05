@@ -3,7 +3,6 @@
 {% block title %}Home - Restaurant Manager{% endblock %}
 
 {% block content %}
-
 <div class="container col s12">
     <div class="row">
         <div class="col s12">
@@ -63,4 +62,10 @@
 
 </div>
 
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('#home').toggleClass('current');
+</script>
 {% endblock %}

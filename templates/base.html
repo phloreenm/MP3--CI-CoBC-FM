@@ -32,25 +32,25 @@
         <a href="/" class="brand-logo"><i class="fa-duotone fa-books">Restaurant Manager</i></a>
         <a href="#" data-target="mobile_menu" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
         <ul class="right hide-on-med-and-down">
-          <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="{{ url_for('index') }}" id="home"><i class="fa-solid fa-house"></i> Home</a></li>
           {% if session.user %}
-          <li><a href="{{ url_for('procedures') }}"><i class="fa-solid fa-user"></i> Procedures</a></li>
-          <li><a href="{{ url_for('tasks') }}"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
+            <li><a href="{{ url_for('procedures') }}" id="procedures"><i class="fa-solid fa-user"></i> Procedures</a></li>
+            <li><a href="{{ url_for('tasks') }}" id="tasks"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
           {% if session['user_role'] == 'admin' %}
-            <li><a href="{{ url_for('dashboard', role='admin') }}"><i class="fa-solid fa-user"></i> Admin Dashboard</a></li>
-            <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Users</a></li>
-            <li><a href="{{ url_for('register') }}"><i class="fa-solid fa-user"></i> Register</a></li>
+            <li><a href="{{ url_for('dashboard', role='admin') }}" id="dashboard"><i class="fa-solid fa-user"></i> Admin Dashboard</a></li>
+            <li><a href="{{ url_for('users') }}" id="users"><i class="fa-solid fa-user"></i> Users</a></li>
+            <li><a href="{{ url_for('register') }}" id="register"><i class="fa-solid fa-user"></i> Register</a></li>
           {% elif session['user_role'] == 'manager' %}
-            <li><a href="{{ url_for('dashboard', role='manager') }}"><i class="fa-solid fa-user"></i> Manager Dashboard</a></li>
-            <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Employees</a></li>
-            <li><a href="{{ url_for('register') }}"><i class="fa-solid fa-user"></i> Register</a></li>
+            <li><a href="{{ url_for('dashboard', role='manager') }}" id="dashboard"><i class="fa-solid fa-user"></i> Manager Dashboard</a></li>
+            <li><a href="{{ url_for('users') }}" id="users"><i class="fa-solid fa-user"></i> Employees</a></li>
+            <li><a href="{{ url_for('register') }}" id="register"><i class="fa-solid fa-user"></i> Register</a></li>
           {% else %}
-            <li><a href="{{ url_for('dashboard', role='employee') }}"><i class="fa-solid fa-user"></i> Employee Dashboard</a></li>
-            <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Employees</a></li>
+            <li><a href="{{ url_for('dashboard', role='employee') }}" id="dashboard"><i class="fa-solid fa-user"></i> Employee Dashboard</a></li>
+            <li><a href="{{ url_for('users') }}" id="users"><i class="fa-solid fa-user"></i> Employees</a></li>
           {% endif %}
           <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-user"></i> Log Out</a></li>
         {% else %}
-          <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-user"></i> Log In</a></li>
+          <li><a href="{{ url_for('login') }}" id="login"><i class="fa-solid fa-user"></i> Log In</a></li>
         {% endif %}
           <!-- Dropdown Trigger -->
           <!-- <li><a class="dropdown-trigger" href="#!" data-target="user_menu"><i class="fa-solid fa-caret-down"></i>User
@@ -60,25 +60,25 @@
     </nav>
     <!-- mobile sidenav -->
     <ul class="sidenav text-white grey darken-4" id="mobile_menu">
-      <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="{{ url_for('index') }}" id="home"><i class="fa-solid fa-house"></i> Home</a></li>
           {% if session.user %}
-            <li><a href="{{ url_for('procedures') }}"><i class="fa-solid fa-user"></i> Procedures</a></li>
-            <li><a href="{{ url_for('tasks') }}"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
+            <li><a href="{{ url_for('procedures') }}" id="procedures"><i class="fa-solid fa-user"></i> Procedures</a></li>
+            <li><a href="{{ url_for('tasks') }}" id="tasks"><i class="fa-solid fa-user"></i> Daily Tasks</a></li>
             {% if session['user_role'] == 'admin' %}
-              <li><a href="{{ url_for('dashboard', role='admin') }}"><i class="fa-solid fa-user"></i> Admin Dashboard</a></li>
-              <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Users</a></li>
-              <li><a href="{{ url_for('register') }}"><i class="fa-solid fa-user"></i> Register</a></li>
+              <li><a href="{{ url_for('dashboard', role='admin') }}" id="dashboard"><i class="fa-solid fa-user"></i> Admin Dashboard</a></li>
+              <li><a href="{{ url_for('users') }}" id="users"><i class="fa-solid fa-user"></i> Users</a></li>
+              <li><a href="{{ url_for('register') }}" id="register"><i class="fa-solid fa-user"></i> Register</a></li>
             {% elif session['user_role'] == 'manager' %}
-              <li><a href="{{ url_for('dashboard', role='manager') }}"><i class="fa-solid fa-user"></i> Manager Dashboard</a></li>
-              <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Employees</a></li>
-              <li><a href="{{ url_for('register') }}"><i class="fa-solid fa-user"></i> Register</a></li>
+              <li><a href="{{ url_for('dashboard', role='manager') }}" id="dashboard"><i class="fa-solid fa-user"></i> Manager Dashboard</a></li>
+              <li><a href="{{ url_for('users') }}" id="users"><i class="fa-solid fa-user"></i> Employees</a></li>
+              <li><a href="{{ url_for('register') }}" id="register"><i class="fa-solid fa-user"></i> Register</a></li>
             {% else %}
-              <li><a href="{{ url_for('dashboard', role='employee') }}"><i class="fa-solid fa-user"></i> Employee Dashboard</a></li>
-              <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Employees</a></li>
+              <li><a href="{{ url_for('dashboard', role='employee') }}" id="dashboard"><i class="fa-solid fa-user"></i> Employee Dashboard</a></li>
+              <li><a href="{{ url_for('users') }}" id="users"><i class="fa-solid fa-user"></i> Employees</a></li>
             {% endif %}
             <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-user"></i> Log Out</a></li>
           {% else %}
-            <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-user"></i> Log In</a></li>
+            <li><a href="{{ url_for('login') }}" id="login"><i class="fa-solid fa-user"></i> Log In</a></li>
           {% endif %}
       <!-- Dropdown Trigger -->
       <!-- <li><a class="dropdown-trigger" href="#!" data-target="user_menu"><i class="fa-solid fa-caret-down"></i>User

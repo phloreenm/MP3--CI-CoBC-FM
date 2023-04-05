@@ -14,6 +14,18 @@ if os.path.exists('env.py'):
 
 load_dotenv()
 
+NAV_ITEMS = {
+    'index': 'home',
+    'procedures': 'procedures',
+    'tasks': 'tasks',
+    'login': 'login',
+    'dashboard_admin': 'dashboard',
+    'dashboard_employee': 'dashboard',
+    'dashboard_manager': 'dashboard',
+    'users': 'users',
+    'register': 'register',
+}
+
 MONGO_URI = os.getenv('MONGO_URI')
 MONGO_DBNAME = os.getenv('MONGO_DBNAME')
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -183,6 +195,10 @@ def procedures():
 def tasks():
     tasks = list(daily_tasks_coll.find())
     return render_template('tasks.html', tasks=tasks)
+
+
+def get_current_page_name():
+    return request.path.lstrip('/')
 
 
 if __name__ == '__main__':

@@ -3,6 +3,14 @@ $(document).ready(function () {
   $(".dropdown-trigger").dropdown();
   $('.sidenav').sidenav();
   $('select').formSelect();
+  // add active class for navigation menu items:
+  let this_page = "{{ get_current_page() }}";
+  let activeNavItem = NAV_ITEMS[this_page];
+  // check if the current page has a navigation menu item:
+  if (activeNavItem) {
+    // if true add the active class to the navigation menu item:
+    $('#' + activeNavItem).addClass('current');
+  }
 })
 
 // remove Flash messages after the set timeout if flash_msg ID exists on page:
