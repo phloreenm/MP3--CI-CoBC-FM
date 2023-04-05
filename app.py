@@ -67,8 +67,6 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # if 'user' in session:
-    #     return redirect(url_for('index'))
     if request.method == 'POST':
         # Check if username or email have been used
         user = users_coll.find_one(
@@ -95,14 +93,14 @@ def register():
         # If new user, add it to the database:
         users_coll.insert_one(new_user)
         # Add user to session cookie
-        session['user'] = request.form.get('un').lower()
-        print(f"session['user'] in register route: {session['user']}")
+        # session['user'] = request.form.get('un').lower()
+        # print(f"session['user'] in register route: {session['user']}")
         # Add role to session cookie
-        session['role'] = request.form.get('role').lower()
-        print(f"session['role'] in register route: {session['role']}")
+        # session['role'] = request.form.get('role').lower()
+        # print(f"session['role'] in register route: {session['role']}")
         role = session['role']
         flash(f'\nUser {session["user"]} successfully registered and logged in!', 'success')
-        return redirect(url_for('dashboard', role=role))
+        return redirect(url_for('users', role=role))
     db_roles = list(roles_coll.find())
     db_user_comp = users_coll.find_one(
         {'un': session['user']}

@@ -6,11 +6,11 @@
     {% if users %}
 
     {% if session['role'] == 'admin' %}
-    <h5>System Administrator - users list</h5>
+        <h5>System Administrator - Registered users list</h5>
     {% elif session['role'] == 'manager' %}
-    <h5>Restaurant Manager - Employees list</h5>
+        <h5>Restaurant Manager - Employees list</h5>
     {% elif session['role'] == 'employee' %}
-    <h5>Users list</h5>
+        <h5>Employee - Users list</h5>
     {% endif %}
 
     <div class="row">

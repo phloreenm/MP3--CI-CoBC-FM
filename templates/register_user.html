@@ -66,7 +66,7 @@
                 <i class="material-icons prefix">contacts</i>
                 <!-- manager may only add employees at his company -->
                 {% if session['role'] == 'manager' %}
-                    <input id="company" name="company" type="text" class="validate" value="{{ restaurant.title() }}" disabled required>
+                    <input id="company" name="company" type="text" class="validate" value="{{ restaurant.title() }}" readonly required>
                 {% else %}
                     <input id="company" name="company" type="text" class="validate" autocomplete="on" required>
                 {% endif %}

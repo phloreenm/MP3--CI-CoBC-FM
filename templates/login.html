@@ -6,32 +6,30 @@
 
 <div class="container col s12">
 {% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<div id="flash_msg" class="row">
-    <div class="col s12">
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <span class="title">Message:</span>
-                <p>
-                    {{ message }}
-                </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-            </li>
-        </ul>
-    </div>
-</div>
-{% endfor %}
-{% else %}
-<div class="row">
-    <div class="col s12">
-        <h3 class="brand-logo col s8">New user registration</h3>
-    </div>
-</div>
-{% endif %}
+    {% if messages %}
+        {% for message in messages %}
+        <div id="flash_msg" class="row">
+            <div class="col s12">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <span class="title">Message:</span>
+                        <p>
+                            {{ message }}
+                        </p>
+                        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
 {% endwith %}
 <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
-
+    <div class="row">
+        <div class="col s12">
+            <h3 class="brand-logo col s8">New user registration</h3>
+        </div>
+    </div>
 <form class="col s12" method="POST" action="{{ url_for('login') }}">
     <div class="row">
         <div class="row">
