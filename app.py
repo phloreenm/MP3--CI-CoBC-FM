@@ -1,6 +1,7 @@
 import os
-from pymongo import MongoClient
+
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
 from dotenv import load_dotenv
 from flask import (
     Flask, flash, render_template, request, redirect, url_for, session)
@@ -79,11 +80,12 @@ def register():
         # If new user, add it to the database:
         users_coll.insert_one(new_user)
         session['user'] = request.form.get('un').lower()
-        session['role'] = request.form.get('role')
+        print(f"session['user'] in register route: {session['user']}")
+        session['role'] = request.form.get('role').lower()
+        print(f"session['role'] in register route: {session['role']}")
+        role = session['role']
         flash(f'\nUser {session["user"]} successfully registered and logged in!', 'success')
-        return redirect(
-            url_for('dashboard', role=session['role'], username=session['user']))
-    
+        return redirect(url_for('dashboard', role=role))
     return render_template('register_user.html')
 
 
@@ -101,12 +103,13 @@ def login():
             # Check if password is correct
             if check_password_hash(user['pw'], request.form.get('password')):
                 session['user'] = request.form.get('un').lower()
+                print(f"session['user'] in register route: {session['user']}")
+                session['role'] = user['role'].lower()
+                print(f"session['role'] in register route: {session['role']}")
                 flash(f'\nUser {session["user"]} logged in!', 'success')
                 # return to the dashboard specific to user's role:
                 role = user['role']
-                # print(role)
                 return redirect(url_for('dashboard', role=role))
-                # url_for('dashboard', role=role, username=session["user"]))
             else:
                 flash('Incorrect Username and/or Password', 'danger')
                 return redirect(url_for('login'))
@@ -122,7 +125,8 @@ def login():
 def logout():
     # Remove user from session cookies
     flash(f'\nUser {session["user"]} logged out!', 'success')
-    session.pop('user')
+    # session.pop('user')
+    session.clear()
     return redirect(url_for('index'))
 
 

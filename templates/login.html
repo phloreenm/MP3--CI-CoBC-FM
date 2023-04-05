@@ -4,7 +4,6 @@
 
 {% block content %}
 
-
 <div class="container col s12">
 {% with messages = get_flashed_messages() %}
 {% if messages %}
@@ -13,7 +12,6 @@
     <div class="col s12">
         <ul class="collection">
             <li class="collection-item avatar">
-                <i class="fas fa-exclamation-triangle"></i>
                 <span class="title">Message:</span>
                 <p>
                     {{ message }}
@@ -93,5 +91,4 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ url_for('static',filename='scripts/register_validation.js') }}"></script>
 {% endblock %}

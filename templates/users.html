@@ -4,30 +4,15 @@
 
 {% block content %}
 
-<!-- {% with messages = get_flashed_messages() %}
-   {% if messages %}
-      {% for message in messages %}
-      <div class="row">
-        <div class="col s12">
-            <ul class="collection">
-                <li class="collection-item avatar">
-                    <i class="fas fa-exclamation-triangle"></i>
-                <span class="title">Message:</span>
-                <p>
-                    {{ message }}
-                </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-      {% endfor %}
-   {% endif %}
-{% endwith %} -->
-
 {% if users %}
 <table>
-    <caption>Users list</caption>
+    {% if session['role'] == 'admin' %}
+        <caption>System Administrator - users list</caption>
+    {% elif session['role'] == 'manager' %}
+        <caption>Restaurant Manager - Employees list</caption>
+    {% elif session['role'] == 'employee' %}
+        <caption>Users list</caption>
+    {% endif %}
     <tr>
         <th>user.role</th>
         <th>user.un</th>
@@ -38,20 +23,36 @@
     </tr>
     {% for user in users %}
     <tr>
-        <td>{{ user.role }}</td>
-        <td>{{ user.un }}</td>
-        <td>{{ user.fname }}</td>
-        <td>{{ user.lname }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.company }}</td>
+        {% if session['role'] == 'admin' %}
+            <td>{{ user.role }}</td>
+            <td>{{ user.un }}</td>
+            <td>{{ user.fname }}</td>
+            <td>{{ user.lname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.company }}</td>
+        {% elif session['role'] == 'manager' %}
+            {% if user.role == 'employee' and user.role == 'manager' %}
+                <td>{{ user.role }}</td>
+                <td>{{ user.un }}</td>
+                <td>{{ user.fname }}</td>
+                <td>{{ user.lname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.company }}</td>
+            {% endif %}
+        {% elif session['role'] == 'employee' %}
+            {% if user.role == 'employee' %}
+                <td>{{ user.role }}</td>
+                <td>{{ user.un }}</td>
+                <td>{{ user.fname }}</td>
+                <td>{{ user.lname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.company }}</td>
+            {% endif %}
+        {% endif %}
     </tr>
     {% endfor %}
 
 </table>
 {% endif %}
-{% for doc in document%}
-print(doc)
-
-{% endfor %}
 
 {% endblock %}

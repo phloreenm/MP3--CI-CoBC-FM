@@ -4,7 +4,6 @@
 
 {% block content %}
 
-    <h1>Inside MANAGER dashboard_manager.html</h1>
     <div class="container col s12">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -29,9 +28,53 @@
     </div>
     <div class="row">
         <div class="col s12">
+                <h3>Hi {{ session['user'] }}! You are a {{ session['role'] }}.</h3>
                 <h3>Welcome to RESTAURANT MANAGER dashboard</h3>
                 <h5>Full acces to create new managers and assign them to new shops</h5>
 
         </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">View Daily Tasks Reports</span>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium numquam placeat quis libero repellat ipsum debitis, ullam ex. Consectetur exercitationem consequatur odio rerum porro accusantium suscipit vel sequi excepturi delectus?</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Today's reports</a>
+              <a href="#">All reports</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Procedures</span>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati error eveniet laudantium exercitationem rerum natus, consequatur odit ducimus officiis, nostrum iste cupiditate reiciendis quisquam ad aspernatur nemo ratione optio. Cumque?</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Add new procedure</a>
+              <a href="#">View all procedures</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title col s12 push-s4 pull-s2">View Employees</span>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium numquam placeat quis libero repellat ipsum debitis, ullam ex. Consectetur exercitationem consequatur odio rerum porro accusantium suscipit vel sequi excepturi delectus?</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Add new employee</a>
+              <a href="#">View all employees</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s8 push-s2 pull-s2 blue-grey darken-1"><span class="flow-text">This div is 7-columns wide on pushed to the right by 5-columns.</span></div>
+        <div class="col s9 pull-s3 blue-grey darken-4"><span class="flow-text">5-columns wide pulled to the left by 7-columns.</span></div>
+      </div>
     </div>
 {% endblock %}
