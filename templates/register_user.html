@@ -46,12 +46,12 @@
                 <select id="role" name="role" class="validate" required>
                     <option value="" disabled selected>Select Role</option>
                     {%- for r in db_roles %}
-                        <!-- SysAdmin may add any access level users -->
+                        <!-- SysAdmin may add SysAdmin and Manager roles access level users -->
                         {%- if session['role'] == 'admin' %}
-                            {%- if r.role_name == 'manager' %}
+                            {%- if r.role_name == 'admin'  or r.role_name == 'manager' %}
                                 <option value="{{- r.role_name }}">{{- r.role_name.title() }}</option>
                             {% endif %}  
-                        <!-- Manager may add only employees and managers -->
+                        <!-- Manager may add Employees and Managers -->
                         {%- elif session['role'] == 'manager' %}
                             {% if r.role_name == 'manager' or r.role_name == 'employee' %}
                                 <option value="{{- r.role_name }}">{{- r.role_name.title() }}</option>
