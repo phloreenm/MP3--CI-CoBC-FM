@@ -21,6 +21,8 @@ IP = os.getenv('IP')
 PORT = os.getenv('PORT')
 
 app = Flask(__name__)
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
 
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['MONGO_URI'] = MONGO_URI
@@ -37,6 +39,7 @@ db = client.get_database(app.config['MONGO_DBNAME'])
 users_coll = db['users']
 procedures_coll = db['procedures']
 daily_tasks_coll = db['daily_tasks']
+roles_coll = db['roles']
 
 
 @app.route('/')
@@ -52,8 +55,8 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if 'user' in session:
-        return redirect(url_for('index'))
+    # if 'user' in session:
+    #     return redirect(url_for('index'))
     if request.method == 'POST':
         # Check if username or email have been used
         user = users_coll.find_one(
@@ -86,7 +89,10 @@ def register():
         role = session['role']
         flash(f'\nUser {session["user"]} successfully registered and logged in!', 'success')
         return redirect(url_for('dashboard', role=role))
-    return render_template('register_user.html')
+    db_roles = list(roles_coll.find())
+    # for r in range(len(db_roles)):
+    #     print(f'Role: {db_roles[r]["role_name"]}')
+    return render_template('register_user.html', db_roles=db_roles)
 
 
 @app.route('/login', methods=['GET', 'POST'])

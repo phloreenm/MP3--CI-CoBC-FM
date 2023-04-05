@@ -2,6 +2,7 @@
 $(document).ready(function () {
   $(".dropdown-trigger").dropdown();
   $('.sidenav').sidenav();
+  $('select').formSelect();
 })
 
 // remove Flash messages after the set timeout if flash_msg ID exists on page:

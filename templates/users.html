@@ -27,7 +27,7 @@
                     {% endif %}
                 </div>
                 <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">{{ user['role'] }}<i
+                    <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
                             class="material-icons right">more_vert</i></span>
                     <p><a href="#">Edit</a></p>
                     <p><a href="#">Delete</a></p>
@@ -35,10 +35,24 @@
                 <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
                             class="material-icons right">close</i></span>
-                    <p>{{ user['un'] }}</p>
-                    <p>{{ user['role'] }}</p>
-                    <p>{{ user['email'] }}</p>
-                    <p>{{ user['company'] }}</p>
+                    <table style="width:100%">
+                        <tr>
+                            <th>Username:</th>
+                            <td>{{ user['un'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Role:</th>
+                            <td>{{ user['role'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>E-mail:</th>
+                            <td>{{ user['email'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company:</th>
+                            <td>{{ user['company'] }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -56,7 +70,7 @@
                     {% endif %}
                 </div>
                 <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">{{ user['role'] }}<i
+                    <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
                             class="material-icons right">more_vert</i></span>
                     <p><a href="#">Edit</a></p>
                     <p><a href="#">Delete</a></p>
@@ -64,10 +78,24 @@
                 <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
                             class="material-icons right">close</i></span>
-                    <p>{{ user['un'] }}</p>
-                    <p>{{ user['role'] }}</p>
-                    <p>{{ user['email'] }}</p>
-                    <p>{{ user['company'] }}</p>
+                    <table style="width:100%">
+                        <tr>
+                            <th>Username:</th>
+                            <td>{{ user['un'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Role:</th>
+                            <td>{{ user['role'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>E-mail:</th>
+                            <td>{{ user['email'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company:</th>
+                            <td>{{ user['company'] }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -86,18 +114,33 @@
                     {% endif %}
                 </div>
                 <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">{{ user['role'] }}<i
+                    <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
                             class="material-icons right">more_vert</i></span>
-                    <p><a href="#">Edit</a></p>
-                    <p><a href="#">Delete</a></p>
+                    {% if user['un'] == session['user'] %}
+                        <p><a href="#">Edit</a></p>
+                    {% endif %}
                 </div>
                 <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
                             class="material-icons right">close</i></span>
-                    <p>{{ user['un'] }}</p>
-                    <p>{{ user['role'] }}</p>
-                    <p>{{ user['email'] }}</p>
-                    <p>{{ user['company'] }}</p>
+                    <table style="width:100%">
+                        <tr>
+                            <th>Username:</th>
+                            <td>{{ user['un'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Role:</th>
+                            <td>{{ user['role'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>E-mail:</th>
+                            <td>{{ user['email'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company:</th>
+                            <td>{{ user['company'] }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
