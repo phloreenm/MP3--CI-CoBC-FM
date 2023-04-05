@@ -24,29 +24,29 @@
     {% for user in users %}
     <tr>
         {% if session['role'] == 'admin' %}
-            <td>{{ user.role }}</td>
-            <td>{{ user.un }}</td>
-            <td>{{ user.fname }}</td>
-            <td>{{ user.lname }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.company }}</td>
+            <td>{{ user['role'] }}</td>
+            <td>{{ user['un'] }}</td>
+            <td>{{ user['fname'] }}</td>
+            <td>{{ user['lname'] }}</td>
+            <td>{{ user['email'] }}</td>
+            <td>{{ user['company'] }}</td>
         {% elif session['role'] == 'manager' %}
-            {% if user.role == 'employee' and user.role == 'manager' %}
-                <td>{{ user.role }}</td>
-                <td>{{ user.un }}</td>
-                <td>{{ user.fname }}</td>
-                <td>{{ user.lname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.company }}</td>
+            {% if user['role'] == 'employee' or user['role'] == 'manager' %}
+                <td>{{ user['role'] }}</td>
+                <td>{{ user['un'] }}</td>
+                <td>{{ user['fname'] }}</td>
+                <td>{{ user['lname'] }}</td>
+                <td>{{ user['email'] }}</td>
+                <td>{{ user['company'] }}</td>
             {% endif %}
         {% elif session['role'] == 'employee' %}
-            {% if user.role == 'employee' %}
-                <td>{{ user.role }}</td>
-                <td>{{ user.un }}</td>
-                <td>{{ user.fname }}</td>
-                <td>{{ user.lname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.company }}</td>
+            {% if user['role'] == 'employee' %}
+                <td>{{ user['role'] }}</td>
+                <td>{{ user['un'] }}</td>
+                <td>{{ user['fname'] }}</td>
+                <td>{{ user['lname'] }}</td>
+                <td>{{ user['email'] }}</td>
+                <td>{{ user['company'] }}</td>
             {% endif %}
         {% endif %}
     </tr>

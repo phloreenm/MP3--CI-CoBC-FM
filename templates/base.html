@@ -44,6 +44,7 @@
               <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Employees</a></li>
             {% else %}
               <li><a href="{{ url_for('dashboard', role='employee') }}"><i class="fa-solid fa-user"></i> Employee Dashboard</a></li>
+              <li><a href="{{ url_for('users') }}"><i class="fa-solid fa-user"></i> Employees</a></li>
             {% endif %}
             <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-user"></i> Log Out</a></li>
           {% else %}
