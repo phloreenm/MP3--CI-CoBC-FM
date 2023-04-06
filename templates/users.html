@@ -41,11 +41,11 @@
                                 <table style="width:100%">
                                     <tr>
                                         <th>Username:</th>
-                                        <td>{{ user['un'] }}</td>
+                                        <td>{{ user['un'].title() }}</td>
                                     </tr>
                                     <tr>
                                         <th>Role:</th>
-                                        <td>{{ user['role'] }}</td>
+                                        <td>{{ user['role'].title() }}</td>
                                     </tr>
                                     <tr>
                                         <th>E-mail:</th>
@@ -53,7 +53,11 @@
                                     </tr>
                                     <tr>
                                         <th>Company:</th>
-                                        <td>{{ user['company'] }}</td>
+                                        <td>{{ user['company'].title() }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ID:</th>
+                                        <td>{{ user['_id'] }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -84,24 +88,28 @@
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
                                         class="material-icons right">close</i></span>
-                                <table style="width:100%">
-                                    <tr>
-                                        <th>Username:</th>
-                                        <td>{{ user['un'] }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Role:</th>
-                                        <td>{{ user['role'] }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>E-mail:</th>
-                                        <td>{{ user['email'] }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Company:</th>
-                                        <td>{{ user['company'] }}</td>
-                                    </tr>
-                                </table>
+                                        <table style="width:100%">
+                                            <tr>
+                                                <th>Username:</th>
+                                                <td>{{ user['un'].title() }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Role:</th>
+                                                <td>{{ user['role'].title() }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>E-mail:</th>
+                                                <td>{{ user['email'] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Company:</th>
+                                                <td>{{ user['company'].title() }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ID:</th>
+                                                <td>{{ user['_id'] }}</td>
+                                            </tr>
+                                        </table>
                             </div>
                         </div>
                     </div>
@@ -131,24 +139,28 @@
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
                                         class="material-icons right">close</i></span>
-                                <table style="width:100%">
-                                    <tr>
-                                        <th>Username:</th>
-                                        <td>{{ user['un'] }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Role:</th>
-                                        <td>{{ user['role'] }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>E-mail:</th>
-                                        <td>{{ user['email'] }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Company:</th>
-                                        <td>{{ user['company'] }}</td>
-                                    </tr>
-                                </table>
+                                        <table style="width:100%">
+                                            <tr>
+                                                <th>Username:</th>
+                                                <td>{{ user['un'].title() }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Role:</th>
+                                                <td>{{ user['role'].title() }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>E-mail:</th>
+                                                <td>{{ user['email'] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Company:</th>
+                                                <td>{{ user['company'].title() }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ID:</th>
+                                                <td>{{ user['_id'] }}</td>
+                                            </tr>
+                                        </table>
                             </div>
                         </div>
                     </div>
