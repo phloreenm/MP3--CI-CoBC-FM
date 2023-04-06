@@ -143,6 +143,52 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/edit_user')
+def edit_user():
+    return render_template('edit_user.html')
+
+
+# @app.route('/edit_user/<string:un>', methods=['GET', 'POST'])
+# def edit_user(un):
+#     # query the database for the user to be edited:
+#     user = users_coll.find_one(
+#             {'un': un}
+#             )
+#     if request.method == 'POST':
+#         # user can not edit username and role
+#         # check if old password is correct:
+#         if check_password_hash(user['pw'], request.form.get('password')):
+#             # check if fields password1 matches password2:
+#             if request.form.get('password1') == request.form.get('password2'):
+#                 # update user's password:
+#                 users_coll.update_one(
+#                     {'un': un},
+#                     {'$set': {'pw': generate_password_hash(
+#                         request.form.get('password1'))}}
+#                     )
+#                 # update user's first name:
+#                 users_coll.update_one(
+#                     {'un': un},
+#                     {'$set': {'fname': request.form.get('first_name').lower()}}
+#                     )
+#                 # update user's last name:
+#                 users_coll.update_one(
+#                     {'un': un},
+#                     {'$set': {'lname': request.form.get('last_name').lower()}}
+#                     )
+#                 # update user's email:
+#                 users_coll.update_one(
+#                     {'un': un},
+#                     {'$set': {'email': request.form.get('email1').lower()}}
+#                     )
+#                 flash(f'\nUser {session["user"]} successfully updated!', 'success')
+#                 return redirect(url_for('users', role=session['role']))
+#             else:
+#                 # flash('New Passwords do not match!', 'danger')
+#                 return redirect(url_for('edit_user', user=user))
+#     return render_template('edit_user.html', user=user)
+
+
 @app.route('/logout')
 def logout():
     # Remove user from session cookies

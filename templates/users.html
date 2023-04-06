@@ -14,148 +14,152 @@
     {% endif %}
 
     <div class="row">
-    {% for user in users %}
-    {% if session['role'] == 'admin' %}
-    {% if user['role'] == 'admin' or user['role'] == 'manager' %}
-        <div class="col s8 m6 l3 offset-s2">
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    {% if user['role'] == 'admin' %}
-                        <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
-                    {% elif user['role'] == 'manager' %}
-                        <img class="activator" alt="Manager icon" src="{{ url_for('static', filename='images/manager.bmp') }}">
-                    {% elif user['role'] == 'employee' %}
-                        <img class="activator" alt="Employee icon" src="{{ url_for('static', filename='images/employee.bmp') }}">
-                    {% endif %}
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
-                            class="material-icons right">more_vert</i></span>
-                    <p><a href="#">Edit</a></p>
-                    <p><a href="#">Delete</a></p>
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
-                            class="material-icons right">close</i></span>
-                    <table style="width:100%">
-                        <tr>
-                            <th>Username:</th>
-                            <td>{{ user['un'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>Role:</th>
-                            <td>{{ user['role'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>E-mail:</th>
-                            <td>{{ user['email'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>Company:</th>
-                            <td>{{ user['company'] }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-    {% elif session['role'] == 'manager' %}
-    {% if user['role'] == 'employee' or user['role'] == 'manager' %}
-        <div class="col s8 m6 l3 offset-s2">
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    {% if user['role'] == 'admin' %}
-                        <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
-                    {% elif user['role'] == 'manager' %}
-                        <img class="activator" alt="Manager icon" src="{{ url_for('static', filename='images/manager.bmp') }}">
-                    {% elif user['role'] == 'employee' %}
-                        <img class="activator" alt="Employee icon" src="{{ url_for('static', filename='images/employee.bmp') }}">
-                    {% endif %}
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
-                            class="material-icons right">more_vert</i></span>
-                    <p><a href="#">Edit</a></p>
-                    <p><a href="#">Delete</a></p>
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
-                            class="material-icons right">close</i></span>
-                    <table style="width:100%">
-                        <tr>
-                            <th>Username:</th>
-                            <td>{{ user['un'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>Role:</th>
-                            <td>{{ user['role'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>E-mail:</th>
-                            <td>{{ user['email'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>Company:</th>
-                            <td>{{ user['company'] }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-    {% elif session['role'] == 'employee' %}
-    {% if user['role'] == 'employee' %}
-        <div class="col s8 m6 l3 offset-s2">
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    {% if user['role'] == 'admin' %}
-                        <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
-                    {% elif user['role'] == 'manager' %}
-                        <img class="activator" alt="Manager icon" src="{{ url_for('static', filename='images/manager.bmp') }}">
-                    {% elif user['role'] == 'employee' %}
-                        <img class="activator" alt="Employee icon" src="{{ url_for('static', filename='images/employee.bmp') }}">
-                    {% endif %}
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
-                            class="material-icons right">more_vert</i></span>
-                    <!-- If user in session, the user may only edit his card only-->
-                    {% if user['un'] == session['user'] %}
-                        <p><a href="#">Edit</a></p>
-                    {% endif %}
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
-                            class="material-icons right">close</i></span>
-                    <table style="width:100%">
-                        <tr>
-                            <th>Username:</th>
-                            <td>{{ user['un'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>Role:</th>
-                            <td>{{ user['role'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>E-mail:</th>
-                            <td>{{ user['email'] }}</td>
-                        </tr>
-                        <tr>
-                            <th>Company:</th>
-                            <td>{{ user['company'] }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-    {% endif %}
-    </tr>
-    {% endfor %}
+        {% for user in users %}
+            {% if session['role'] == 'admin' %}
+                {% if user['role'] == 'admin' or user['role'] == 'manager' %}
+                    <div class="col s8 m6 l3 offset-s2">
+                        <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                {% if user['role'] == 'admin' %}
+                                    <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
+                                {% elif user['role'] == 'manager' %}
+                                    <img class="activator" alt="Manager icon" src="{{ url_for('static', filename='images/manager.bmp') }}">
+                                {% elif user['role'] == 'employee' %}
+                                    <img class="activator" alt="Employee icon" src="{{ url_for('static', filename='images/employee.bmp') }}">
+                                {% endif %}
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
+                                        class="material-icons right">more_vert</i></span>
+                                <!-- <p><a href="{{ url_for('edit_user', un=user.un) }}">Edit</a></p> -->
+                                <p><a href="{{ url_for('edit_user') }}">Edit</a></p>
+                                <p><a href="#">Delete</a></p>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
+                                        class="material-icons right">close</i></span>
+                                <table style="width:100%">
+                                    <tr>
+                                        <th>Username:</th>
+                                        <td>{{ user['un'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Role:</th>
+                                        <td>{{ user['role'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>E-mail:</th>
+                                        <td>{{ user['email'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Company:</th>
+                                        <td>{{ user['company'] }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
 
-    </table>
-    {% endif %}
-</div> 
+            {% elif session['role'] == 'manager' %}
+                {% if user['role'] == 'employee' or user['role'] == 'manager' %}
+                    <div class="col s8 m6 l3 offset-s2">
+                        <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                {% if user['role'] == 'admin' %}
+                                    <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
+                                {% elif user['role'] == 'manager' %}
+                                    <img class="activator" alt="Manager icon" src="{{ url_for('static', filename='images/manager.bmp') }}">
+                                {% elif user['role'] == 'employee' %}
+                                    <img class="activator" alt="Employee icon" src="{{ url_for('static', filename='images/employee.bmp') }}">
+                                {% endif %}
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
+                                        class="material-icons right">more_vert</i></span>
+                                <!-- <p><a href="{{ url_for('edit_user', un=user['un']) }}">Edit</a></p> -->
+                                <p><a href="{{ url_for('edit_user') }}">Edit</a></p>
+                                <p><a href="#">Delete</a></p>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
+                                        class="material-icons right">close</i></span>
+                                <table style="width:100%">
+                                    <tr>
+                                        <th>Username:</th>
+                                        <td>{{ user['un'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Role:</th>
+                                        <td>{{ user['role'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>E-mail:</th>
+                                        <td>{{ user['email'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Company:</th>
+                                        <td>{{ user['company'] }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% elif session['role'] == 'employee' %}
+                {% if user['role'] == 'employee' %}
+                    <div class="col s8 m6 l3 offset-s2">
+                        <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                {% if user['role'] == 'admin' %}
+                                    <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
+                                {% elif user['role'] == 'manager' %}
+                                    <img class="activator" alt="Manager icon" src="{{ url_for('static', filename='images/manager.bmp') }}">
+                                {% elif user['role'] == 'employee' %}
+                                    <img class="activator" alt="Employee icon" src="{{ url_for('static', filename='images/employee.bmp') }}">
+                                {% endif %}
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
+                                        class="material-icons right">more_vert</i></span>
+                                <!-- If user in session, the user may only edit his card only-->
+                                {% if user['un'] == session['user'] %}
+                                    <!-- <p><a href="{{ url_for('edit_user', un=user['un']) }}">Edit</a></p>
+                                    <p><a href="{{ url_for('edit_user') }}">Edit</a></p> -->
+                                {% endif %}
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
+                                        class="material-icons right">close</i></span>
+                                <table style="width:100%">
+                                    <tr>
+                                        <th>Username:</th>
+                                        <td>{{ user['un'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Role:</th>
+                                        <td>{{ user['role'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>E-mail:</th>
+                                        <td>{{ user['email'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Company:</th>
+                                        <td>{{ user['company'] }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+        </table>
+        {% endif %}
+    </div> 
 {% endblock %}
 
 {% block javascript %}
