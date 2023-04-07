@@ -14,6 +14,7 @@ $(document).ready(function () {
   $(".dropdown-trigger").dropdown();
   $('.sidenav').sidenav();
   $('select').formSelect();
+  $('.modal').modal();
 
   // add active class for navigation menu items:
   let this_page = window.location.pathname.split("/").pop();

@@ -4,24 +4,24 @@
 
 {% block content %}
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-        <div id="flash_msg" class="row">
-            <div class="col s12">
-                <ul class="collection">
-                    <li class="collection-item avatar">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span class="title">Message:</span>
-                        <p>
-                            {{ message }}
-                        </p>
-                        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                    </li>
-                </ul>
+        {% if messages %}
+            {% for message in messages %}
+            <div id="flash_msg" class="row">
+                <div class="col s12">
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span class="title">Message:</span>
+                            <p>
+                                {{ message }}
+                            </p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        {% endfor %}
-    {% endif %}
+            {% endfor %}
+        {% endif %}
     {% endwith %}
     {% if users %}
 
@@ -53,8 +53,22 @@
                                         class="material-icons right">more_vert</i></span>
                                 <p><a href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
                                 {% if session['user']  != user['un'] %}
-                                    <p><a href="#">Delete</a></p>
+                                    <p><a class="waves-effect waves-light btn modal-trigger" href="#modal_{{ user['un'] }}">Delete</a></p>
                                 {% endif %}
+                                <!-- Modal SOURCE: https://materializecss.com/modals.html#! -->
+                                <!-- Modal Structure -->
+                                <div id="modal_{{ user['un'] }}" class="modal">
+                                    <div class="modal-content">
+                                        <h4>Deletion confirmation</h4>
+                                        <p>This action will permanently remove this user from the database.</p>
+                                        <p>Are you sure you want to delete this user.</p>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">NO</a>
+                                        <a href="{{ url_for('delete_user', user_id=user._id) }}" class="modal-close waves-effect waves-green btn-flat">YES</a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
@@ -104,8 +118,22 @@
                                         class="material-icons right">more_vert</i></span>
                                 <p><a href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
                                 {% if session['user']  != user['un'] %}
-                                    <p><a href="#">Delete</a></p>
+                                    <p><a class="waves-effect waves-light btn modal-trigger" href="#modal_{{ user['un'] }}">Delete</a></p>
                                 {% endif %}
+                                <!-- Modal base code SOURCE: https://materializecss.com/modals.html#! -->
+                                <!-- Modal Structure -->
+                                <div id="modal_{{ user['un'] }}" class="modal">
+                                    <div class="modal-content">
+                                        <h4>Deletion confirmation</h4>
+                                        <p>This action will permanently remove this user from the database.</p>
+                                        <p>Are you sure you want to delete this user.</p>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">NO</a>
+                                        <a href="{{ url_for('delete_user', user_id=user._id) }}" class="modal-close waves-effect waves-green btn-flat">YES</a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i

@@ -80,14 +80,8 @@ def register():
         }
         # If new user, add it to the database:
         users_coll.insert_one(new_user)
-        # Add user to session cookie
-        # session['user'] = request.form.get('un').lower()
-        # print(f"session['user'] in register route: {session['user']}")
-        # Add role to session cookie
-        # session['role'] = request.form.get('role').lower()
-        # print(f"session['role'] in register route: {session['role']}")
         role = session['role']
-        flash(f'\nUser {session["user"]} successfully registered and logged in!', 'success')
+        flash(f'\nUser {new_user["un"]} successfully registered!', 'success')
         return redirect(url_for('users', role=role))
     db_roles = list(roles_coll.find())
     db_user_comp = users_coll.find_one(
@@ -184,6 +178,20 @@ def edit_user(user_id):
     return render_template(
         'edit_user.html', user=user, roles=roles,
         restaurant=user['company'])
+
+
+@app.route('/delete_user/<user_id>')
+def delete_user(user_id):
+    # delete user from the database:
+    users_coll.delete_one({'_id': ObjectId(user_id)})
+    user = users_coll.find_one(
+            {'_id': ObjectId(user_id)}
+            )
+    if user:
+        flash('User not deleted!', 'success')
+    else:
+        flash('User deleted successfully!', 'success')
+    return redirect(url_for('users', role=session['role']))
 
 
 @app.route('/logout')
