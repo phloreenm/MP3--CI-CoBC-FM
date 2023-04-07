@@ -14,18 +14,6 @@ if os.path.exists('env.py'):
 
 load_dotenv()
 
-NAV_ITEMS = {
-    'index': 'home',
-    'procedures': 'procedures',
-    'tasks': 'tasks',
-    'login': 'login',
-    'dashboard_admin': 'dashboard',
-    'dashboard_employee': 'dashboard',
-    'dashboard_manager': 'dashboard',
-    'users': 'users',
-    'register': 'register',
-}
-
 MONGO_URI = os.getenv('MONGO_URI')
 MONGO_DBNAME = os.getenv('MONGO_DBNAME')
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -143,50 +131,91 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/edit_user')
-def edit_user():
-    return render_template('edit_user.html')
+@app.route('/edit_user/<user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    # query the database for the user to be edited
+    # and populate form with user's info:
+    user = users_coll.find_one(
+            {'_id': ObjectId(user_id)}
+            )
+    roles = list(roles_coll.find())
+    if request.method == "POST":
+        url2 = request.url
+        print(f"The current URL is: {url2}")
+        print("POST IF edit_user template\n")
+        # if paswword field is empty:
+        if request.form.get('password') == '':
+            # update user's info:
+            users_coll.update_one(
+                {'_id': ObjectId(user_id)},
+                {
+                    '$set': {
+                        'role': request.form.get('role').lower(),
+                        'company': request.form.get('company').lower(),
+                        'un': request.form.get('un').lower(),
+                        'fname': request.form.get('first_name').lower(),
+                        'lname': request.form.get('last_name').lower(),
+                        'email': request.form.get('email1').lower()
+                        }
+                }
+            )
+            print(f"Succesfuly updated user {user['un']}\n")
+            flash('User updated successfully!', 'success')
+            return redirect(url_for('users', role=session['role']))
+        # if password field is not empty:
+        else:
+            url3 = request.url
+            print(f"The current URL is: {url3}")
+            print("POST ELSE edit_user template\n")
+            # check if newpassword match:
+            if request.form.get('password1'):
+                # update user's info:
+                users_coll.update_one(
+                    {'_id': ObjectId(user_id)},
+                    {
+                        '$set': {
+                            'role': request.form.get('role').lower(),
+                            'company': request.form.get('company').lower(),
+                            'un': request.form.get('un').lower(),
+                            'fname': request.form.get('first_name').lower(),
+                            'lname': request.form.get('last_name').lower(),
+                            'email': request.form.get('email1').lower(),
+                            'pw': generate_password_hash(
+                                request.form.get('password1'))
+                            }
+                    }
+                )
+        print(f"Succesfuly updated user {user['un']}\n")
+        print("POST edit_user template\n")
+        flash('User updated successfully!', 'success')
+        return redirect(url_for('users'))
+    # else:
+    #     print(f"Unsuccesful attemt to update user {user['un']}")
+    #     flash('New Passwords do not match!', 'danger')
+    #     return redirect(url_for('edit_user', user_id=user_id))
+    print("GET edit_user template\n")
+    url4 = request.url
+    print(f"The current URL is: {url4}")
+    return render_template(
+        'edit_user.html', user=user, roles=roles,
+        restaurant=user['company'])
 
 
-# @app.route('/edit_user/<string:un>', methods=['GET', 'POST'])
-# def edit_user(un):
-#     # query the database for the user to be edited:
+# @app.route("/edit_user/<user_id>", methods=["GET", "POST"])
+# def edit_user(user_id):
+
 #     user = users_coll.find_one(
-#             {'un': un}
+#             {"_id": ObjectId(user_id)}
 #             )
-#     if request.method == 'POST':
-#         # user can not edit username and role
-#         # check if old password is correct:
-#         if check_password_hash(user['pw'], request.form.get('password')):
-#             # check if fields password1 matches password2:
-#             if request.form.get('password1') == request.form.get('password2'):
-#                 # update user's password:
-#                 users_coll.update_one(
-#                     {'un': un},
-#                     {'$set': {'pw': generate_password_hash(
-#                         request.form.get('password1'))}}
-#                     )
-#                 # update user's first name:
-#                 users_coll.update_one(
-#                     {'un': un},
-#                     {'$set': {'fname': request.form.get('first_name').lower()}}
-#                     )
-#                 # update user's last name:
-#                 users_coll.update_one(
-#                     {'un': un},
-#                     {'$set': {'lname': request.form.get('last_name').lower()}}
-#                     )
-#                 # update user's email:
-#                 users_coll.update_one(
-#                     {'un': un},
-#                     {'$set': {'email': request.form.get('email1').lower()}}
-#                     )
-#                 flash(f'\nUser {session["user"]} successfully updated!', 'success')
-#                 return redirect(url_for('users', role=session['role']))
-#             else:
-#                 # flash('New Passwords do not match!', 'danger')
-#                 return redirect(url_for('edit_user', user=user))
-#     return render_template('edit_user.html', user=user)
+#     roles = list(roles_coll.find())
+
+#     if request.method == "POST":
+#         flash('Request method is POST', 'danger')
+#         return redirect(url_for("users"))
+
+#     return render_template(
+#         "edit_user.html", user=user, roles=roles
+#     )
 
 
 @app.route('/logout')
@@ -245,10 +274,6 @@ def procedures():
 def tasks():
     tasks = list(daily_tasks_coll.find())
     return render_template('tasks.html', tasks=tasks)
-
-
-def get_current_page_name():
-    return request.path.lstrip('/')
 
 
 if __name__ == '__main__':

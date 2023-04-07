@@ -3,6 +3,26 @@
 {% block title %}Users - Restaurant Manager{% endblock %}
 
 {% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+        <div id="flash_msg" class="row">
+            <div class="col s12">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span class="title">Message:</span>
+                        <p>
+                            {{ message }}
+                        </p>
+                        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
     {% if users %}
 
     {% if session['role'] == 'admin' %}
@@ -29,11 +49,12 @@
                                 {% endif %}
                             </div>
                             <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
+                                <span class="card-title activator center-align grey-text text-darken-4"><span style="font-size: 0.8em; !important">{{ user['fname'].title() }} {{ user['lname'].title() }}</span><br><span style="font-size: 0.6em;">{{ user['role'].title() }}</span><i
                                         class="material-icons right">more_vert</i></span>
-                                <!-- <p><a href="{{ url_for('edit_user', un=user.un) }}">Edit</a></p> -->
-                                <p><a href="{{ url_for('edit_user') }}">Edit</a></p>
-                                <p><a href="#">Delete</a></p>
+                                <p><a href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
+                                {% if session['user']  != user['un'] %}
+                                    <p><a href="#">Delete</a></p>
+                                {% endif %}
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
@@ -79,11 +100,12 @@
                                 {% endif %}
                             </div>
                             <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
+                                <span class="card-title activator center-align grey-text text-darken-4"><span style="font-size: 0.8em; !important">{{ user['fname'].title() }} {{ user['lname'].title() }}</span><br><span style="font-size: 0.6em;">{{ user['role'].title() }}</span><i
                                         class="material-icons right">more_vert</i></span>
-                                <!-- <p><a href="{{ url_for('edit_user', un=user['un']) }}">Edit</a></p> -->
-                                <p><a href="{{ url_for('edit_user') }}">Edit</a></p>
-                                <p><a href="#">Delete</a></p>
+                                <p><a href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
+                                {% if session['user']  != user['un'] %}
+                                    <p><a href="#">Delete</a></p>
+                                {% endif %}
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }}<i
@@ -128,12 +150,11 @@
                                 {% endif %}
                             </div>
                             <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">{{ user['fname'].title() }} {{ user['lname'].title() }} - {{ user['role'].title() }}<i
+                                <span class="card-title activator center-align grey-text text-darken-4"><span style="font-size: 0.8em; !important">{{ user['fname'].title() }} {{ user['lname'].title() }}</span><br><span style="font-size: 0.6em;">{{ user['role'].title() }}</span><i
                                         class="material-icons right">more_vert</i></span>
                                 <!-- If user in session, the user may only edit his card only-->
                                 {% if user['un'] == session['user'] %}
-                                    <!-- <p><a href="{{ url_for('edit_user', un=user['un']) }}">Edit</a></p>
-                                    <p><a href="{{ url_for('edit_user') }}">Edit</a></p> -->
+                                    <p><a href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
                                 {% endif %}
                             </div>
                             <div class="card-reveal">
