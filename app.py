@@ -140,11 +140,67 @@ def edit_user(user_id):
             )
     roles = list(roles_coll.find())
     if request.method == "POST":
-        url2 = request.url
-        print(f"The current URL is: {url2}")
-        print("POST IF edit_user template\n")
-        # if paswword field is empty:
-        if request.form.get('password') == '':
+        if request.form.get('password'):
+            # if password is NOT empty:
+            print("POST IF password is NOT empty in edit_user template\n")
+            url3 = request.url
+            print(f"The current URL is: {url3}")
+            print("POST ELSE edit_user template\n")
+            # check if newpassword:
+            if request.form.get('password1'):
+                # check input fields values:
+                role = request.form.get('role').lower()
+                company = request.form.get('company').lower()
+                un = request.form.get('un').lower()
+                fname = request.form.get('first_name').lower()
+                lname = request.form.get('last_name').lower()
+                email1 = request.form.get('email1').lower()
+                password1 = request.form.get('password1')
+                password2 = request.form.get('password2')
+                print(f"role: {role}\n")
+                print(f"company: {company}\n")
+                print(f"un: {un}\n")
+                print(f"fname: {fname}\n")
+                print(f"lname: {lname}\n")
+                print(f"email1: {email1}\n")
+                print(f"password1: {password1}\n")
+                print(f"password2: {password2}\n")
+                # update user's info:
+                users_coll.update_one(
+                    {'_id': ObjectId(user_id)},
+                    {
+                        '$set': {
+                            'role': request.form.get('role').lower(),
+                            'company': request.form.get('company').lower(),
+                            'un': request.form.get('un').lower(),
+                            'fname': request.form.get('first_name').lower(),
+                            'lname': request.form.get('last_name').lower(),
+                            'email': request.form.get('email1').lower(),
+                            'pw': generate_password_hash(
+                                request.form.get('password1'))
+                            }
+                    }
+                )
+        # if paswword field IS empty:
+        else:
+            print("POST IF password is empty in edit_user template\n")
+            # check input fields values:
+            role = request.form.get('role').lower()
+            company = request.form.get('company').lower()
+            un = request.form.get('un').lower()
+            fname = request.form.get('first_name').lower()
+            lname = request.form.get('last_name').lower()
+            email1 = request.form.get('email1').lower()
+            password1 = request.form.get('password1')
+            password2 = request.form.get('password2')
+            print(f"role: {role}\n")
+            print(f"company: {company}\n")
+            print(f"un: {un}\n")
+            print(f"fname: {fname}\n")
+            print(f"lname: {lname}\n")
+            print(f"email1: {email1}\n")
+            print(f"password1: {password1}\n")
+            print(f"password2: {password2}\n")
             # update user's info:
             users_coll.update_one(
                 {'_id': ObjectId(user_id)},
@@ -163,28 +219,8 @@ def edit_user(user_id):
             flash('User updated successfully!', 'success')
             return redirect(url_for('users', role=session['role']))
         # if password field is not empty:
-        else:
-            url3 = request.url
-            print(f"The current URL is: {url3}")
-            print("POST ELSE edit_user template\n")
-            # check if newpassword match:
-            if request.form.get('password1'):
-                # update user's info:
-                users_coll.update_one(
-                    {'_id': ObjectId(user_id)},
-                    {
-                        '$set': {
-                            'role': request.form.get('role').lower(),
-                            'company': request.form.get('company').lower(),
-                            'un': request.form.get('un').lower(),
-                            'fname': request.form.get('first_name').lower(),
-                            'lname': request.form.get('last_name').lower(),
-                            'email': request.form.get('email1').lower(),
-                            'pw': generate_password_hash(
-                                request.form.get('password1'))
-                            }
-                    }
-                )
+        # elif request.form.get('password') != '':
+
         print(f"Succesfuly updated user {user['un']}\n")
         print("POST edit_user template\n")
         flash('User updated successfully!', 'success')

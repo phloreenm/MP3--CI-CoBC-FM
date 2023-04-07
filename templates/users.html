@@ -38,7 +38,7 @@
             {% if session['role'] == 'admin' %}
                 {% if user['role'] == 'admin' or user['role'] == 'manager' %}
                     <div class="col s8 m6 l3 offset-s2">
-                        <div class="card">
+                        <div class="card medium">
                             <div class="card-image waves-effect waves-block waves-light">
                                 {% if user['role'] == 'admin' %}
                                     <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
