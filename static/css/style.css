@@ -12,3 +12,8 @@ main {
     color: rgb(255, 0, 0);
     font-size: 1.5em;
 }
+
+.modal {
+    max-height: 100%;
+    overflow: visible
+}

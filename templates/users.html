@@ -38,7 +38,7 @@
             {% if session['role'] == 'admin' %}
                 {% if user['role'] == 'admin' or user['role'] == 'manager' %}
                     <div class="col s8 m6 l3 offset-s2">
-                        <div class="card medium">
+                        <div class="card hoverable medium">
                             <div class="card-image waves-effect waves-block waves-light">
                                 {% if user['role'] == 'admin' %}
                                     <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
@@ -51,7 +51,7 @@
                             <div class="card-content">
                                 <span class="card-title activator center-align grey-text text-darken-4"><span style="font-size: 0.8em; !important">{{ user['fname'].title() }} {{ user['lname'].title() }}</span><br><span style="font-size: 0.6em;">{{ user['role'].title() }}</span><i
                                         class="material-icons right">more_vert</i></span>
-                                <p><a href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
+                                <p><a class="waves-effect waves-light btn modal-trigger" href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
                                 {% if session['user']  != user['un'] %}
                                     <p><a class="waves-effect waves-light btn modal-trigger" href="#modal_{{ user['un'] }}">Delete</a></p>
                                 {% endif %}
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <a href="#!" class="modal-close waves-effect waves-green btn-flat">NO</a>
-                                        <a href="{{ url_for('delete_user', user_id=user._id) }}" class="modal-close waves-effect waves-green btn-flat">YES</a>
+                                        <a href="{{ url_for('delete_user', user_id=user._id) }}" class="modal-close waves-effect waves-red btn-flat">YES</a>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
             {% elif session['role'] == 'manager' %}
                 {% if user['role'] == 'employee' or user['role'] == 'manager' %}
                     <div class="col s8 m6 l3 offset-s2">
-                        <div class="card">
+                        <div class="card hoverable medium">
                             <div class="card-image waves-effect waves-block waves-light">
                                 {% if user['role'] == 'admin' %}
                                     <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
@@ -116,9 +116,9 @@
                             <div class="card-content">
                                 <span class="card-title activator center-align grey-text text-darken-4"><span style="font-size: 0.8em; !important">{{ user['fname'].title() }} {{ user['lname'].title() }}</span><br><span style="font-size: 0.6em;">{{ user['role'].title() }}</span><i
                                         class="material-icons right">more_vert</i></span>
-                                <p><a href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
+                                <a class="waves-effect waves-light btn modal-trigger left" href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a>
                                 {% if session['user']  != user['un'] %}
-                                    <p><a class="waves-effect waves-light btn modal-trigger" href="#modal_{{ user['un'] }}">Delete</a></p>
+                                    <a class="waves-effect waves-light red darken-4 btn modal-trigger right" href="#modal_{{ user['un'] }}">Delete</a>
                                 {% endif %}
                                 <!-- Modal base code SOURCE: https://materializecss.com/modals.html#! -->
                                 <!-- Modal Structure -->
@@ -130,8 +130,8 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">NO</a>
-                                        <a href="{{ url_for('delete_user', user_id=user._id) }}" class="modal-close waves-effect waves-green btn-flat">YES</a>
+                                        <a href="#!" class="modal-close waves-effect waves-green btn-large left">NO</a>
+                                        <a href="{{ url_for('delete_user', user_id=user._id) }}" class="modal-close waves-effect waves-light red darken-4 btn-large right">YES</a>
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +167,7 @@
             {% elif session['role'] == 'employee' %}
                 {% if user['role'] == 'employee' %}
                     <div class="col s8 m6 l3 offset-s2">
-                        <div class="card">
+                        <div class="card hoverable medium">
                             <div class="card-image waves-effect waves-block waves-light">
                                 {% if user['role'] == 'admin' %}
                                     <img class="activator" alt="SysAdmin icon" src="{{ url_for('static', filename='images/sysadmin.bmp') }}">
@@ -182,7 +182,7 @@
                                         class="material-icons right">more_vert</i></span>
                                 <!-- If user in session, the user may only edit his card only-->
                                 {% if user['un'] == session['user'] %}
-                                    <p><a href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
+                                    <p><a class="waves-effect waves-light btn modal-trigger" href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></p>
                                 {% endif %}
                             </div>
                             <div class="card-reveal">
