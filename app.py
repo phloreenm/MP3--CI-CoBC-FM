@@ -113,9 +113,7 @@ def login():
             # Check if password is correct
             if check_password_hash(user['pw'], request.form.get('password')):
                 session['user'] = request.form.get('un').lower()
-                print(f"session['user'] in register route: {session['user']}")
                 session['role'] = user['role'].lower()
-                print(f"session['role'] in register route: {session['role']}")
                 flash(f'\nUser {session["user"]} logged in!', 'success')
                 # return to the dashboard specific to user's role:
                 role = user['role']
@@ -142,29 +140,7 @@ def edit_user(user_id):
     if request.method == "POST":
         if request.form.get('password'):
             # if password is NOT empty:
-            print("POST IF password is NOT empty in edit_user template\n")
-            url3 = request.url
-            print(f"The current URL is: {url3}")
-            print("POST ELSE edit_user template\n")
-            # check if newpassword:
             if request.form.get('password1'):
-                # check input fields values:
-                role = request.form.get('role').lower()
-                company = request.form.get('company').lower()
-                un = request.form.get('un').lower()
-                fname = request.form.get('first_name').lower()
-                lname = request.form.get('last_name').lower()
-                email1 = request.form.get('email1').lower()
-                password1 = request.form.get('password1')
-                password2 = request.form.get('password2')
-                print(f"role: {role}\n")
-                print(f"company: {company}\n")
-                print(f"un: {un}\n")
-                print(f"fname: {fname}\n")
-                print(f"lname: {lname}\n")
-                print(f"email1: {email1}\n")
-                print(f"password1: {password1}\n")
-                print(f"password2: {password2}\n")
                 # update user's info:
                 users_coll.update_one(
                     {'_id': ObjectId(user_id)},
@@ -181,26 +157,8 @@ def edit_user(user_id):
                             }
                     }
                 )
-        # if paswword field IS empty:
+        # if password field IS empty:
         else:
-            print("POST IF password is empty in edit_user template\n")
-            # check input fields values:
-            role = request.form.get('role').lower()
-            company = request.form.get('company').lower()
-            un = request.form.get('un').lower()
-            fname = request.form.get('first_name').lower()
-            lname = request.form.get('last_name').lower()
-            email1 = request.form.get('email1').lower()
-            password1 = request.form.get('password1')
-            password2 = request.form.get('password2')
-            print(f"role: {role}\n")
-            print(f"company: {company}\n")
-            print(f"un: {un}\n")
-            print(f"fname: {fname}\n")
-            print(f"lname: {lname}\n")
-            print(f"email1: {email1}\n")
-            print(f"password1: {password1}\n")
-            print(f"password2: {password2}\n")
             # update user's info:
             users_coll.update_one(
                 {'_id': ObjectId(user_id)},
@@ -215,43 +173,17 @@ def edit_user(user_id):
                         }
                 }
             )
-            print(f"Succesfuly updated user {user['un']}\n")
             flash('User updated successfully!', 'success')
             return redirect(url_for('users', role=session['role']))
         # if password field is not empty:
         # elif request.form.get('password') != '':
 
-        print(f"Succesfuly updated user {user['un']}\n")
         print("POST edit_user template\n")
         flash('User updated successfully!', 'success')
         return redirect(url_for('users'))
-    # else:
-    #     print(f"Unsuccesful attemt to update user {user['un']}")
-    #     flash('New Passwords do not match!', 'danger')
-    #     return redirect(url_for('edit_user', user_id=user_id))
-    print("GET edit_user template\n")
-    url4 = request.url
-    print(f"The current URL is: {url4}")
     return render_template(
         'edit_user.html', user=user, roles=roles,
         restaurant=user['company'])
-
-
-# @app.route("/edit_user/<user_id>", methods=["GET", "POST"])
-# def edit_user(user_id):
-
-#     user = users_coll.find_one(
-#             {"_id": ObjectId(user_id)}
-#             )
-#     roles = list(roles_coll.find())
-
-#     if request.method == "POST":
-#         flash('Request method is POST', 'danger')
-#         return redirect(url_for("users"))
-
-#     return render_template(
-#         "edit_user.html", user=user, roles=roles
-#     )
 
 
 @app.route('/logout')
