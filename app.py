@@ -196,6 +196,9 @@ def delete_user(user_id):
 
 @app.route('/logout')
 def logout():
+    # Check if user is logged in:
+    if 'user' not in session:
+        return redirect(url_for('login'))
     # Remove user from session cookies
     flash(f'\nUser {session["user"]} logged out!', 'success')
     # session.pop('user')
