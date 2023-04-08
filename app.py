@@ -252,6 +252,23 @@ def tasks():
     return render_template('tasks.html', tasks=tasks)
 
 
+@app.route('/add_task', methods=['GET', 'POST'])
+def add_task():
+    if request.method == "POST":
+        task = {
+            'task': request.form.get('task'),
+            'description': request.form.get('description'),
+            'date': request.form.get('date'),
+            'time': request.form.get('time'),
+            'user': request.form.get('user'),
+            'status': request.form.get('status')
+        }
+        daily_tasks_coll.insert_one(task)
+        flash('Task added successfully!', 'success')
+        return redirect(url_for('tasks'))
+    return render_template('add_task.html')
+
+
 if __name__ == '__main__':
     app.run(
         host=app.config['IP'],

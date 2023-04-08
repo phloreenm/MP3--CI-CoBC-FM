@@ -11,3 +11,4 @@ cloudinary_python.txt
 old/
 certificates/
 *.pem
+templates/test_dd.html

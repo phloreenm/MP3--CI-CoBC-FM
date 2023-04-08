@@ -1,0 +1,147 @@
+<!-- 'task': request.form.get('task'),
+            'description': request.form.get('description'),
+            'date': request.form.get('date'),
+            'time': request.form.get('time'),
+            'user': request.form.get('user'),
+            'status': request.form.get('status') -->
+{% extends "base.html" %}
+
+{% block title %}Daily Tasks Form - Restaurant Manager{% endblock %}
+
+{% block content %}
+<div class="container col s12"></div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div id="flash_msg" class="row">
+                <div class="col s12">
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span class="title">Message:</span>
+                            <p>
+                                {{ message }}
+                            </p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <div class="col s12">
+            <h5 class="brand-logo col s12">
+                    Add new task
+            </h5>
+        </div>
+    </div>
+    <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
+
+    <form class="col s12" method="POST" action="{{ url_for('add_task') }}">
+        <div class="row">
+            <!-- roles -->
+            <div class="input-field hoverable col s4">
+                <i class="material-icons prefix">contacts</i>
+                <select id="role" name="role" class="validate" required>
+                    <option value="" disabled selected>Select Role</option>
+                    {%- for r in db_roles %}
+                        <!-- SysAdmin may add SysAdmin and Manager roles access level users -->
+                        {%- if session['role'] == 'admin' %}
+                            {%- if r.role_name == 'admin'  or r.role_name == 'manager' %}
+                                <option value="{{- r.role_name }}">{{- r.role_name.title() }}</option>
+                            {% endif %}  
+                        <!-- Manager may add Employees and Managers -->
+                        {%- elif session['role'] == 'manager' %}
+                            {% if r.role_name == 'manager' or r.role_name == 'employee' %}
+                                <option value="{{- r.role_name }}">{{- r.role_name.title() }}</option>
+                            {% endif %}                       
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <label for="role">Choose Role</label>
+            </div>
+            <!-- company -->
+            <div class="input-field hoverable col s4">
+                <i class="material-icons prefix">contacts</i>
+                <!-- manager may only add employees at his company -->
+                {% if session['role'] == 'manager' %}
+                    <input id="company" name="company" type="text" class="validate" value="{{ restaurant.title() }}" readonly required>
+                {% else %}
+                    <input id="company" name="company" type="text" class="validate" autocomplete="on" required>
+                {% endif %}
+                
+                <label for="company">Company</label>
+            </div>
+            <!-- username -->
+                <div class="input-field hoverable col s4">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="un" name="un" type="text" class="validate" autocomplete="on" required>
+                    <label for="un">Username</label>
+                </div>
+            </div>
+            <div class="row">
+                <!-- first name -->
+                <div class="input-field hoverable col s6">
+                    <i class="material-icons prefix">contacts</i>
+                    <input id="first_name" name="first_name" type="text" class="validate" autocomplete="on" required>
+                    <label for="first_name">First Name</label>
+                </div>
+                <!-- last name -->
+                <div class="input-field hoverable col s6">
+                    <i class="material-icons prefix">contacts</i>
+                    <input id="last_name" name="last_name" type="text" class="validate" autocomplete="on" required>
+                    <label for="last_name">Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <!-- email -->
+                <div class="input-field hoverable col s6">
+                    <i class="material-icons prefix">email</i>
+                    <input id="email1" name="email1" type="email" class="validate" autocomplete="on" required>
+                    <label for="email1" data-error="Please use a valid email"
+                        data-success="That is a valid e-mail address">E-mail</label>
+                </div>
+                <!-- confirm email -->
+                <div class="input-field hoverable col s6">
+                    <i class="material-icons prefix">email</i>
+                    <input id="email2" name="email2" type="email" class="validate" autocomplete="on" required>
+                    <label for="email2" data-error="Please use a valid email"
+                        data-success="That is a valid e-mail address">Confirm E-mail</label>
+                </div>
+            </div>
+            <div class="row">
+                <!-- password -->
+                <div class="input-field hoverable col s6">
+                    <i class="material-icons prefix">vpn_key</i>
+                    <input id="password1" name="password1" type="password" class="validate" required>
+                    <label for="password1">Password</label>
+                </div>
+                <!-- confirm password -->
+                <div class="input-field hoverable col s6">
+                    <i class="material-icons prefix">replay</i>
+                    <input id="password2" name="password2" type="password" class="validate" required>
+                    <label for="password2">Confirm Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Submit/register button -->
+                <div class="col s12 center-align">
+                    <button type="submit" class="waves-effect waves-light btn right hoverable">
+                        Register <i class="fas fa-plus-square right"></i>
+                    </button>
+                </div>
+            </div>
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('#add_task').toggleClass('current');
+</script>
+{% endblock %}
