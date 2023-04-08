@@ -14,7 +14,7 @@ The idea of developing this web application is a result of a discussion I had wi
 
 Being a web application would allow any active employee to access it with just a smartphone, tablet or a laptop and proceed with his tasks. The access to the dashboard would be done though a login page. 
 
-#**Features**
+# **Features**
 I designed three levels of Role-based Access Control:
 - **System Administrator** or the 'admin' role:
   - Is the owner of the app providing the services to its clients (restaurant owners)
@@ -43,8 +43,12 @@ Obviously the application has the potential to be developed even further to matc
 - The ```env.py``` file is read using the ```dotenv``` library in Python. This library allows you to load environment variables from a file named .env located in the same directory as your Python script.
 ```pip install python-dotenv```
 
+# ** Deployment **
+To install all dependencies listed in the requirements.txt type in terminal: ```pip install -r requirements.txt```
 
 
+# ** Code refactoring **
+- In a future release of the project's code, I shall approach the object oriented paradigm to represent the database persistence in objects/classes. This way the necessary code will be less.+
 
 ---
 

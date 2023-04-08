@@ -5,17 +5,27 @@
 {% block content %}
 
 {% if tasks %}
-    <table>
-        <caption>Tasks list</caption>
+    <table style="width:100%">
+        <caption><h3>Tasks list</h3></caption>
         <tr>
-            <th>procedures.t_name</th>
-        </tr>
-        {% for task in tasks %}
-            <tr>
+          <th>Task name:</th>
+            {% for task in tasks %}
                 <td>{{ task.t_name }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+            {% endfor %}
+        </tr>
+        <tr>
+          <th>Description:</th>
+          {% for task in tasks %}
+                <td>{{ task.t_description }}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+          <th>Task Type:</th>
+          {% for task in tasks %}
+                <td>{{ task.t_type }}</td>
+            {% endfor %}
+        </tr>
+      </table>
 {% endif %}
 
 {% endblock %}
