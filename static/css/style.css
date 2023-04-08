@@ -10,8 +10,16 @@ main {
 }
 
 .current {
-    color: rgb(255, 0, 0);
-    font-size: 1.5em;
+    color: rgb(234, 239, 190);
+    font-size: 1.2em;
+}
+
+#nav_menu > li > a, #nav_menu > li > a > i {
+    font-size: 0.9rem;
+}
+
+#mobile_menu > li > a {
+    color: white;
 }
 
 .modal {

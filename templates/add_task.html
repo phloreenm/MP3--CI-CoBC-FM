@@ -39,26 +39,16 @@
         </div>
     </div>
     <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
-
+    
     <form class="col s12" method="POST" action="{{ url_for('add_task') }}">
         <div class="row">
-            <!-- roles -->
+            <!-- Task Name -->
             <div class="input-field hoverable col s4">
                 <i class="material-icons prefix">contacts</i>
                 <select id="role" name="role" class="validate" required>
                     <option value="" disabled selected>Select Role</option>
-                    {%- for r in db_roles %}
-                        <!-- SysAdmin may add SysAdmin and Manager roles access level users -->
-                        {%- if session['role'] == 'admin' %}
-                            {%- if r.role_name == 'admin'  or r.role_name == 'manager' %}
-                                <option value="{{- r.role_name }}">{{- r.role_name.title() }}</option>
-                            {% endif %}  
-                        <!-- Manager may add Employees and Managers -->
-                        {%- elif session['role'] == 'manager' %}
-                            {% if r.role_name == 'manager' or r.role_name == 'employee' %}
-                                <option value="{{- r.role_name }}">{{- r.role_name.title() }}</option>
-                            {% endif %}                       
-                        {% endif %}
+                    {%- for t in tasks %}
+                                <option value="{{- t.t_name }}">{{- t.t_name.title() }}</option>
                     {% endfor %}
                 </select>
                 <label for="role">Choose Role</label>

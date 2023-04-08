@@ -10,7 +10,29 @@
         <tr>
           <th>Task name:</th>
             {% for task in tasks %}
-                <td>{{ task.t_name }}</td>
+                <ul class="collection">
+                        <li class="collection-item avatar">
+                        <a class="btn-floating btn-large waves-effect waves-light green">
+                            {% if task.t_type == 'begin' %}
+                            <i class="fa-regular fa-stop"></i>
+                            {% elif task.t_type == 'finish' %}
+                                <i class="fa-regular fa-stop"></i>
+                            {% elif task.t_type == 'temperatures' %}
+                                <i class="fa-solid fa-temperature-half"></i>
+                            {% elif task.t_type == 'cleaning' %}
+                                <i class="material-icons">add_box</i>
+                            {% elif task.t_type == 'stock_reception' %}
+                                <i class="material-icons">add</i>
+                            {% elif task.t_type == 'other' %}
+                                <i class="material-icons">add</i>
+                            {% endif %}
+                        </a>
+                        <span class="title">{{ task.t_name }}</span>
+                        <p>Description: {{ task.t_description }}</p>
+                        <a href="#!" class="secondary-content"><i class="material-icons">add</i></a></li>
+                    
+                </ul>
+
             {% endfor %}
         </tr>
         <tr>
