@@ -40,6 +40,7 @@ users_coll = db['users']
 procedures_coll = db['procedures']
 daily_tasks_coll = db['daily_tasks']
 roles_coll = db['roles']
+temps_coll = db['daily_tasks_temps']
 
 
 @app.route('/')
@@ -277,6 +278,22 @@ def add_task():
         flash('Task added successfully!', 'success')
         return redirect(url_for('tasks'))
     return render_template('add_task.html', tasks=tasks)
+
+
+@app.route('/temps_form', methods=['GET', 'POST'])
+def temps_form():
+    if request.method == "POST":
+        # get the form data:
+        temp = {
+            'date': request.form.get('date'),
+            'time': request.form.get('time'),
+            'temp': request.form.get('temp'),
+            'user': request.form.get('user')
+        }
+        temps_coll.insert_one(temp)
+        flash('Temperature added successfully!', 'success')
+        return redirect(url_for('temps_form'))
+    return render_template('temps_form.html')
 
 
 if __name__ == '__main__':

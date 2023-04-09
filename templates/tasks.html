@@ -5,49 +5,45 @@
 {% block content %}
 
 {% if tasks %}
-    <table style="width:100%">
-        <caption><h3>Tasks list</h3></caption>
-        <tr>
-          <th>Task name:</th>
+    
             {% for task in tasks %}
                 <ul class="collection">
-                        <li class="collection-item avatar">
+                    <li class="collection-item avatar">
                         <a class="btn-floating btn-large waves-effect waves-light green">
                             {% if task.t_type == 'begin' %}
-                            <i class="fa-regular fa-stop"></i>
+                                <i class="fa-solid fa-play"></i>
                             {% elif task.t_type == 'finish' %}
-                                <i class="fa-regular fa-stop"></i>
+                                <i class="fa-solid fa-stop"></i>
                             {% elif task.t_type == 'temperatures' %}
                                 <i class="fa-solid fa-temperature-half"></i>
-                            {% elif task.t_type == 'cleaning' %}
-                                <i class="material-icons">add_box</i>
                             {% elif task.t_type == 'stock_reception' %}
-                                <i class="material-icons">add</i>
-                            {% elif task.t_type == 'other' %}
-                                <i class="material-icons">add</i>
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                            {% elif task.t_type == 'inventory_inspection' %}
+                                <i class="fa-solid fa-warehouse"></i>
+                            {% elif task.t_type == 'cleaning' %}
+                                <i class="fa-solid fa-hand-sparkles"></i>
+                            {% endif %}
+                        </a><br>
+                            <span class="title"><strong>{{ task.t_name }}</strong></span>
+                            <p><br>{{ task.t_description }}<br></p>
+                            {% if task.t_type == 'begin' %}
+                                <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'finish' %}
+                                <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'temperatures' %}
+                                <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'stock_reception' %}
+                                <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'inventory_inspection' %}
+                                <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'cleaning' %}
+                                <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% endif %}
                         </a>
-                        <span class="title">{{ task.t_name }}</span>
-                        <p>Description: {{ task.t_description }}</p>
-                        <a href="#!" class="secondary-content"><i class="material-icons">add</i></a></li>
-                    
+                    </li>
                 </ul>
 
             {% endfor %}
-        </tr>
-        <tr>
-          <th>Description:</th>
-          {% for task in tasks %}
-                <td>{{ task.t_description }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-          <th>Task Type:</th>
-          {% for task in tasks %}
-                <td>{{ task.t_type }}</td>
-            {% endfor %}
-        </tr>
-      </table>
 {% endif %}
 
 {% endblock %}
