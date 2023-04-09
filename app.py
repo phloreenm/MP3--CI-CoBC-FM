@@ -46,6 +46,8 @@ roles_coll = db['roles']
 @app.route('/index')
 def index():
     try:
+        if 'user' in session:
+            return redirect(url_for('dashboard', role=session['role']))
         return render_template('index.html')
     except Exception as e:
         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
@@ -182,13 +184,17 @@ def edit_user(user_id):
 
 @app.route('/delete_user/<user_id>')
 def delete_user(user_id):
+    if (users_coll.find({'un': 'sysadmin'})):
+        flash('Can not delete System Administrator', 'danger')
+        return redirect(url_for('users', role=session['role']))
     # delete user from the database:
     users_coll.delete_one({'_id': ObjectId(user_id)})
+    # query the database if the user was deleted
     user = users_coll.find_one(
             {'_id': ObjectId(user_id)}
             )
     if user:
-        flash('User not deleted!', 'success')
+        flash('User not deleted!', 'danger')
     else:
         flash('User deleted successfully!', 'success')
     return redirect(url_for('users', role=session['role']))

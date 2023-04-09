@@ -11,7 +11,12 @@ const NAV_ITEMS = {
 };
 // JQuery for Materialize library initializations
 $(document).ready(function () {
-  $('.sidenav').sidenav();
+  $('.sidenav').sidenav({
+    draggable: 'true',
+    inDuration: 250,
+    outDuration: 250,
+    preventScrolling: true
+  });
   $('.dropdown-trigger').dropdown({
     inDuration: 300,
     outDuration: 225,
