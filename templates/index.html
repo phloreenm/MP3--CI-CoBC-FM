@@ -53,7 +53,6 @@
                 {% if not session['user'] %}
                 <div class="card-action">
                     <a href="{{ url_for('login') }}" title="Log In existing user">Log In</a>
-                    <a href="{{ url_for('register') }}" title="Register new user">Register</a>
                 </div>
                 {% endif %}
             </div>

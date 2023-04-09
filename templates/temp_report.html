@@ -27,14 +27,14 @@
     {% endwith %}
     <div class="row">
         <div class="col s12">
-            <h5 class="brand-logo col s12">
+            <h5 class="brand-logo col s12 center">
                 All temperature reports
             </h5>
         </div>
     </div>
 
 
-    {% if t_reports %}
+    {% if t_reports and dt_obj %}
         <table>
             <thead>
                 <tr>
@@ -49,7 +49,8 @@
             <tbody>
                 {% for tr in t_reports %}
                 <tr>
-                    <td>{{ tr['timestamp'] }}</td>
+                    <!-- <td>{{ tr['timestamp'] }}</td> -->
+                    <td>{{ dt_obj }}</td>
                     <td>{{ tr['user'] }}</td>
                     <td>{{ tr['dish_name'] }}</td>
                     <td>{{ tr['probe_used'] }}</td>

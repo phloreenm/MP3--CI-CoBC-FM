@@ -261,7 +261,7 @@ def procedures():
 def tasks():
     tasks = list(daily_tasks_coll.find())
     t_reports = list(temps_coll.find(
-            {}).sort('timestamp', -1).limit(10))
+            {}).sort('timestamp', -1).limit(20))
     return render_template('tasks.html', tasks=tasks, t_reports=t_reports)
 
 
@@ -291,22 +291,15 @@ def temps_form():
         iso_date = ts_obj.isoformat()
         # get the form data:
         temp_measurement = {
-            'dish_name': request.form.get('dish_name'),
-            'probe_used': request.form.get('probe_used'),
+            'dish_name': request.form.get('dish_name').lower(),
+            'probe_used': request.form.get('probe_used').lower(),
             'temperature': request.form.get('temperature'),
-            'unit': request.form.get('unit'),
+            'unit': request.form.get('unit').lower(),
             'timestamp': iso_date,
-            'user': session['user'],
-            'comments': request.form.get('comments')
+            'user': session['user'].lower(),
+            'comments': request.form.get('comments').lower()
         }
-        # for k, v in temp_measurement.items():
-        #     print(f'{k}: {v}')
         temps_coll.insert_one(temp_measurement)
-        # last_report = temps_coll.find_one(
-        #     {'timestamp': iso_date})
-        # for k, v in last_report.items():
-        #     print(f'{k}: {v}')
-        
         flash('Temperature added successfully!', 'success')
         return redirect(url_for('temps'))
     return render_template('temps_form.html')
@@ -316,7 +309,10 @@ def temps_form():
 def temps():
     t_reports = list(temps_coll.find(
             {}).sort('timestamp', -1).limit(20))
-    return render_template('temp_report.html', t_reports=t_reports)
+    dt = t_reports[0]['timestamp']
+    dt_obj = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
+    return render_template(
+        'temp_report.html', t_reports=t_reports, dt_obj=dt_obj)
 
 
 

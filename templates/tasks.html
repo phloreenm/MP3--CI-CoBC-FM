@@ -47,7 +47,7 @@
                             {% elif task.t_type == 'finish' %}
                                 <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'temperatures' %}
-                                <a href="{{ url_for('temps') }}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                                <a href="{{ url_for('temps_form') }}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'stock_reception' %}
                                 <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'inventory_inspection' %}
