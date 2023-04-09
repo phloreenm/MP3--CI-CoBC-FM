@@ -14,6 +14,9 @@ main {
     font-size: 1.2em;
 }
 
+.brand-logo > img {
+    max-width: 250px;
+}
 #nav_menu > li > a, #nav_menu > li > a > i {
     font-size: 0.9rem;
 }

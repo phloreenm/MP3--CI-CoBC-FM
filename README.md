@@ -105,6 +105,7 @@ You can now use the `heroku` CLI program - try running `heroku apps` to confirm 
 - [Web Dev - Using Flask to Show Which Navbar Link is Active](https://www.youtube.com/watch?v=sIGPwvd-nTk)
 ### **Media**
 - Cards:
+  - [Employees icon: Restaurant Waiter Png vectors by Lovepik.com](https://lovepik.com/images/png-restaurant-waiter.html)
   - [Employees icon](https://www.publicdomainpictures.net/pictures/240000/nahled/restaurant-employee.jpg)
   - [Manager icon](https://cdn2.iconfinder.com/data/icons/business-finance-135/64/manager-1024.png)
   - [Administrator icon](https://icons.iconarchive.com/icons/aha-soft/free-large-boss/512/Admin-icon.png)

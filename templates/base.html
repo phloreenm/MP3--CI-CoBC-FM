@@ -35,7 +35,7 @@
     <!-- main navigation -->
     <nav>
       <div class="nav-wrapper text-white grey darken-4">
-        <a href="#!" class="brand-logo"><i class="fa-duotone fa-books">RM</i></a>
+        <a href="#!" class="brand-logo"><img src="{{ url_for('static', filename='images/e_manager_logo_w_tb.png') }}" alt="eManager Logo" ></a>
         <a href="#" data-target="mobile_menu" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
         <ul id="nav_menu" class="right hide-on-med-and-down">
           <li><a href="{{ url_for('index') }}" id="home"><i class="fa-solid fa-house"></i> Home</a></li>
@@ -55,9 +55,9 @@
               <li><a href="{{ url_for('users') }}" id="users"><i class="fa-solid fa-user"></i> Employees</a></li>
             {% endif %}
               <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a></li>
+              <li><a href="#">{{ session['user'] }}</a></li>
           {% else %}
             <li><a href="{{ url_for('login') }}" id="login"><i class="fa-solid fa-right-to-bracket"></i> Log In</a></li>
-            <li><a href="#">{{ session['user'] }}</a></li>
           {% endif %}
         <!-- Dropdown Trigger -->
         <!-- <li><a class="dropdown-trigger" href="#!" data-target="dd_menu"><i class="fa-solid fa-caret-down"></i>DropDown</a></li> -->
@@ -83,6 +83,7 @@
             <li><a href="{{ url_for('users') }}" id="users"><i class="fa-solid fa-user"></i> Employees</a></li>
           {% endif %}
           <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a></li>
+          <li><a href="#">{{ session['user'] }}</a></li>
         {% else %}
           <li><a href="{{ url_for('login') }}" id="login"><i class="fa-solid fa-right-to-bracket"></i> Log In</a></li>
         {% endif %}
