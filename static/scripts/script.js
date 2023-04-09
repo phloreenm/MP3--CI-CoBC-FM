@@ -28,6 +28,7 @@ $(document).ready(function () {
   });
   $('select').formSelect();
   $('.modal').modal();
+  $('.datepicker').datepicker();
 
   // add active class for navigation menu items:
   let this_page = window.location.pathname.split("/").pop();

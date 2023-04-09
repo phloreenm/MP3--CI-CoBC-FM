@@ -6,24 +6,24 @@
 
 <div class="container col s12">
     {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div id="flash_msg" class="row">
-                <div class="col s12">
-                    <ul class="collection">
-                        <li class="collection-item avatar">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span class="title">Message:</span>
-                            <p>
-                                {{ message }}
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            {% endfor %}
-        {% endif %}
+    {% if messages %}
+    {% for message in messages %}
+    <div id="flash_msg" class="row">
+        <div class="col s12">
+            <ul class="collection">
+                <li class="collection-item avatar">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="title">Message:</span>
+                    <p>
+                        {{ message }}
+                    </p>
+                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
     {% endwith %}
     <div class="row">
         <div class="col s12">
@@ -34,46 +34,57 @@
     </div>
     <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
 
-    <form class="col s12" method="POST" action="{{ url_for('temperature') }}">
+    <form class="col s12" method="POST" action="{{ url_for('temps_form') }}">
         <div class="row">
             <form class="col s12">
                 <div class="row">
-                    <div class="input-field col s6">
-                    <input placeholder="Dish Name" id="dish_name" name="dish_name" type="text" class="validate">
-                    <label for="dish_name">Dish Name</label>
-                    </div>
-                    <div class="input-field col s6">
-                    <input id="probe_used" name="probe_used" type="text" class="validate">
-                    <label for="probe_used">Probe Used</label>
+                    <div class="input-field col s12">
+                        <input id="dish_name" name="dish_name" type="text" class="validate">
+                        <label for="dish_name">Dish Name</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input id="temperature"  name="temperature"type="text" class="validate">
-                        <label for="temperature">Temperature</label>
+                    <div class="input-field col s12">
+                        <input id="probe_used" name="probe_used" type="text" class="validate">
+                        <label for="probe_used">Probe Used</label>
                     </div>
-                    <div class="input-field col s6">
-                        <!-- <input id="time" name="time" type="text" class="validate">
-                        <label for="time">Date/Time</label> -->
-
-                        <input type="datetime-local" id="timestamp" name="timestamp">
-                        <label for="timestamp">Timestamp</label>
-
-                        <input id="user" type="text" class="validate">
-                        <label for="user">User</label>
                 </div>
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                    <i class="material-icons right">send</i>
-            </form>
-          </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="temperature" name="temperature" type="text" class="validate">
+                        <label for="temperature">Measured Temperature</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="datetime-local" id="timestamp" name="timestamp">
+                        <!-- <label for="timestamp">Timestamp</label> -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="user" type="text" value="{{ session['user'].title() }}" class="validate" disabled readonly>
+                        <label for="user">RP</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                    </div>
+                </div>
+        </div>
+
     </form>
+</div>
+</form>
 
 </div>
 
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ url_for('static',filename='scripts/register_validation.js') }}"></script>
+
 <script>
     $('#register').toggleClass('current');
 </script>

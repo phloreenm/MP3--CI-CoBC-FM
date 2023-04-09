@@ -285,9 +285,9 @@ def temps_form():
     if request.method == "POST":
         # get the form data:
         temp = {
-            'date': request.form.get('date'),
-            'time': request.form.get('time'),
-            'temp': request.form.get('temp'),
+            'dish_name': request.form.get('dish_name'),
+            'probe_used': request.form.get('probe_used'),
+            'temperature': request.form.get('temperature'),
             'user': request.form.get('user')
         }
         temps_coll.insert_one(temp)
