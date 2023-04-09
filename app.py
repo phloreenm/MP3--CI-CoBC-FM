@@ -8,6 +8,7 @@ from flask import (
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
+from datetime import datetime
 
 if os.path.exists('env.py'):
     import env
@@ -259,7 +260,9 @@ def procedures():
 @app.route('/tasks')
 def tasks():
     tasks = list(daily_tasks_coll.find())
-    return render_template('tasks.html', tasks=tasks)
+    t_reports = list(temps_coll.find(
+            {}).sort('timestamp', -1).limit(10))
+    return render_template('tasks.html', tasks=tasks, t_reports=t_reports)
 
 
 @app.route('/add_task', methods=['GET', 'POST'])
@@ -283,17 +286,40 @@ def add_task():
 @app.route('/temps_form', methods=['GET', 'POST'])
 def temps_form():
     if request.method == "POST":
+        ts_str = request.form['timestamp_tf']
+        ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
+        iso_date = ts_obj.isoformat()
         # get the form data:
-        temp = {
+        temp_measurement = {
             'dish_name': request.form.get('dish_name'),
             'probe_used': request.form.get('probe_used'),
             'temperature': request.form.get('temperature'),
-            'user': request.form.get('user')
+            'unit': request.form.get('unit'),
+            'timestamp': iso_date,
+            'user': session['user'],
+            'comments': request.form.get('comments')
         }
-        temps_coll.insert_one(temp)
+        # for k, v in temp_measurement.items():
+        #     print(f'{k}: {v}')
+        temps_coll.insert_one(temp_measurement)
+        # last_report = temps_coll.find_one(
+        #     {'timestamp': iso_date})
+        # for k, v in last_report.items():
+        #     print(f'{k}: {v}')
+        
         flash('Temperature added successfully!', 'success')
-        return redirect(url_for('temps_form'))
+        return redirect(url_for('temps'))
     return render_template('temps_form.html')
+
+
+@app.route('/temps')
+def temps():
+    t_reports = list(temps_coll.find(
+            {}).sort('timestamp', -1).limit(20))
+    return render_template('temp_report.html', t_reports=t_reports)
+
+
+
 
 
 if __name__ == '__main__':

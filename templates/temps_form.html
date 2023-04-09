@@ -48,23 +48,41 @@
                         <input id="probe_used" name="probe_used" type="text" class="validate">
                         <label for="probe_used">Probe Used</label>
                     </div>
+
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input id="temperature" name="temperature" type="text" class="validate">
+                    <div class="input-field col s10">
+                        <input id="temperature" name="temperature" type="number" minlength="2" maxlength="5"
+                            class="validate">
                         <label for="temperature">Measured Temperature</label>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="datetime-local" id="timestamp" name="timestamp">
-                        <!-- <label for="timestamp">Timestamp</label> -->
+                    <div class="input-field col s2">
+                        <select id="unit" name="unit" class="validate" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">Celsius</option>
+                            <option value="2">Fahrenheit </option>
+                        </select>
+                        <label>Temperature Unit</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="user" type="text" value="{{ session['user'].title() }}" class="validate" disabled readonly>
+                        <input type="datetime-local" value="" id="timestamp_tf" name="timestamp_tf">
+                        <!-- <label for="timestamp_tf">Timestamp</label> -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="user" type="text" value="{{ session['user'].title() }}" class="validate" disabled
+                            readonly>
                         <label for="user">RP</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="Comments" value="No observations" id="comments" name="comments" type="text"
+                            maxlength="128">
+                        <label for="comments">Observations</label>
                     </div>
                 </div>
                 <div class="row">
@@ -74,11 +92,7 @@
                     </div>
                 </div>
         </div>
-
     </form>
-</div>
-</form>
-
 </div>
 
 {% endblock %}
@@ -86,6 +100,12 @@
 {% block javascript %}
 
 <script>
-    $('#register').toggleClass('current');
+    $('#temps_form').toggleClass('current');
+
+    $(document).ready(function () {
+        var ts = new Date();
+        var timestamp_tf = ts.toISOString().slice(0, 16);
+        $('#timestamp_tf').val(timestamp_tf);
+    });
 </script>
 {% endblock %}

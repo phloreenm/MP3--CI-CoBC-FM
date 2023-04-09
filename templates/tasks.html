@@ -26,12 +26,28 @@
                         </a><br>
                             <span class="title"><strong>{{ task.t_name }}</strong></span>
                             <p><br>{{ task.t_description }}<br></p>
+
+
+                            {% if task.t_type == 'begin' %}
+                                <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'finish' %}
+                            <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'temperatures' %}
+                                <a href="{{ url_for('temps') }}"><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'stock_reception' %}
+                                <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'inventory_inspection' %}
+                                <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                            {% elif task.t_type == 'cleaning' %}
+                                <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                            {% endif %}
+
                             {% if task.t_type == 'begin' %}
                                 <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'finish' %}
                                 <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'temperatures' %}
-                                <a href="{{ url_for('temps_form') }}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                                <a href="{{ url_for('temps') }}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'stock_reception' %}
                                 <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'inventory_inspection' %}
