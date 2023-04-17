@@ -35,10 +35,12 @@
 
 
     {% if t_reports and dt_obj %}
-        <table>
+        <table class="responsive-table striped">
             <thead>
+                <!-- SEE THIS FOR CHECKBOXES IN TABLE:https://www.oracle.com/webfolder/technetwork/jet-920/jetCookbook.html?component=selector&demo=checkboxSelectableTable -->
+                <!-- USE THE THREE VIEW BY DATE to list result by the date they were submitted -->
                 <tr>
-                    <th>D/T</th>
+                    <th>Date / Time</th>
                     <th>RP</th>
                     <th>Dish Name</th>
                     <th>Probe Used</th>
@@ -49,7 +51,6 @@
             <tbody>
                 {% for tr in t_reports %}
                 <tr>
-                    <!-- <td>{{ tr['timestamp'] }}</td> -->
                     <td>{{ dt_obj }}</td>
                     <td>{{ tr['user'] }}</td>
                     <td>{{ tr['dish_name'] }}</td>
@@ -72,6 +73,6 @@
 {% block javascript %}
 
 <script>
-    $('#temp_report').toggleClass('current');
+    $('#tasks').toggleClass('current');
 </script>
 {% endblock %}
