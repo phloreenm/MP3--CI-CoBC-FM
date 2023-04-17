@@ -61,9 +61,9 @@
             <!-- company -->
             <div class="input-field hoverable col s4">
                 <i class="material-icons prefix">contacts</i>
-                {% if session['role'] == 'employee' %}
+                {% if session['role'] == 'employee' or session['role'] == 'manager' %}
                     <input id="company" name="company" type="text" class="validate" value="{{ restaurant.title() }}" readonly>
-                {% elif session['role'] == 'admin' or session['role'] == 'manager' %}
+                {% elif session['role'] == 'admin'%}
                     <input id="company" name="company" type="text" class="validate" value="{{ restaurant.title() }}" autocomplete="on" required>
                 {% endif %}
                 <label for="company">Company</label>
