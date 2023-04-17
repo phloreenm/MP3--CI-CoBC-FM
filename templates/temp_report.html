@@ -34,7 +34,7 @@
     </div>
 
 
-    {% if t_reports and dt_obj %}
+    {% if t_reports %}
         <table class="responsive-table striped">
             <thead>
                 <!-- SEE THIS FOR CHECKBOXES IN TABLE:https://www.oracle.com/webfolder/technetwork/jet-920/jetCookbook.html?component=selector&demo=checkboxSelectableTable -->
@@ -51,7 +51,7 @@
             <tbody>
                 {% for tr in t_reports %}
                 <tr>
-                    <td>{{ dt_obj }}</td>
+                    <td>{{ tr['timestamp'] }}</td>
                     <td>{{ tr['user'] }}</td>
                     <td>{{ tr['dish_name'] }}</td>
                     <td>{{ tr['probe_used'] }}</td>

@@ -31,17 +31,21 @@ app.config['MONGO_DBNAME'] = MONGO_DBNAME
 app.config['IP'] = IP
 app.config['PORT'] = PORT
 
+# Create MongoDB client instance:
 client = MongoClient(
     app.config['MONGO_URI'],
     appname=app.name
 )
 
+# Access MongoDB database and collections with Python client instance:
 db = client.get_database(app.config['MONGO_DBNAME'])
+# Access collections:
 users_coll = db['users']
 procedures_coll = db['procedures']
 daily_tasks_coll = db['daily_tasks']
 roles_coll = db['roles']
 temps_coll = db['daily_tasks_temps']
+dt_reps_coll = db['daily_tasks_reports']
 
 
 @app.route('/')
@@ -299,7 +303,7 @@ def temps_form():
             'temperature': request.form.get('temperature'),
             'unit': request.form.get('unit').lower(),
             'timestamp': iso_date,
-            'user': session['user'].lower(),
+            'user': user['un'].lower(),
             'company': user['company'].lower(),
             'comments': request.form.get('comments').lower()
         }
@@ -313,12 +317,35 @@ def temps_form():
 def temps():
     t_reports = list(temps_coll.find(
             {}).sort('timestamp', -1).limit(20))
-    dt = t_reports[0]['timestamp']
-    dt_obj = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
+    for t_report in t_reports:
+        dt = t_report['timestamp']
+        dt_obj = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
+        t_report['timestamp'] = dt_obj.strftime('%Y-%m-%d %H:%M:%S')
+        print(t_report['timestamp'])
+    # dt = t_reports[0]['timestamp']
+    # dt_obj = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
     return render_template(
-        'temp_report.html', t_reports=t_reports, dt_obj=dt_obj)
+        'temp_report.html', t_reports=t_reports)
 
 
+@app.route('/commence_shift_form', methods=['GET', 'POST'])
+def commence_shift_form():
+    dt = daily_tasks_coll.find()
+    ts_str = request.form['timestamp_tf']
+    ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
+    iso_date = ts_obj.isoformat()
+    if request.method == "POST":
+        # get the form data:
+        c_shift_rep = {
+            'shift': request.form.get('shift'),
+            'timestamp': request.form.get(iso_date),
+            'user': request.form.get('user'),
+            'status': request.form.get('status')
+        }
+        dt_reps_coll.insert_one(c_shift_rep)
+        flash('Commencing Shift Report added successfully!', 'success')
+        return redirect(url_for('shifts'))
+    return render_template('commence_shift_form.html', dt=dt)
 
 
 

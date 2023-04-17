@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Commence Shift Form - Restaurant Manager{% endblock %}
+
+{% block content %}
+
+<div class="container col s12">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div id="flash_msg" class="row">
+        <div class="col s12">
+            <ul class="collection">
+                <li class="collection-item avatar">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="title">Message:</span>
+                    <p>
+                        {{ message }}
+                    </p>
+                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="row">
+        <div class="col s12">
+            <h5 class="brand-logo col s12">
+                Commence Shift Checks
+            </h5>
+        </div>
+    </div>
+    <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
+    {% if dt %}
+        <form class="col s12" method="POST" action="{{ url_for('commence_shift_form') }}">
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="dish_name" name="dish_name" type="text" class="validate">
+                            <label for="dish_name">Dish Name</label>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="input-field col s12">
+                            <input id="probe_used" name="probe_used" type="text" class="validate">
+                            <label for="probe_used">Probe Used</label>
+                        </div>
+                    </div> -->
+                    <!-- <div class="row">
+                        <div class="input-field col s10">
+                            <input id="temperature" name="temperature" type="number" minlength="2" maxlength="5"
+                                class="validate">
+                            <label for="temperature">Measured Temperature</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <select id="unit" name="unit" class="validate" required>
+                                <option value="" disabled selected>Select</option>
+                                <option value="Celsius">Celsius</option>
+                                <option value="Fahrenheit">Fahrenheit </option>
+                            </select>
+                            <label>Temperature Unit</label>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="datetime-local" value="" id="timestamp_tf" name="timestamp_tf">
+                            <!-- <label for="timestamp_tf">Timestamp</label> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="user" type="text" value="{{ session['user'].title() }}" class="validate" disabled
+                                readonly>
+                            <label for="user">RP</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input placeholder="Comments" value="No observations" id="comments" name="comments" type="text"
+                                maxlength="128">
+                            <label for="comments">Observations</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                <i class="material-icons right">send</i>
+                        </div>
+                    </div>
+            </div>
+        </form>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+    $('#tasks').toggleClass('current');
+
+    $(document).ready(function () {
+        var ts = new Date();
+        var timestamp_tf = ts.toISOString().slice(0, 16);
+        $('#timestamp_tf').val(timestamp_tf);
+    });
+</script>
+{% endblock %}
