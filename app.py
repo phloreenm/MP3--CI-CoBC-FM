@@ -289,6 +289,9 @@ def temps_form():
         ts_str = request.form['timestamp_tf']
         ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
         iso_date = ts_obj.isoformat()
+        user = users_coll.find_one(
+            {'un': session['user'].lower()}
+            )
         # get the form data:
         temp_measurement = {
             'dish_name': request.form.get('dish_name').lower(),
@@ -297,6 +300,7 @@ def temps_form():
             'unit': request.form.get('unit').lower(),
             'timestamp': iso_date,
             'user': session['user'].lower(),
+            'company': user['company'].lower(),
             'comments': request.form.get('comments').lower()
         }
         temps_coll.insert_one(temp_measurement)
