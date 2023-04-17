@@ -46,17 +46,19 @@
                     <th>Probe Used</th>
                     <th>Temperature</th>
                     <th>Unit</th>
+                    <th>Company</th>
                 </tr>
             </thead>
             <tbody>
                 {% for tr in t_reports %}
                 <tr>
                     <td>{{ tr['timestamp'] }}</td>
-                    <td>{{ tr['user'] }}</td>
-                    <td>{{ tr['dish_name'] }}</td>
-                    <td>{{ tr['probe_used'] }}</td>
+                    <td>{{ tr['user'].title() }}</td>
+                    <td>{{ tr['dish_name'].title() }}</td>
+                    <td>{{ tr['probe_used'].title() }}</td>
                     <td>{{ tr['temperature'] }}</td>
-                    <td>{{ tr['unit'] }}</td>
+                    <td>{{ tr['unit'].title() }}</td>
+                    <td>{{ tr['company'].title() }}</td>
                 </tr>
 
 

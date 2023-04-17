@@ -315,15 +315,16 @@ def temps_form():
 
 @app.route('/temps')
 def temps():
+    user = users_coll.find_one(
+            {'un': session['user'].lower()}
+            )
     t_reports = list(temps_coll.find(
-            {}).sort('timestamp', -1).limit(20))
+            {'company': user['company']}).sort('timestamp', -1).limit(20))
+    # Update results timestamp values with stringyfied datetime values:
     for t_report in t_reports:
         dt = t_report['timestamp']
         dt_obj = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
         t_report['timestamp'] = dt_obj.strftime('%Y-%m-%d %H:%M:%S')
-        print(t_report['timestamp'])
-    # dt = t_reports[0]['timestamp']
-    # dt_obj = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
     return render_template(
         'temp_report.html', t_reports=t_reports)
 
