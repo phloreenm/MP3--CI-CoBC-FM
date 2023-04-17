@@ -25,16 +25,17 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
-    <div class="row">
-        <div class="col s12">
-            <h5 class="brand-logo col s12 center">
-                All temperature reports
-            </h5>
+    
+
+
+    {% if t_reports != None %}
+        <div class="row">
+            <div class="col s12">
+                <h5 class="brand-logo col s12 center">
+                    {{ t_reports[0]['company'].title() }} Temperature Records
+                </h5>
+            </div>
         </div>
-    </div>
-
-
-    {% if t_reports %}
         <table class="responsive-table striped">
             <thead>
                 <!-- SEE THIS FOR CHECKBOXES IN TABLE:https://www.oracle.com/webfolder/technetwork/jet-920/jetCookbook.html?component=selector&demo=checkboxSelectableTable -->
@@ -65,6 +66,8 @@
                 {% endfor %}
             </tbody>
         </table>
+    {% else %}
+        <h3>No reports found!</h3>
     {% endif %}
 
 
