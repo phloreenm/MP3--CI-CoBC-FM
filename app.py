@@ -331,10 +331,7 @@ def temps():
 
 @app.route('/commence_shift_form', methods=['GET', 'POST'])
 def commence_shift_form():
-    dt = daily_tasks_coll.find()
-    ts_str = request.form['timestamp_tf']
-    ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
-    iso_date = ts_obj.isoformat()
+    dt = daily_tasks_coll.find({'t_type': 'begin'.lower()})
     if request.method == "POST":
         # get the form data:
         c_shift_rep = {

@@ -43,7 +43,7 @@
                             {% endif %}
 
                             {% if task.t_type == 'begin' %}
-                                <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                                <a href="{{ url_for('commence_shift_form')}}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'finish' %}
                                 <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'temperatures' %}
