@@ -29,11 +29,11 @@
 
 
                             {% if task.t_type == 'begin' %}
-                                <a href="{{ url_for('commence_report') }}" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                <a href="{{ url_for('reports', report_type=task.t_type) }}" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'finish' %}
-                            <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                            <a href="{{ url_for('reports', report_type=task.t_type) }}"" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'temperatures' %}
-                                <a href="{{ url_for('temps') }}"><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                <a href="{{ url_for('reports', report_type=task.t_type) }}""><span> View reports </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'stock_reception' %}
                                 <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'inventory_inspection' %}
