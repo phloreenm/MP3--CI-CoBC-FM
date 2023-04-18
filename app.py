@@ -319,7 +319,7 @@ def temps():
             {'un': session['user'].lower()}
             )
     t_reports = list(temps_coll.find(
-            {'company': user['company']}).sort('timestamp', -1).limit(20))
+            {'company': user['company']}).sort('timestamp', -1).limit(40))
     # Update results timestamp values with stringyfied datetime values:
     for t_report in t_reports:
         dt = t_report['timestamp']
@@ -333,11 +333,13 @@ def temps():
 def commence_shift_form():
     dt = daily_tasks_coll.find({'t_type': 'begin'.lower()})
     if request.method == "POST":
+        ts_str = request.form['timestamp_tf']
+        ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
+        iso_date = ts_obj.isoformat()
         # get the form data:
         c_shift_rep = {
-            'shift': request.form.get('shift'),
             'timestamp': request.form.get(iso_date),
-            'user': request.form.get('user'),
+            'user': request.form.get(session['user'].lower()),
             'status': request.form.get('status')
         }
         dt_reps_coll.insert_one(c_shift_rep)
@@ -345,6 +347,15 @@ def commence_shift_form():
         return redirect(url_for('shifts'))
     return render_template('commence_shift_form.html', dt=dt)
 
+
+@app.route('/commence_report')
+def commence_report():
+    user = users_coll.find_one(
+            {'un': session['user'].lower()}
+            )
+    cs_reports = list(dt_reps_coll.find(
+            {'t_type': 'begin'}).sort('timestamp', -1).limit(20))
+    return render_template('commence_report.html', cs_reports=cs_reports)
 
 
 if __name__ == '__main__':

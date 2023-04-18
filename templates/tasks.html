@@ -29,7 +29,7 @@
 
 
                             {% if task.t_type == 'begin' %}
-                                <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                <a href="{{ url_for('commence_report') }}" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'finish' %}
                             <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                             {% elif task.t_type == 'temperatures' %}

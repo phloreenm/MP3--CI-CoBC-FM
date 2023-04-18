@@ -50,7 +50,7 @@
                     {% for d_task in dt %}
                         <div class="row">
                             <div class="input-field col s8">
-                                <p>{{ d_task['t_name'] }}</p>
+                                <p>{{ d_task['t_name'] }} Tasks</p>
                             </div>
                         </div>
                         {% for task in d_task['tasks'] %}
@@ -77,6 +77,12 @@
                             </div>
                         {% endfor %}
                     {% endfor %}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="datetime-local" value="" id="timestamp_tf" name="timestamp_tf">
+                            <!-- <label for="timestamp_tf">Timestamp</label> -->
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="input-field col s12">
                             <button class="btn waves-effect waves-light" type="submit" name="action">Submit
