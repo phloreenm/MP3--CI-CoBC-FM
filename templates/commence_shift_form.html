@@ -27,8 +27,8 @@
     {% endwith %}
     <div class="row">
         <div class="col s12">
-            <h5 class="brand-logo col s12">
-                Commence Shift Checks
+            <h5 class="brand-logo col s12 center">
+                Commence Shift Daily Tasks Checks
             </h5>
         </div>
     </div>
@@ -50,26 +50,24 @@
                     {% for d_task in dt %}
                         <div class="row">
                             <div class="input-field col s8">
-                                <p>{{ d_task['t_name'] }} Tasks</p>
+                                <p>Tasks Type: <strong>{{ d_task['t_name'] }}</strong> </p>
                             </div>
                         </div>
                         {% for task in d_task['tasks'] %}
                             <div class="row">
                                 <div class="input-field col s8">
-                                    <p>{{ loop.index }}: {{task}}</p>
+                                    <p name="task_content">{{ loop.index }}: {{task}}</p>
                                 </div>
                                 <div class="input-field col s4">
                                     <p>
                                         <label>
-                                            <!-- <input name="{{ d_task['t_type'] }}" value="yes" type="radio" /> -->
-                                            <input name="task_{{ loop.index }}" value="yes" type="radio" />
+                                            <input name="task_{{ loop.index }}" value="yes" type="radio" class="radio-choice">
                                             <span>Yes</span>
                                         </label>
                                     </p>
                                     <p>
                                         <label>
-                                            <!-- <input name="{{ d_task['t_type'] }}" value="no" type="radio" /> -->
-                                            <input name="task_{{ loop.index }}" value="no" type="radio" />
+                                            <input name="task_{{ loop.index }}" value="no" type="radio"  class="radio-choice">
                                             <span>No</span>
                                         </label>
                                     </p>
@@ -78,9 +76,10 @@
                         {% endfor %}
                     {% endfor %}
                     <div class="row">
+                        <input type="text" name="obs">
+                    <div class="row">
                         <div class="input-field col s12">
                             <input type="datetime-local" value="" id="timestamp_tf" name="timestamp_tf">
-                            <!-- <label for="timestamp_tf">Timestamp</label> -->
                         </div>
                     </div>
                     <div class="row">

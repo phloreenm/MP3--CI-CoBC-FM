@@ -339,20 +339,44 @@ def temps_form():
 
 @app.route('/commence_shift_form', methods=['GET', 'POST'])
 def commence_shift_form():
-    dt = daily_tasks_coll.find({'t_type': 'begin'.lower()})
+    dt = list(daily_tasks_coll.find({'t_type': 'begin'.lower()}).limit(1))
     if request.method == "POST":
+        tasks = []
+        task_list_db = []
+        task_responses = {}
+        # get the form data:
         ts_str = request.form['timestamp_tf']
         ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
         iso_date = ts_obj.isoformat()
+        # get tasks index and user's choices:
+        for key in request.form.keys():
+            if key.startswith('task_'):
+                task_number = int(key.split('_')[-1])
+                tasks.append(request.form[f'task_{task_number}'])
+                task_responses[task_number] = request.form[key]
+        # get tasks values from DB and append them to the task_list_db list
+        for d in dt:
+            for t in d['tasks']:
+                task_list_db.append(t)
+        # create a dict with list containg the tasks and the user's choices
+        tasks_answers_pairs = {
+            str(key): [task_list_db[key-1], task_responses[key]]
+            for key in task_responses.keys()}
         # get the form data:
+        observations = request.form.get('obs')
+        if observations is None:
+            observations = ''
         c_shift_rep = {
-            'timestamp': request.form.get(iso_date),
-            'user': request.form.get(session['user'].lower()),
-            'status': request.form.get('status')
+            't_type': dt[0]['t_type'],
+            't_ts_submit': iso_date,
+            't_rp_un': session['user'].lower(),
+            'answers': tasks_answers_pairs,
+            't_obs': observations.lower(),
         }
+        # insert the report into the DB
         dt_reps_coll.insert_one(c_shift_rep)
         flash('Commencing Shift Report added successfully!', 'success')
-        return redirect(url_for('shifts'))
+        return redirect(url_for('tasks'))
     return render_template('commence_shift_form.html', dt=dt)
 
 

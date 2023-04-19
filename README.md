@@ -75,6 +75,7 @@ To install all dependencies listed in the requirements.txt type in terminal: ```
 - [Remove unnecessary whitespace from Jinja rendered template](https://stackoverflow.com/questions/35775207/remove-unnecessary-whitespace-from-jinja-rendered-template)
 - [Jinja Whitespace](https://python-web.teclado.com/section11/lectures/02_jinja_whitespace_control/)
 - [Web Dev - Using Flask to Show Which Navbar Link is Active](https://www.youtube.com/watch?v=sIGPwvd-nTk)
+- [Get the values of the selected radio inputs in Flask](https://www.reddit.com/r/flask/comments/g5qwgw/how_can_i_get_the_value_of_the_selected_radio/)
 ### **Media**
 - Cards:
   - [Employees icon: Restaurant Waiter Png vectors by Lovepik.com](https://lovepik.com/images/png-restaurant-waiter.html)
