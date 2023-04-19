@@ -9,6 +9,8 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 from datetime import datetime
+# from flask_login import login_required
+# from flask_login import LoginManager
 
 if os.path.exists('env.py'):
     import env
@@ -22,6 +24,9 @@ IP = os.getenv('IP')
 PORT = os.getenv('PORT')
 
 app = Flask(__name__)
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
@@ -251,7 +256,11 @@ def users():
 
 
 @app.route('/procedures')
+# @login_required
 def procedures():
+    # Check if user is logged in:
+    if 'user' not in session:
+        return redirect(url_for('login'))
     try:
         procedures = list(procedures_coll.find())
         return render_template('procedures.html', procedures=procedures)
