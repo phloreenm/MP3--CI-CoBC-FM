@@ -402,14 +402,17 @@ def reports(report_type):
     #         t_report['timestamp'] = dt_obj.strftime('%Y-%m-%d %H:%M:%S')
     #     return render_template('temps_report.html', t_reports=t_reports)
     if report_type == 'begin':
-        cs_reports = 'nada'
         reports = list(dt_reps_coll.find(
             {'t_type': 'begin'}).sort('timestamp', -1).limit(20))
+        for report in reports:
+            report['t_ts_submit'] = format_date(report['t_ts_submit'])
         return render_template(
-            'reports_list.html', reports=reports, cs_reports=cs_reports)
+            'reports_list.html', reports=reports)
     elif report_type == 'finish':
         reports = list(dt_reps_coll.find(
             {'t_type': 'finish'}).sort('timestamp', -1).limit(20))
+        for report in reports:
+            report['t_ts_submit'] = format_date(report['t_ts_submit'])
         return render_template('reports_list.html', reports=reports)
     elif report_type == 'temperatures':
         reports = list(temps_coll.find(
