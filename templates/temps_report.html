@@ -28,11 +28,11 @@
     
 
 
-    {% if t_reports != None %}
+    {% if reports != None %}
         <div class="row">
             <div class="col s12">
                 <h5 class="brand-logo col s12 center">
-                    {{ t_reports[0]['company'].title() }} Temperature Records
+                    {{ reports[0]['company'].title() }} Temperature Records
                 </h5>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for tr in t_reports %}
+                {% for tr in reports %}
                 <tr>
                     <td>{{ tr['timestamp'] }}</td>
                     <td>{{ tr['user'].title() }}</td>

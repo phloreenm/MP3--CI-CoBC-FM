@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Commence Shift Reports - Restaurant Manager{% endblock %}
+
+{% block content %}
+
+<div class="container col s12">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div id="flash_msg" class="row">
+        <div class="col s12">
+            <ul class="collection">
+                <li class="collection-item avatar">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="title">Message:</span>
+                    <p>
+                        {{ message }}
+                    </p>
+                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    
+
+
+    {% if report != None %}
+        <div class="row">
+            <div class="col s4 left">
+                <h5 class="brand-logo col s12 left">
+                     Report date:
+                </h5>
+            </div>
+            <div class="col s8 right">
+                <h5 class="brand-logo col s12 right">
+                     {{ date }}
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s4">
+                <h5><span style="font-size: smaller;">Employee:</span> <span style="font-style: italic;">{{ report['t_rp_un'].title() }}</span></h5>
+            </div>
+            <div class="col s8">
+                <h6 style="text-align: right;">Observation: <span style="font-style: italic;">"{{ report['t_obs'] }}"</span></h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="col s8">
+                    <p style="text-align: left; font-weight: bold;">Task description:</p>
+                </div>
+                <div class="col s4">
+                    <p style="text-align: right; font-weight: bold;">User choice</p>
+                </div>
+                {% if answers %}
+                    {% for key, value in answers.items() %}
+                    <div class="col s8">
+                        <p style="text-align: left;">{{ key }}. {{ value[0] }}</p>
+                    </div>
+                    <div class="col s4 right">
+                        <p style="text-align: right;">{{ value[1].upper() }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        
+    {% else %}
+        <h3>Reports not found!</h3>
+    {% endif %}
+
+
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+    $('#tasks').toggleClass('current');
+</script>
+{% endblock %}
