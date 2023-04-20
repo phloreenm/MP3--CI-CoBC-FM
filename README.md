@@ -83,3 +83,7 @@ To install all dependencies listed in the requirements.txt type in terminal: ```
   - [Manager icon](https://cdn2.iconfinder.com/data/icons/business-finance-135/64/manager-1024.png)
   - [Administrator icon](https://icons.iconarchive.com/icons/aha-soft/free-large-boss/512/Admin-icon.png)
   - [Modal base code SOURCE](https://materializecss.com/modals.html#!)
+### **Information**
+- Cards:
+  - [Food Standards Agency UK](https://www.food.gov.uk/)
+  - [Temperature control: hot food](https://www.bromley.gov.uk/leaflet/261478/12/751/d#:~:text=When%20you%20are%20cooking%20food,it%20is%20overcooked%20or%20heated.)

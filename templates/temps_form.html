@@ -27,12 +27,37 @@
     {% endwith %}
     <div class="row">
         <div class="col s12">
-            <h5 class="brand-logo col s12">
-                Temperature control
-            </h5>
+            <h5 class="brand-logo col s12 center">Temperature control: hot food</h5>
+                
+                
+            
         </div>
     </div>
-    <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
+    <div class="row">
+        <div class="col s12">
+            <h5 class="brand-logo col s12">
+                * Temperature control
+            </h5>
+        </div>
+        <div class="col s12">
+            <p class="brand-logo col s12">
+                When you are cooking food, you must make sure it reaches a minimum core temperature of 70°C for two minutes (or an immediate reading of 75°C). In Scotland the minimum core temperature is 82°C. The food can certainly be hotter than this, but the quality of some food may suffer if it is overcooked or heated
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <h5 class="brand-logo col s12">
+                * The thermometer probe
+            </h5>
+        </div>
+        <div class="col s12">
+            <p class="brand-logo col s12">
+                It is good practice to use a probe thermometer to check that food is properly cooked. Probe thermometers are designed to take the 'core' temperature of the food. This means measuring the temperature at the thickest part of the food - normally the middle. The thickest part will always be the last area to experience temperature change, so the correct reading here shows that the food will have reached the right temperature throughout.
+            </p>
+            <a href="https://www.bromley.gov.uk/leaflet/261478/12/751/d#:~:text=When%20you%20are%20cooking%20food,it%20is%20overcooked%20or%20heated." target="_blank" style="font-size: small;" alt="Temperature control: hot food - external link source" class="col s12 right">* More details</a>
+        </div>
+    </div>
 
     <form class="col s12" method="POST" action="{{ url_for('temps_form') }}">
         <div class="row">

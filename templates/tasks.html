@@ -28,19 +28,18 @@
                                     <span class="title"><strong>{{ task.t_name }}</strong></span>
                                     <p><br>{{ task.t_description }}<br></p>
 
-
                                     {% if task.t_type == 'begin' %}
-                                        <a href="{{ url_for('reports', report_type=task.t_type) }}" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                    <br><a href="{{ url_for('reports', report_type=task.t_type) }}" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'finish' %}
-                                        <a href="{{ url_for('reports', report_type=task.t_type) }}"" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                    <br><a href="{{ url_for('reports', report_type=task.t_type) }}"" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'temperatures' %}
-                                        <a href="{{ url_for('reports', report_type=task.t_type) }}""><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                    <br><a href="{{ url_for('reports', report_type=task.t_type) }}""><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'stock_reception' %}
-                                        <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                    <br><a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'stock_inventory' %}
-                                        <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                    <br><a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'cleaning' %}
-                                        <a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                    <br><a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% endif %}
 
                                     {% if task.t_type == 'begin' %}
