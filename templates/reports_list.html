@@ -6,24 +6,24 @@
 
 <div class="container col s12">
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <div id="flash_msg" class="row">
-        <div class="col s12">
-            <ul class="collection">
-                <li class="collection-item avatar">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span class="title">Message:</span>
-                    <p>
-                        {{ message }}
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    {% endfor %}
-    {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <div id="flash_msg" class="row">
+                    <div class="col s12">
+                        <ul class="collection">
+                            <li class="collection-item avatar">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span class="title">Message:</span>
+                                <p>
+                                    {{ message }}
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     {% endwith %}
     
 
@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col s12">
                 <h5 class="brand-logo col s12 center">
-                     Commence Shift Records
+                     Shift Records
                 </h5>
             </div>
         </div>
@@ -44,6 +44,7 @@
                     <th>Date / Time</th>
                     <th>RP</th>
                     <th>Task Type</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +53,7 @@
                     <td><a href="{{ url_for('report', report_id=rep['_id']) }}">{{ rep['t_ts_submit'] }}</a></td>
                     <td>{{ rep['t_rp_un'].title() }}</td>
                     <td>{{ rep['t_type'].title() }}</td>
+                    <td><a href="{{ url_for('delete_report', report_id=rep['_id']) }}">Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -59,7 +61,6 @@
     {% else %}
         <h3>No reports found!</h3>
     {% endif %}
-
 
 </div>
 

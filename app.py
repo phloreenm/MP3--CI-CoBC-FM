@@ -9,8 +9,6 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 from datetime import datetime
-# from flask_login import login_required
-# from flask_login import LoginManager
 
 if os.path.exists('env.py'):
     import env
@@ -24,8 +22,6 @@ IP = os.getenv('IP')
 PORT = os.getenv('PORT')
 
 app = Flask(__name__)
-# login_manager = LoginManager()
-# login_manager.init_app(app)
 
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
@@ -364,7 +360,8 @@ def shift_form(form_type):
         # insert the report into the DB
         dt_reps_coll.insert_one(c_shift_rep)
         flash('Commencing Shift Report added successfully!', 'success')
-        return redirect(url_for('tasks'))
+        # return redirect(url_for('tasks'))
+        return render_template('reports', report_type=form_type)
     return render_template('shift_form.html', dt=dt)
 
 
@@ -380,12 +377,14 @@ def reports(report_type):
             report['t_ts_submit'] = format_date(report['t_ts_submit'])
         return render_template(
             'reports_list.html', reports=reports)
+    
     elif report_type == 'finish':
         reports = list(dt_reps_coll.find(
             {'t_type': 'finish'}).sort('timestamp', -1).limit(20))
         for report in reports:
             report['t_ts_submit'] = format_date(report['t_ts_submit'])
         return render_template('reports_list.html', reports=reports)
+    
     elif report_type == 'temperatures':
         reports = list(temps_coll.find(
             {'company': user['company']}).sort('timestamp', -1).limit(40))
@@ -393,9 +392,11 @@ def reports(report_type):
             dt = r['timestamp']
             r['timestamp'] = format_date(dt)
         return render_template('temps_report.html', reports=reports)
+    
     else:
         # handle invalid report type
-        return "Invalid report type"
+        flash('Invalid report type.', 'success')
+        return render_template('error.html')
 
 
 @app.route('/report/<report_id>')
@@ -405,6 +406,27 @@ def report(report_id):
     date = format_date(report['t_ts_submit'])
     return render_template(
         'report_details.html', report=report, answers=answers, date=date)
+
+
+@app.route('/delete_report/<report_id>')
+def delete_report(report_id):
+    report = dt_reps_coll.find_one({'_id': ObjectId(report_id)})
+    # delete report from the database:
+    try:
+        dt_reps_coll.delete_one({'_id': ObjectId(report_id)})
+        # query the database if the report was deleted
+        deleted_report = users_coll.find_one(
+                {'_id': ObjectId(report_id)}
+                )
+    except Exception as e:
+        print(e)
+        deleted_report = False
+    if deleted_report:
+        flash('Report not deleted!', 'danger')
+    else:
+        flash('User deleted successfully!', 'success')
+    print(report['t_type'])
+    return redirect(url_for('reports', report_type=report['t_type']))
 
 
 def format_date(date_str):
