@@ -117,7 +117,8 @@ def login():
             if check_password_hash(user['pw'], request.form.get('password')):
                 session['user'] = request.form.get('un').lower()
                 session['role'] = user['role'].lower()
-                flash(f'\nUser {session["user"]} logged in!', 'success')
+                flash(
+                    f'\nUser {session["user"].title()} logged in!', 'success')
                 # return to the dashboard specific to user's role:
                 role = user['role']
                 return redirect(url_for('dashboard', role=role))
@@ -274,22 +275,22 @@ def tasks():
     return render_template('tasks.html', tasks=tasks, t_reports=t_reports)
 
 
-@app.route('/add_task', methods=['GET', 'POST'])
-def add_task():
-    tasks = list(daily_tasks_coll.find())
-    if request.method == "POST":
-        task = {
-            'task': request.form.get('task'),
-            'description': request.form.get('description'),
-            'date': request.form.get('date'),
-            'time': request.form.get('time'),
-            'user': request.form.get('user'),
-            'status': request.form.get('status')
-        }
-        daily_tasks_coll.insert_one(task)
-        flash('Task added successfully!', 'success')
-        return redirect(url_for('tasks'))
-    return render_template('add_task.html', tasks=tasks)
+# @app.route('/add_task', methods=['GET', 'POST'])
+# def add_task():
+#     tasks = list(daily_tasks_coll.find())
+#     if request.method == "POST":
+#         task = {
+#             'task': request.form.get('task'),
+#             'description': request.form.get('description'),
+#             'date': request.form.get('date'),
+#             'time': request.form.get('time'),
+#             'user': request.form.get('user'),
+#             'status': request.form.get('status')
+#         }
+#         daily_tasks_coll.insert_one(task)
+#         flash('Task added successfully!', 'success')
+#         return redirect(url_for('tasks'))
+#     return render_template('add_task.html', tasks=tasks)
 
 
 @app.route('/temps_form', methods=['GET', 'POST'])
@@ -424,9 +425,28 @@ def delete_report(report_id):
     if deleted_report:
         flash('Report not deleted!', 'danger')
     else:
-        flash('User deleted successfully!', 'success')
+        flash('Report deleted successfully!', 'success')
     print(report['t_type'])
     return redirect(url_for('reports', report_type=report['t_type']))
+
+
+@app.route('/delete_temp/<temp_id>')
+def delete_temp(temp_id):
+    # delete report from the database:
+    try:
+        temps_coll.delete_one({'_id': ObjectId(temp_id)})
+        # query the database if the report was deleted
+        deleted_report = temps_coll.find_one(
+                {'_id': ObjectId(temp_id)}
+                )
+    except Exception as e:
+        print(e)
+        deleted_report = False
+    if deleted_report:
+        flash('Temperature Report  not deleted!', 'danger')
+    else:
+        flash('Temperature Report deleted successfully!', 'success')
+    return redirect(url_for('reports', report_type='temperatures'))
 
 
 def format_date(date_str):
