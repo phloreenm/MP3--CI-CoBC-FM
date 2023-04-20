@@ -6,35 +6,37 @@
 
 <div class="container col s12">
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <div id="flash_msg" class="row">
-        <div class="col s12">
-            <ul class="collection">
-                <li class="collection-item avatar">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span class="title">Message:</span>
-                    <p>
-                        {{ message }}
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+        {% if messages %}
+            {% for message in messages %}
+            <div id="flash_msg" class="row">
+                <div class="col s12">
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span class="title">Message:</span>
+                            <p>
+                                {{ message }}
+                            </p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        
+    {% if dt != None %}
     <div class="row">
         <div class="col s12">
             <h5 class="brand-logo col s12 center">
-                Commence Shift Daily Tasks Checks
+                {{ dt['t_type'] }} Daily Tasks Checks
             </h5>
         </div>
     </div>
     <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
-    {% if dt != None %}
-        <form class="col s12" method="POST" action="{{ url_for('commence_shift_form') }}">
+    
+        <form class="col s12" method="POST" action="{{ url_for('shift_form', form_type=dt['t_type']) }}">
             <div class="row">
                 <div class="col s12">
                     <div class="row">

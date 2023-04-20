@@ -322,24 +322,12 @@ def temps_form():
     return render_template('temps_form.html')
 
 
-# @app.route('/temps')
-# def temps():
-#     user = users_coll.find_one(
-#             {'un': session['user'].lower()}
-#             )
-#     t_reports = list(temps_coll.find(
-#             {'company': user['company']}).sort('timestamp', -1).limit(40))
-#     for t_report in t_reports:
-#         dt = t_report['timestamp']
-#         dt_obj = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
-#         t_report['timestamp'] = dt_obj.strftime('%Y-%m-%d %H:%M:%S')
-#     return render_template(
-#         'temps_report.html', t_reports=t_reports)
-
-
-@app.route('/commence_shift_form', methods=['GET', 'POST'])
-def commence_shift_form():
-    dt = list(daily_tasks_coll.find({'t_type': 'begin'.lower()}).limit(1))
+@app.route('/shift_form/<form_type>', methods=['GET', 'POST'])
+def shift_form(form_type):
+    if form_type == 'begin':
+        dt = list(daily_tasks_coll.find({'t_type': 'begin'.lower()}).limit(1))
+    elif form_type == 'finish':
+        dt = list(daily_tasks_coll.find({'t_type': 'finish'.lower()}).limit(1))
     if request.method == "POST":
         tasks = []
         task_list_db = []
@@ -348,7 +336,7 @@ def commence_shift_form():
         ts_str = request.form['timestamp_tf']
         ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
         iso_date = ts_obj.isoformat()
-        # get tasks index and user's choices:
+        # get tasks index and user's choices and pair them in a dict:
         for key in request.form.keys():
             if key.startswith('task_'):
                 task_number = int(key.split('_')[-1])
@@ -377,7 +365,7 @@ def commence_shift_form():
         dt_reps_coll.insert_one(c_shift_rep)
         flash('Commencing Shift Report added successfully!', 'success')
         return redirect(url_for('tasks'))
-    return render_template('commence_shift_form.html', dt=dt)
+    return render_template('shift_form.html', dt=dt)
 
 
 @app.route('/reports/<report_type>')
@@ -385,22 +373,6 @@ def reports(report_type):
     user = users_coll.find_one(
             {'un': session['user'].lower()}
             )
-    # if report_type == 'begin':
-    #     cs_reports = list(dt_reps_coll.find(
-    #         {'t_type': 'begin'}).sort('timestamp', -1).limit(20))
-    #     return render_template('commence_report.html', cs_reports=cs_reports)
-    # elif report_type == 'finish':
-    #     cos_r = list(dt_reps_coll.find(
-    #         {'t_type': 'finish'}).sort('timestamp', -1).limit(20))
-    #     return render_template('conclude_report.html', cos_r=cos_r)
-    # elif report_type == 'temperatures':
-    #     t_reports = list(temps_coll.find(
-    #         {'company': user['company']}).sort('timestamp', -1).limit(40))
-    #     for t_report in t_reports:
-    #         dt = t_report['timestamp']
-    #         dt_obj = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
-    #         t_report['timestamp'] = dt_obj.strftime('%Y-%m-%d %H:%M:%S')
-    #     return render_template('temps_report.html', t_reports=t_reports)
     if report_type == 'begin':
         reports = list(dt_reps_coll.find(
             {'t_type': 'begin'}).sort('timestamp', -1).limit(20))
@@ -421,12 +393,6 @@ def reports(report_type):
             dt = r['timestamp']
             r['timestamp'] = format_date(dt)
         return render_template('temps_report.html', reports=reports)
-    # elif report_type == 'inventory':
-    #     reports = list(dt_reps_coll.find({'t_type': 'inventory'}).sort('timestamp', -1).limit(20))
-    #     return render_template('inventory_report.html', reports=reports)
-    # elif report_type == 'cleaning':
-    #     reports = list(dt_reps_coll.find({'t_type': 'cleaning'}).sort('timestamp', -1).limit(20))
-    #     return render_template('cleaning_report.html', reports=reports)
     else:
         # handle invalid report type
         return "Invalid report type"
