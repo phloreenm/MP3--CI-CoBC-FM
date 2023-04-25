@@ -47,7 +47,9 @@
                     <th>Probe Used</th>
                     <th>Temperature</th>
                     <th>Unit</th>
-                    <th>Company</th>
+                    {% if session['role'] == 'manager' %}
+                        <th>Delete</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -59,17 +61,32 @@
                     <td>{{ tr['probe_used'].title() }}</td>
                     <td>{{ tr['temperature'] }}</td>
                     <td>{{ tr['unit'].title() }}</td>
-                    <td>{{ tr['company'].title() }}</td>
-                </tr>
 
+                    {% if session['role'] == 'manager' %}
+                        <td><a class="waves-effect waves-light red darken-4 btn modal-trigger right" href="#modal_{{ session['user'] }}">Delete</a></td>
+                    {% endif %}
+                </tr>
+                <!-- Modal base code SOURCE: https://materializecss.com/modals.html#! -->
+                <!-- Modal Structure -->
+                <div id="modal_{{ session['user'] }}" class="modal">
+                    <div class="modal-content">
+                        <h4 class="align-middle">Deletion confirmation</h4><br>
+                        <p class="align-middle">This action will permanently remove this entry from the database.</p><br>
+                        <h6 class="align-middle">Are you sure you want to delete this entry?</6>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-large left">NO</a>
+                        <a href="{{ url_for('delete_temp', temp_id=tr['_id']) }}" class="modal-close waves-effect waves-light red darken-4 btn-large right">YES</a>
+                    </div>
+                </div>
 
                 {% endfor %}
             </tbody>
         </table>
+        
     {% else %}
         <h3>No reports found!</h3>
     {% endif %}
-
 
 </div>
 

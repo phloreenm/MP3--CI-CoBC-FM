@@ -1,6 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div id="flash_msg" class="row">
+                <div class="col s12">
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span class="title">Message:</span>
+                            <p>
+                                {{ message }}
+                            </p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+
     <h1 style="text-align: center;">Can not display the page you're looking for because of an error.</h1>
     <table>
         <caption style="text-align: center; color: rgb(255, 0, 0);">Error description</caption>

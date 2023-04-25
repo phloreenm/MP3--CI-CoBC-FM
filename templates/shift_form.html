@@ -24,17 +24,19 @@
             </div>
             {% endfor %}
         {% endif %}
-        {% endwith %}
-        
+    {% endwith %}
+
     {% if dt != None %}
     <div class="row">
         <div class="col s12">
             <h5 class="brand-logo col s12 center">
-                {{ dt['t_type'] }} Daily Tasks Checks
+                {{ dt[0]['t_name'] }} Daily Tasks Checks
+            </h5>
+            <h5 class="brand-logo col s12 center">
+                '{{ dt[0]['t_type'] }}'
             </h5>
         </div>
     </div>
-    <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
     
         <form class="col s12" method="POST" action="{{ url_for('shift_form', form_type=dt['t_type']) }}">
             <div class="row">
@@ -96,7 +98,7 @@
         <div class="row">
             <div class="col s12">
                 <h5 class="brand-logo col s12">
-                    No Commencing Shift Procedure found.
+                    No Shift Procedure found.
                 </h5>
             </div>
         </div>

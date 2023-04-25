@@ -9,8 +9,6 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 from datetime import datetime
-# from flask_login import login_required
-# from flask_login import LoginManager
 
 if os.path.exists('env.py'):
     import env
@@ -24,8 +22,6 @@ IP = os.getenv('IP')
 PORT = os.getenv('PORT')
 
 app = Flask(__name__)
-# login_manager = LoginManager()
-# login_manager.init_app(app)
 
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
@@ -121,7 +117,8 @@ def login():
             if check_password_hash(user['pw'], request.form.get('password')):
                 session['user'] = request.form.get('un').lower()
                 session['role'] = user['role'].lower()
-                flash(f'\nUser {session["user"]} logged in!', 'success')
+                flash(
+                    f'\nUser {session["user"].title()} logged in!', 'success')
                 # return to the dashboard specific to user's role:
                 role = user['role']
                 return redirect(url_for('dashboard', role=role))
@@ -278,22 +275,22 @@ def tasks():
     return render_template('tasks.html', tasks=tasks, t_reports=t_reports)
 
 
-@app.route('/add_task', methods=['GET', 'POST'])
-def add_task():
-    tasks = list(daily_tasks_coll.find())
-    if request.method == "POST":
-        task = {
-            'task': request.form.get('task'),
-            'description': request.form.get('description'),
-            'date': request.form.get('date'),
-            'time': request.form.get('time'),
-            'user': request.form.get('user'),
-            'status': request.form.get('status')
-        }
-        daily_tasks_coll.insert_one(task)
-        flash('Task added successfully!', 'success')
-        return redirect(url_for('tasks'))
-    return render_template('add_task.html', tasks=tasks)
+# @app.route('/add_task', methods=['GET', 'POST'])
+# def add_task():
+#     tasks = list(daily_tasks_coll.find())
+#     if request.method == "POST":
+#         task = {
+#             'task': request.form.get('task'),
+#             'description': request.form.get('description'),
+#             'date': request.form.get('date'),
+#             'time': request.form.get('time'),
+#             'user': request.form.get('user'),
+#             'status': request.form.get('status')
+#         }
+#         daily_tasks_coll.insert_one(task)
+#         flash('Task added successfully!', 'success')
+#         return redirect(url_for('tasks'))
+#     return render_template('add_task.html', tasks=tasks)
 
 
 @app.route('/temps_form', methods=['GET', 'POST'])
@@ -318,16 +315,19 @@ def temps_form():
         }
         temps_coll.insert_one(temp_measurement)
         flash('Temperature added successfully!', 'success')
-        return redirect(url_for('temps'))
+        return redirect(url_for('reports', report_type='temperatures'))
     return render_template('temps_form.html')
 
 
 @app.route('/shift_form/<form_type>', methods=['GET', 'POST'])
 def shift_form(form_type):
+
+    print(f'form_type: {form_type}')
     if form_type == 'begin':
         dt = list(daily_tasks_coll.find({'t_type': 'begin'.lower()}).limit(1))
     elif form_type == 'finish':
         dt = list(daily_tasks_coll.find({'t_type': 'finish'.lower()}).limit(1))
+
     if request.method == "POST":
         tasks = []
         task_list_db = []
@@ -336,6 +336,7 @@ def shift_form(form_type):
         ts_str = request.form['timestamp_tf']
         ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
         iso_date = ts_obj.isoformat()
+        print(f'iso_date: {iso_date}')
         # get tasks index and user's choices and pair them in a dict:
         for key in request.form.keys():
             if key.startswith('task_'):
@@ -350,6 +351,7 @@ def shift_form(form_type):
         tasks_answers_pairs = {
             str(key): [task_list_db[key-1], task_responses[key]]
             for key in task_responses.keys()}
+        print(f'tasks_answers_pairs: {tasks_answers_pairs}')
         # get the form data:
         observations = request.form.get('obs')
         if observations is None:
@@ -361,11 +363,19 @@ def shift_form(form_type):
             'answers': tasks_answers_pairs,
             't_obs': observations.lower(),
         }
+        print(f'c_shift_rep: {c_shift_rep}')
+        print("Before inserting the report into the DB")
         # insert the report into the DB
         dt_reps_coll.insert_one(c_shift_rep)
+        print("After inserting the report into the DB")
         flash('Commencing Shift Report added successfully!', 'success')
+        print("After the flask msg")
         return redirect(url_for('tasks'))
+
+    print("Before the GET render_template")
     return render_template('shift_form.html', dt=dt)
+    # return redirect( url_for('reports', report_type=form_type))
+    # return render_template('reports', report_type=form_type)
 
 
 @app.route('/reports/<report_type>')
@@ -380,12 +390,14 @@ def reports(report_type):
             report['t_ts_submit'] = format_date(report['t_ts_submit'])
         return render_template(
             'reports_list.html', reports=reports)
+
     elif report_type == 'finish':
         reports = list(dt_reps_coll.find(
             {'t_type': 'finish'}).sort('timestamp', -1).limit(20))
         for report in reports:
             report['t_ts_submit'] = format_date(report['t_ts_submit'])
         return render_template('reports_list.html', reports=reports)
+
     elif report_type == 'temperatures':
         reports = list(temps_coll.find(
             {'company': user['company']}).sort('timestamp', -1).limit(40))
@@ -393,9 +405,11 @@ def reports(report_type):
             dt = r['timestamp']
             r['timestamp'] = format_date(dt)
         return render_template('temps_report.html', reports=reports)
+
     else:
         # handle invalid report type
-        return "Invalid report type"
+        flash('Invalid report type.', 'success')
+        return render_template('error.html')
 
 
 @app.route('/report/<report_id>')
@@ -405,6 +419,46 @@ def report(report_id):
     date = format_date(report['t_ts_submit'])
     return render_template(
         'report_details.html', report=report, answers=answers, date=date)
+
+
+@app.route('/delete_report/<report_id>')
+def delete_report(report_id):
+    report = dt_reps_coll.find_one({'_id': ObjectId(report_id)})
+    # delete report from the database:
+    try:
+        dt_reps_coll.delete_one({'_id': ObjectId(report_id)})
+        # query the database if the report was deleted
+        deleted_report = users_coll.find_one(
+                {'_id': ObjectId(report_id)}
+                )
+    except Exception as e:
+        print(e)
+        deleted_report = False
+    if deleted_report:
+        flash('Report not deleted!', 'danger')
+    else:
+        flash('Report deleted successfully!', 'success')
+    print(report['t_type'])
+    return redirect(url_for('reports', report_type=report['t_type']))
+
+
+@app.route('/delete_temp/<temp_id>')
+def delete_temp(temp_id):
+    # delete report from the database:
+    try:
+        temps_coll.delete_one({'_id': ObjectId(temp_id)})
+        # query the database if the report was deleted
+        deleted_report = temps_coll.find_one(
+                {'_id': ObjectId(temp_id)}
+                )
+    except Exception as e:
+        print(e)
+        deleted_report = False
+    if deleted_report:
+        flash('Temperature Report  not deleted!', 'danger')
+    else:
+        flash('Temperature Report deleted successfully!', 'success')
+    return redirect(url_for('reports', report_type='temperatures'))
 
 
 def format_date(date_str):
