@@ -2,12 +2,6 @@
 
 
 
-
-## ** ** 
-
-
-
-
 # **The idea behind 'Restaurant Manager'**
 
 The idea of developing this web application is a result of a discussion I had with a friend of mine, about his need to use a tool to organize the flow in the activity of his restaurant. We've sketched on paper some ideas and we concluded to a simple application, for the beginning, to see how it would work in real life. Basically the app should perform as a tool both for the employees in their daily duties, but also for the managers, which could verify daily reports of the events had place during the day.
@@ -37,40 +31,52 @@ I designed three levels of Role-based Access Control:
 
 Obviously the application has the potential to be developed even further to match other business models or to incorporate even more capabilities, but in future releases.
 
+---
+
 # **Application feasibility**
 'Restaurant Manager' is a tool designed to simplify and improve daily tasks, practical and user-friendly, that simplifies and streamlines daily tasks for restaurant managers and their employees. With its intuitive interface and useful features, it offers a feasible solution for managing specific aspects of a restaurant's operations, from employee task assignments to hazard procedures and daily reports management.
 
+---
 
 # **Needed to be installed**
 - The ```env.py``` file is read using the ```dotenv``` library in Python. This library allows you to load environment variables from a file named .env located in the same directory as your Python script.
 ```pip install python-dotenv```
 
-# ** Deployment **
+---
+
+# **Deployment**
 To install all dependencies listed in the requirements.txt type in terminal: ```pip install -r requirements.txt```
 
+---
 
-# ** Code refactoring **
+# **Code refactoring**
 - In a future release of the project's code, I shall approach the object oriented paradigm to represent the database persistence in objects/classes. This way the necessary code will be less.+
 
 ---
 
-# ** Planned Features **
+# **Planned Features**
 - In a future release of this project, I shall approach the object oriented paradigm to represent the database persistence in objects/classes. This way the necessary code will be less.
 - Also, since this will become a real-world application, I will include some features which they were in plan, but the time didn't allow me to implement them:
   - Reports and Forms pages for other features:
     - Stock Reception (The process of checking the order and inventorying the items) 
     - Count Inventory (The process of checking the stock and inventorying the items to ensure accuracy and completeness)
     - Cleaning and Sanitization (Maintaining a clean and sanitary environment  - reports which involve regularly scheduled tasks such as sweeping, mopping, and wiping down surfaces, as well as periodic deep cleaning of equipment and facilities)
+  <p align="center">
+    <img src="documentation/images/future-releases-features.jpg" width="600" title="hover text" alt="accessibility text">
+  </p>
   - Dedicated 'Procedures' page containing
 
 ---
 
-# ** Issues **
-## ** Cognitive Complexity ** 
-- Quite often in my code I had a SonarLint error telling that I should refactor the code reduce the Cognitive Complexity.
-  <p><img></img></p>
+# **Issues**
+
+## **Cognitive Complexity** 
+- Quite often in my code I have had a SonarLint error telling that I should refactor the code reduce the Cognitive Complexity.
+  <p align="center">
+    <img src="documentation/images/cognitive-complexity.jpg" width="600" title="hover text" alt="accessibility text">
+  </p>
   - This has been achieved by applying simple refactoring to the existing code, by refactoring the code into smaller, more modular functions that are easier to reason about. For example the code that handles the form submission has been moved in two separate blocks:
-    - One function containing the business logic to retrieve and process the form data
+    - One function containing the business logic to retrieve and process the form data.
     - The older router and function which would keep the GET and POST methods requests, but on POST method request, there would be a call for the functions processing the form data.
 
 ---
@@ -92,6 +98,8 @@ To install all dependencies listed in the requirements.txt type in terminal: ```
 - [Jinja Whitespace](https://python-web.teclado.com/section11/lectures/02_jinja_whitespace_control/)
 - [Web Dev - Using Flask to Show Which Navbar Link is Active](https://www.youtube.com/watch?v=sIGPwvd-nTk)
 - [Get the values of the selected radio inputs in Flask](https://www.reddit.com/r/flask/comments/g5qwgw/how_can_i_get_the_value_of_the_selected_radio/)
+- [SonarSource - Cognitive Complexity](https://www.sonarsource.com/docs/CognitiveComplexity.pdf)
+- [Flask Error Handling](https://flask.palletsprojects.com/en/2.2.x/errorhandling/)
 ### **Media**
 - Cards:
   - [Employees icon: Restaurant Waiter Png vectors by Lovepik.com](https://lovepik.com/images/png-restaurant-waiter.html)
