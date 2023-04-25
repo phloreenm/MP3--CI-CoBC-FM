@@ -27,7 +27,17 @@
 <!-- [Materialize Register Page Sample base source code](https://codepen.io/HaldunA/pen/eJxRPG) -->
     <div class="row">
         <div class="col s12">
-            <h3 class="brand-logo col s8">Log In</h3>
+            <h3 class="brand-logo col s12">Welcome to eManager!</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <p class="col s12">If you're a new user and want to create an account as a manager, please contact your system administrator to create an account for you. The system administrator is responsible for adding new managers to the app.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <p class="col s12">If you're an existing user, please enter your login details below to access your account.</p>
         </div>
     </div>
 <form class="col s12" method="POST" action="{{ url_for('login') }}">
@@ -38,7 +48,7 @@
                 <input id="un" name="un" type="text" class="validate" autocomplete="on" required>
                 <label for="un">Username</label>
             </div>
-            <div class="input-field hoverable col s6">
+            <div class="input-field hoverable col s12">
                 <i class="material-icons prefix">vpn_key</i>
                 <input id="password" name="password" type="password" class="validate" required>
                 <label for="password">Password</label>
@@ -52,6 +62,11 @@
             </div>
         </div>
 </form>
+<div class="row">
+    <div class="col s12">
+        <p class="col s12">If you're having trouble logging in, please contact your system administrator for assistance.</p>
+    </div>
+</div>
 
 </div>
 {% endblock %}
