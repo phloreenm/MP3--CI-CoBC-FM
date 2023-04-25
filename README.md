@@ -65,6 +65,15 @@ To install all dependencies listed in the requirements.txt type in terminal: ```
 
 ---
 
+# ** Issues **
+## ** Cognitive Complexity ** 
+- Quite often in my code I had a SonarLint error telling that I should refactor the code reduce the Cognitive Complexity.
+  <p><img></img></p>
+  - This has been achieved by applying simple refactoring to the existing code, by refactoring the code into smaller, more modular functions that are easier to reason about. For example the code that handles the form submission has been moved in two separate blocks:
+    - One function containing the business logic to retrieve and process the form data
+    - The older router and function which would keep the GET and POST methods requests, but on POST method request, there would be a call for the functions processing the form data.
+
+---
 ---
 
 ## **Credits**

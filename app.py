@@ -301,51 +301,53 @@ def temps_form():
     return render_template('temps_form.html')
 
 
+def process_form_data(form_data, dt, session_user):
+    tasks = []
+    task_list_db = []
+    task_responses = {}
+    # get the form data:
+    ts_str = form_data['timestamp_tf']
+    ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
+    iso_date = ts_obj.isoformat()
+    # get tasks index and user's choices and pair them in a dict:
+    for key in form_data.keys():
+        if key.startswith('task_'):
+            task_number = int(key.split('_')[-1])
+            tasks.append(form_data[f'task_{task_number}'])
+            task_responses[task_number] = form_data[key]
+    # get tasks values from DB and append them to the task_list_db list
+    for d in dt:
+        for t in d['tasks']:
+            task_list_db.append(t)
+    # create a dict with list containg the tasks and the user's choices
+    tasks_answers_pairs = {
+        str(key): [task_list_db[key-1], task_responses[key]]
+        for key in task_responses.keys()}
+    # get the form data:
+    observations = form_data.get('obs')
+    if observations is None:
+        observations = ''
+    c_shift_rep = {
+        't_type': dt[0]['t_type'],
+        't_ts_submit': iso_date,
+        't_rp_un': session_user.lower(),
+        'answers': tasks_answers_pairs,
+        't_obs': observations.lower(),
+    }
+    dt_reps_coll.insert_one(c_shift_rep)
+    return c_shift_rep
+
+
 @app.route('/shift_form/<form_type>', methods=['GET', 'POST'])
 def shift_form(form_type):
-    print(f'form_type: {form_type}')
     dt = list(daily_tasks_coll.find({'t_type': form_type.lower()}).limit(1))
     if request.method == "POST":
-        tasks = []
-        task_list_db = []
-        task_responses = {}
-        # get the form data:
-        ts_str = request.form['timestamp_tf']
-        ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
-        iso_date = ts_obj.isoformat()
-        # get tasks index and user's choices and pair them in a dict:
-        for key in request.form.keys():
-            if key.startswith('task_'):
-                task_number = int(key.split('_')[-1])
-                tasks.append(request.form[f'task_{task_number}'])
-                task_responses[task_number] = request.form[key]
-        # get tasks values from DB and append them to the task_list_db list
-        for d in dt:
-            for t in d['tasks']:
-                task_list_db.append(t)
-        # create a dict with list containg the tasks and the user's choices
-        tasks_answers_pairs = {
-            str(key): [task_list_db[key-1], task_responses[key]]
-            for key in task_responses.keys()}
-        # get the form data:
-        observations = request.form.get('obs')
-        if observations is None:
-            observations = ''
-        c_shift_rep = {
-            't_type': dt[0]['t_type'],
-            't_ts_submit': iso_date,
-            't_rp_un': session['user'].lower(),
-            'answers': tasks_answers_pairs,
-            't_obs': observations.lower(),
-        }
-        dt_reps_coll.insert_one(c_shift_rep)
+        process_form_data(request.form, dt, session['user'])
         if (form_type == 'begin'):
             flash('Commencing Shift Report added successfully!', 'success')
         elif (form_type == 'finish'):
             flash('Finishing Shift Report added successfully!', 'success')
         return redirect(url_for('tasks'))
-
-    print("Before the GET render_template")
     return render_template('shift_form.html', dt=dt)
 
 
