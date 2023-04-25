@@ -32,7 +32,12 @@
         <div class="row">
             <div class="col s12">
                 <h5 class="brand-logo col s12 center">
-                     Shift Records
+                    {% if reports[0]['t_type'] == 'begin' %}
+                        Commencing Shift Reports List
+                    {% else %}
+                        Closing Shift Reports List
+                    {% endif %}
+
                 </h5>
             </div>
         </div>
