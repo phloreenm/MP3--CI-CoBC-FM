@@ -252,19 +252,19 @@ def users():
         return render_template('error.html', error_message=error_message)
 
 
-@app.route('/procedures')
-# @login_required
-def procedures():
-    # Check if user is logged in:
-    if 'user' not in session:
-        return redirect(url_for('login'))
-    try:
-        procedures = list(procedures_coll.find())
-        return render_template('procedures.html', procedures=procedures)
-    except Exception as e:
-        logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
-        error_message = e
-        return render_template('error.html', error_message=error_message)
+# @app.route('/procedures')
+# # @login_required
+# def procedures():
+#     # Check if user is logged in:
+#     if 'user' not in session:
+#         return redirect(url_for('login'))
+#     try:
+#         procedures = list(procedures_coll.find())
+#         return render_template('procedures.html', procedures=procedures)
+#     except Exception as e:
+#         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
+#         error_message = e
+#         return render_template('error.html', error_message=error_message)
 
 
 @app.route('/tasks')
@@ -303,14 +303,8 @@ def temps_form():
 
 @app.route('/shift_form/<form_type>', methods=['GET', 'POST'])
 def shift_form(form_type):
-
     print(f'form_type: {form_type}')
-    # if form_type == 'begin':
-    #     dt = list(daily_tasks_coll.find({'t_type': 'begin'.lower()}).limit(1))
-    # elif form_type == 'finish':
-    #     dt = list(daily_tasks_coll.find({'t_type': 'finish'.lower()}).limit(1))
     dt = list(daily_tasks_coll.find({'t_type': form_type.lower()}).limit(1))
-
     if request.method == "POST":
         tasks = []
         task_list_db = []
@@ -319,7 +313,6 @@ def shift_form(form_type):
         ts_str = request.form['timestamp_tf']
         ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
         iso_date = ts_obj.isoformat()
-        # print(f'iso_date: {iso_date}')
         # get tasks index and user's choices and pair them in a dict:
         for key in request.form.keys():
             if key.startswith('task_'):
@@ -334,7 +327,6 @@ def shift_form(form_type):
         tasks_answers_pairs = {
             str(key): [task_list_db[key-1], task_responses[key]]
             for key in task_responses.keys()}
-        # print(f'tasks_answers_pairs: {tasks_answers_pairs}')
         # get the form data:
         observations = request.form.get('obs')
         if observations is None:
@@ -346,16 +338,11 @@ def shift_form(form_type):
             'answers': tasks_answers_pairs,
             't_obs': observations.lower(),
         }
-        # print(f'c_shift_rep: {c_shift_rep}')
-        # print("Before inserting the report into the DB")
-        # insert the report into the DB
         dt_reps_coll.insert_one(c_shift_rep)
-        # print("After inserting the report into the DB")
         if (form_type == 'begin'):
             flash('Commencing Shift Report added successfully!', 'success')
         elif (form_type == 'finish'):
             flash('Finishing Shift Report added successfully!', 'success')
-        # print("After the flask msg")
         return redirect(url_for('tasks'))
 
     print("Before the GET render_template")

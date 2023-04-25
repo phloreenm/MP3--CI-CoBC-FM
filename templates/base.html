@@ -39,7 +39,7 @@
         <a href="#" data-target="mobile_menu" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
         <ul id="nav_menu" class="right hide-on-med-and-down">
           {% if session.user %}
-          <li><a href="{{ url_for('procedures') }}" id="procedures"><i class="fa-solid fa-user-shield"></i>Procedures</a></li>
+          
           <li><a href="{{ url_for('tasks') }}" id="tasks"><i class="fa-solid fa-list-check"></i> Daily Tasks</a></li>
             {% if session['user_role'] == 'admin' %}
               <li><a href="{{ url_for('dashboard', role='admin') }}" id="dashboard"><i class="fa-solid fa-gauge"></i> Admin Dashboard</a></li>
@@ -67,7 +67,7 @@
     <!-- mobile sidenav -->
     <ul class="sidenav text-white grey darken-2" id="mobile_menu">
         {% if session.user %}
-          <li><a href="{{ url_for('procedures') }}" id="procedures"><i class="fa-solid fa-user-shield"></i>Procedures</a></li>
+          
           <li><a href="{{ url_for('tasks') }}" id="tasks"><i class="fa-solid fa-list-check"></i> Daily Tasks</a></li>
             {% if session['user_role'] == 'admin' %}
               <li><a href="{{ url_for('dashboard', role='admin') }}" id="dashboard"><i class="fa-solid fa-gauge"></i> Admin Dashboard</a></li>

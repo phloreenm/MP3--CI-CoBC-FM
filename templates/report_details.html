@@ -59,16 +59,15 @@
                 </div>
                 {% if answers %}
                     {% for key, value in answers.items() %}
-                    <div class="col s8">
+                    <div class="col s11">
                         <p style="text-align: left;">{{ key }}. {{ value[0] }}</p>
                     </div>
-                    <div class="col s4 right">
+                    <div class="col s1 right">
                         {% if value[1] == 'yes' %}
                             <p style="text-align: right; color: green;">{{ value[1].upper() }}</p>
                         {% elif value[1] == 'no' %}
                             <p style="text-align: right; color: red;">{{ value[1].upper() }}</p>
                         {% endif %}
-                        <!-- <p style="text-align: right;">{{ value[1].upper() }}</p> -->
                     </div>
                     {% endfor %}
                 {% endif %}

@@ -54,7 +54,14 @@ To install all dependencies listed in the requirements.txt type in terminal: ```
 
 ---
 
-
+# ** Planned Features **
+- In a future release of this project, I shall approach the object oriented paradigm to represent the database persistence in objects/classes. This way the necessary code will be less.
+- Also, since this will become a real-world application, I will include some features which they were in plan, but the time didn't allow me to implement them:
+  - Reports and Forms pages for other features:
+    - Stock Reception (The process of checking the order and inventorying the items) 
+    - Count Inventory (The process of checking the stock and inventorying the items to ensure accuracy and completeness)
+    - Cleaning and Sanitization (Maintaining a clean and sanitary environment  - reports which involve regularly scheduled tasks such as sweeping, mopping, and wiping down surfaces, as well as periodic deep cleaning of equipment and facilities)
+  - Dedicated 'Procedures' page containing
 
 ---
 
