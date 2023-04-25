@@ -315,16 +315,19 @@ def temps_form():
         }
         temps_coll.insert_one(temp_measurement)
         flash('Temperature added successfully!', 'success')
-        return redirect(url_for('temps'))
+        return redirect(url_for('reports', report_type='temperatures'))
     return render_template('temps_form.html')
 
 
 @app.route('/shift_form/<form_type>', methods=['GET', 'POST'])
 def shift_form(form_type):
+
+    print(f'form_type: {form_type}')
     if form_type == 'begin':
         dt = list(daily_tasks_coll.find({'t_type': 'begin'.lower()}).limit(1))
     elif form_type == 'finish':
         dt = list(daily_tasks_coll.find({'t_type': 'finish'.lower()}).limit(1))
+
     if request.method == "POST":
         tasks = []
         task_list_db = []
@@ -333,6 +336,7 @@ def shift_form(form_type):
         ts_str = request.form['timestamp_tf']
         ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
         iso_date = ts_obj.isoformat()
+        print(f'iso_date: {iso_date}')
         # get tasks index and user's choices and pair them in a dict:
         for key in request.form.keys():
             if key.startswith('task_'):
@@ -347,6 +351,7 @@ def shift_form(form_type):
         tasks_answers_pairs = {
             str(key): [task_list_db[key-1], task_responses[key]]
             for key in task_responses.keys()}
+        print(f'tasks_answers_pairs: {tasks_answers_pairs}')
         # get the form data:
         observations = request.form.get('obs')
         if observations is None:
@@ -358,12 +363,19 @@ def shift_form(form_type):
             'answers': tasks_answers_pairs,
             't_obs': observations.lower(),
         }
+        print(f'c_shift_rep: {c_shift_rep}')
+        print("Before inserting the report into the DB")
         # insert the report into the DB
         dt_reps_coll.insert_one(c_shift_rep)
+        print("After inserting the report into the DB")
         flash('Commencing Shift Report added successfully!', 'success')
-        # return redirect(url_for('tasks'))
-        return render_template('reports', report_type=form_type)
+        print("After the flask msg")
+        return redirect(url_for('tasks'))
+
+    print("Before the GET render_template")
     return render_template('shift_form.html', dt=dt)
+    # return redirect( url_for('reports', report_type=form_type))
+    # return render_template('reports', report_type=form_type)
 
 
 @app.route('/reports/<report_type>')
@@ -378,14 +390,14 @@ def reports(report_type):
             report['t_ts_submit'] = format_date(report['t_ts_submit'])
         return render_template(
             'reports_list.html', reports=reports)
-    
+
     elif report_type == 'finish':
         reports = list(dt_reps_coll.find(
             {'t_type': 'finish'}).sort('timestamp', -1).limit(20))
         for report in reports:
             report['t_ts_submit'] = format_date(report['t_ts_submit'])
         return render_template('reports_list.html', reports=reports)
-    
+
     elif report_type == 'temperatures':
         reports = list(temps_coll.find(
             {'company': user['company']}).sort('timestamp', -1).limit(40))
@@ -393,7 +405,7 @@ def reports(report_type):
             dt = r['timestamp']
             r['timestamp'] = format_date(dt)
         return render_template('temps_report.html', reports=reports)
-    
+
     else:
         # handle invalid report type
         flash('Invalid report type.', 'success')
