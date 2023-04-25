@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block meta %}
+    404 Error page
+{% endblock %}
+{% block title %}404 Error - eManager{% endblock %}
 {% block content %}
 
 {% with messages = get_flashed_messages() %}
