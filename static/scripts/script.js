@@ -30,6 +30,16 @@ $(document).ready(function () {
   $('.modal').modal();
   $('.datepicker').datepicker();
 
+  // // add active class for navigation menu items:
+  // let this_page = window.location.pathname.split("/").pop();
+  // // check if the current page is in NAV_ITEMS
+  // if (NAV_ITEMS.hasOwnProperty(this_page)) {
+  //   let activeNavItem = NAV_ITEMS[this_page];
+  //   if (activeNavItem) {
+  //     // if true add the active class to the navigation menu item:
+  //     $('#' + activeNavItem).addClass('current');
+  //   }
+  // } 
   // add active class for navigation menu items:
   let this_page = window.location.pathname.split("/").pop();
   // check if the current page is in NAV_ITEMS
@@ -37,9 +47,9 @@ $(document).ready(function () {
     let activeNavItem = NAV_ITEMS[this_page];
     if (activeNavItem) {
       // if true add the active class to the navigation menu item:
-      $('#' + activeNavItem).addClass('current');
+      $('a[data-nav-item="' + activeNavItem + '"]').addClass('current');
     }
-  } 
+  }
 })
 
 // remove Flash messages after the set timeout if flash_msg ID exists on page:
