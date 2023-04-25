@@ -275,24 +275,6 @@ def tasks():
     return render_template('tasks.html', tasks=tasks, t_reports=t_reports)
 
 
-# @app.route('/add_task', methods=['GET', 'POST'])
-# def add_task():
-#     tasks = list(daily_tasks_coll.find())
-#     if request.method == "POST":
-#         task = {
-#             'task': request.form.get('task'),
-#             'description': request.form.get('description'),
-#             'date': request.form.get('date'),
-#             'time': request.form.get('time'),
-#             'user': request.form.get('user'),
-#             'status': request.form.get('status')
-#         }
-#         daily_tasks_coll.insert_one(task)
-#         flash('Task added successfully!', 'success')
-#         return redirect(url_for('tasks'))
-#     return render_template('add_task.html', tasks=tasks)
-
-
 @app.route('/temps_form', methods=['GET', 'POST'])
 def temps_form():
     if request.method == "POST":
@@ -323,10 +305,11 @@ def temps_form():
 def shift_form(form_type):
 
     print(f'form_type: {form_type}')
-    if form_type == 'begin':
-        dt = list(daily_tasks_coll.find({'t_type': 'begin'.lower()}).limit(1))
-    elif form_type == 'finish':
-        dt = list(daily_tasks_coll.find({'t_type': 'finish'.lower()}).limit(1))
+    # if form_type == 'begin':
+    #     dt = list(daily_tasks_coll.find({'t_type': 'begin'.lower()}).limit(1))
+    # elif form_type == 'finish':
+    #     dt = list(daily_tasks_coll.find({'t_type': 'finish'.lower()}).limit(1))
+    dt = list(daily_tasks_coll.find({'t_type': form_type.lower()}).limit(1))
 
     if request.method == "POST":
         tasks = []
@@ -336,7 +319,7 @@ def shift_form(form_type):
         ts_str = request.form['timestamp_tf']
         ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
         iso_date = ts_obj.isoformat()
-        print(f'iso_date: {iso_date}')
+        # print(f'iso_date: {iso_date}')
         # get tasks index and user's choices and pair them in a dict:
         for key in request.form.keys():
             if key.startswith('task_'):
@@ -351,7 +334,7 @@ def shift_form(form_type):
         tasks_answers_pairs = {
             str(key): [task_list_db[key-1], task_responses[key]]
             for key in task_responses.keys()}
-        print(f'tasks_answers_pairs: {tasks_answers_pairs}')
+        # print(f'tasks_answers_pairs: {tasks_answers_pairs}')
         # get the form data:
         observations = request.form.get('obs')
         if observations is None:
@@ -363,19 +346,20 @@ def shift_form(form_type):
             'answers': tasks_answers_pairs,
             't_obs': observations.lower(),
         }
-        print(f'c_shift_rep: {c_shift_rep}')
-        print("Before inserting the report into the DB")
+        # print(f'c_shift_rep: {c_shift_rep}')
+        # print("Before inserting the report into the DB")
         # insert the report into the DB
         dt_reps_coll.insert_one(c_shift_rep)
-        print("After inserting the report into the DB")
-        flash('Commencing Shift Report added successfully!', 'success')
-        print("After the flask msg")
+        # print("After inserting the report into the DB")
+        if (form_type == 'begin'):
+            flash('Commencing Shift Report added successfully!', 'success')
+        elif (form_type == 'finish'):
+            flash('Finishing Shift Report added successfully!', 'success')
+        # print("After the flask msg")
         return redirect(url_for('tasks'))
 
     print("Before the GET render_template")
     return render_template('shift_form.html', dt=dt)
-    # return redirect( url_for('reports', report_type=form_type))
-    # return render_template('reports', report_type=form_type)
 
 
 @app.route('/reports/<report_type>')
@@ -383,6 +367,7 @@ def reports(report_type):
     user = users_coll.find_one(
             {'un': session['user'].lower()}
             )
+
     if report_type == 'begin':
         reports = list(dt_reps_coll.find(
             {'t_type': 'begin'}).sort('timestamp', -1).limit(20))
