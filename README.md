@@ -65,6 +65,7 @@ To install all dependencies listed in the requirements.txt type in terminal: ```
     <img src="documentation/images/future-releases-features.jpg" width="600" title="hover text" alt="accessibility text">
   </p>
   - Dedicated 'Procedures' page containing
+  - For the moment the users' access the core app may be achieved firstly only by creating a Manager account by the SysAdmin super-user. In a future release I want to implement a subscription based access to the app, where the access is provided automatically to the users who acquired a valid subscription.
 
 ---
 
