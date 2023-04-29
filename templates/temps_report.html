@@ -65,7 +65,7 @@
                     <td>{{ tr['unit'].title() }}</td>
 
                     {% if session['role'] == 'manager' %}
-                        <td><a class="waves-effect waves-light red darken-4 btn modal-trigger right" href="#modal_{{ session['user'] }}">Delete</a></td>
+                        <td><a class="waves-effect waves-light red accent-4 btn modal-trigger right" href="#modal_{{ session['user'] }}"><i class="fa-solid fa-square-minus fa-10x"></i></a></td>
                     {% endif %}
                 </tr>
                 <!-- Modal base code SOURCE: https://materializecss.com/modals.html#! -->

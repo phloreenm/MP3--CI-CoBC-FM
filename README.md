@@ -1,12 +1,25 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+<p align="center">
+  <img src="./static/images/e_manager_logo_w_tb.png" width="600" title="eManager" alt="eManager Logo">
+</p>
 
 
 
-# **The idea behind 'Restaurant Manager'**
+# **Project's links**
+- [Deployed project - Heroku](https://milestonemp3.herokuapp.com/)
+- [GitHub Project's Repository](https://github.com/phloreenm/MP3--CI-CoBC-FM)
 
-The idea of developing this web application is a result of a discussion I had with a friend of mine, about his need to use a tool to organize the flow in the activity of his restaurant. We've sketched on paper some ideas and we concluded to a simple application, for the beginning, to see how it would work in real life. Basically the app should perform as a tool both for the employees in their daily duties, but also for the managers, which could verify daily reports of the events had place during the day.
 
-Being a web application would allow any active employee to access it with just a smartphone, tablet or a laptop and proceed with his tasks. The access to the dashboard would be done though a login page. 
+# **Agile methodology - Kanban**
+- [KanBan style Project board](https://github.com/users/phloreenm/projects/3/views/1)
+- For better organization of the project, I have used the GitHub Project Board with an Agile methodology and Kanban-style approach. The Project Board provides a visual representation of the project's progress and allows to track tasks and issues in a transparent and progressive manner.
+- The board is divided into columns that represent the various stages of the project, from 'Backlog' to 'Done', and I've used cards to represent individual tasks and issues. Each card contains a brief description of the task or issue, as well as any relevant labels, description, steps and assignee.
+- By using this approach, I could easily prioritize and schedule work, track progress, and identify any issues or roadblocks that needed to be addressed. This helped me to work more efficiently and effectively, and ensures that the project is moving forward smoothly and in a timely manner.
+
+
+# **The idea behind 'eManager'**
+- The idea of developing this web application is a result of a discussion I had with a friend of mine, about his need to use a tool to organize the flow in the activity of his restaurant. We've sketched on paper some ideas and we concluded to a simple application, for the beginning, to see how it would work in real life. Basically the app should perform as a tool both for the employees in their daily duties, but also for the managers, which could verify daily reports of the events had place during the day.
+
+- Being a web application would allow any active employee to access it with just a smartphone, tablet or a laptop and proceed with his tasks. The access to the dashboard would be done though a login page. 
 
 # **Features**
 I designed three levels of Role-based Access Control:
@@ -29,7 +42,7 @@ I designed three levels of Role-based Access Control:
       - Hazard Procedures
       - Submit/Fil Daily Tasks Predefined Forms
 
-Obviously the application has the potential to be developed even further to match other business models or to incorporate even more capabilities, but in future releases.
+- Obviously, the application has the potential to be developed even further to match other business models or to incorporate even more capabilities, but in future releases.
 
 ---
 
