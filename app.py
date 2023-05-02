@@ -9,6 +9,7 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 from datetime import datetime
+from utils.utility_functions import check_sysadmin_user
 
 if os.path.exists('env.py'):
     import env
@@ -47,6 +48,9 @@ daily_tasks_coll = db['daily_tasks']
 roles_coll = db['roles']
 temps_coll = db['daily_tasks_temps']
 dt_reps_coll = db['daily_tasks_reports']
+
+# function to create/check if 'sysadmin' users exists in the database
+check_sysadmin_user()
 
 
 @app.route('/')
@@ -138,9 +142,25 @@ def edit_user(user_id):
     # query the database for the user to be edited
     # and populate form with user's info:
     user = users_coll.find_one(
-            {'_id': ObjectId(user_id)}
-            )
+        {'_id': ObjectId(user_id)}
+    )
     roles = list(roles_coll.find())
+    company = user['company']
+    can_edit_role = False
+    restaurant_manager_count = users_coll.count_documents({
+        'company': company,
+        'role': 'manager',
+    })
+
+    # Check if the user can edit the role
+    if session['role'] == 'admin':
+        can_edit_role = True
+    elif session['role'] == 'manager':
+        if user['role'] == 'employee' and restaurant_manager_count >= 1:
+            can_edit_role = True
+        elif user['role'] == 'manager' and restaurant_manager_count > 1:
+            can_edit_role = True
+
     if request.method == "POST":
         if request.form.get('password'):
             # if password is NOT empty:
@@ -180,14 +200,12 @@ def edit_user(user_id):
             flash('User updated successfully!', 'success')
             return redirect(url_for('users', role=session['role']))
         # if password field is not empty:
-        # elif request.form.get('password') != '':
-
-        print("POST edit_user template\n")
         flash('User updated successfully!', 'success')
         return redirect(url_for('users'))
     return render_template(
-        'edit_user.html', user=user, roles=roles,
-        restaurant=user['company'])
+        'edit_user.html', user=user, roles=roles, can_edit_role=can_edit_role,
+        restaurant=user['company'],
+        restaurant_manager_count=restaurant_manager_count)
 
 
 @app.route('/delete_user/<user_id>')
@@ -244,12 +262,19 @@ def dashboard(role):
 @app.route('/users')
 def users():
     try:
-        users = list(users_coll.find().sort('role', 1))
+        logged_in_user = session['user']
+        user_role = session['role']
+        if user_role == 'admin':
+            users = list(users_coll.find().sort('role', 1))
+        else:
+            company = users_coll.find_one({'un': logged_in_user})['company']
+            users = list(users_coll.find({'company': company}).sort('role', 1))
         return render_template('users.html', users=users)
     except Exception as e:
         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
         error_message = e
         return render_template('error.html', error_message=error_message)
+
 
 
 # @app.route('/procedures')
