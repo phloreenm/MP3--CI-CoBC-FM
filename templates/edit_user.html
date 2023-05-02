@@ -50,30 +50,18 @@
                             {% if session['role'] == 'admin' %}
                                 {% if user['role'] != r['role_name'] and r['role_name'] == 'admin' %}
                                     <!-- Admin may only be an admin -->
-                                    {% if session['user'] == 'sysadmin' %}
-                                        <option value="{{ session['role'].title() }}" readonly>{{ session['role'].title() }}</option>
-                                    {% endif %}
-                                {% elif user['role'] != r['role_name'] and r['role_name'] == 'manager' %}
-                                    <!-- Admin may upgrade/downgrade manager to/from employee -->
-                                    <option value="{{ r['role_name'].title() }}">{{ r['role_name'].title() }}</option>
+                                    <option value="{{ session['role'].title() }}" readonly>{{ session['role'].title() }}</option>
                                 {% endif %}
                             {% elif session['role'] == 'manager' %}
                                 {% if user['role'] != r['role_name'] and r['role_name'] == 'manager' %}
-                                    {% if can_edit_role %}
-                                        <!-- Manager should be able to downgrade other managers to employees -->
+                                    <!-- Manager may only be a manager -->
+                                    {% if can_edit_role and r['role_name'] != 'admin' %}
                                         <option value="{{ r['role_name'].title() }}">{{ r['role_name'].title() }}</option>
                                     {% endif %}
                                 {% elif user['role'] != r['role_name'] and r['role_name'] == 'employee' %}
+                                    <!-- Manager should be able to upgrade employee to manager -->
                                     {% if session['user'] != user['un'] %}
-                                        <!-- Manager should be able to upgrade employee to manager -->
                                         <option value="{{ r['role_name'].title() }}">{{ r['role_name'].title() }}</option>
-                                    {% endif %}
-                                {% elif user['role'] != r['role_name'] and r['role_name'] == 'manager' %}
-                                    {% if can_edit_role and session['user'] != 'sysadmin' %}
-                                        {% if r['role_name'] != 'sysadmin' %}  <!-- exclude sysadmin from dropdown -->
-                                            <!-- Manager should be able to downgrade other managers to employees -->
-                                            <option value="{{ r['role_name'].title() }}">{{ r['role_name'].title() }}</option>
-                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             {% endif %}
@@ -82,6 +70,7 @@
                 </select>
                 <label for="role">Choose New Role</label>
             </div>
+            
             
             
             

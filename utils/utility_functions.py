@@ -25,7 +25,7 @@ def check_sysadmin_user():
             'fname': 'System',
             'lname': 'Admin',
             'email': 'sysadmin@example.com',
-            'company': 'None'
+            'company': 'eManager'
         }
         users_coll.insert_one(new_user)
         default_admin_user_created = True

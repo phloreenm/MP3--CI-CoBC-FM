@@ -22,13 +22,17 @@
 - Being a web application would allow any active employee to access it with just a smartphone, tablet or a laptop and proceed with his tasks. The access to the dashboard would be done though a login page. 
 
 # **Features**
-I designed three levels of Role-based Access Control:
-- **System Administrator** or the 'admin' role:
-  - Is the owner of the app providing the services to its clients (restaurant owners)
-  - Has the right to C.R.U.D.:
-    - Sys Admin in the users' list (can't delete himself, but only edit his details, except the username)
-    - New Restaurant managers in the users' list
-  
+I designed three main levels of Role-based Access Control:
+- **System Administrator**
+  - 'sysadmin'(super-user):
+    - Is the owner of the app providing the services to its clients (restaurant owners in our case)
+    - As a backup solution, there is a special function called once at the application starting. This functions checks the database if this user exists. If not, it will be created with default credentials [hard-coded un: 'sysadmin, pw: '1111'], which may be updated at a later date.
+    - This user can't be deleted.
+    - Has the right to C.R.U.D.:
+      - He can do 'admin' and 'manager' Users database operations
+      - Can edit his details, except for the 'username' and 'role'.
+  - any other 'admin' can manipulate the Users' database (admins and managers)  but can't delete himself or 'sysadmin'.
+
 - **Restaurant Manager** or 'manager' role:
   - Has the right to CRUD:
     - Restaurant's employees
