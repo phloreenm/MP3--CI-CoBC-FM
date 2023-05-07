@@ -157,7 +157,6 @@ def should_edit_role(
     return can_edit
 
 
-
 @app.route('/edit_user/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
     # query the database for the user to be edited

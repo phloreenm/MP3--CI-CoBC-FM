@@ -56,12 +56,12 @@
                                     <br><a href="{{ url_for('reports', report_type=task.t_type) }}"" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'temperatures' %}
                                     <br><a href="{{ url_for('reports', report_type=task.t_type) }}""><span> View reports </span><i class="fa-solid fa-list-check"></i>
-                                    {% elif task.t_type == 'stock_reception' %}
+                                    <!-- {% elif task.t_type == 'stock_reception' %}
                                     <br><a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'stock_inventory' %}
                                     <br><a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'cleaning' %}
-                                    <br><a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i>
+                                    <br><a href="#!" ><span> View reports </span><i class="fa-solid fa-list-check"></i> -->
                                     {% endif %}
 
                                     {% if task.t_type == 'begin' %}
@@ -70,12 +70,12 @@
                                         <a href="{{ url_for('shift_form', form_type='finish')}}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'temperatures' %}
                                         <a href="{{ url_for('temps_form') }}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
-                                    {% elif task.t_type == 'stock_reception' %}
+                                    <!-- {% elif task.t_type == 'stock_reception' %}
                                         <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'stock_inventory' %}
                                         <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
                                     {% elif task.t_type == 'cleaning' %}
-                                        <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                                        <a href="#!" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i> -->
                                     {% endif %}
                                 </a>
                             </li>
