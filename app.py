@@ -8,8 +8,8 @@ from flask import (
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
-from datetime import datetime
-from utils.utility_functions import check_sysadmin_user
+from utils.utility_functions import (
+    check_sysadmin_user, format_date, should_edit_role)
 
 if os.path.exists('env.py'):
     import env
@@ -70,17 +70,19 @@ def index():
 def register():
     if request.method == 'POST':
         # Check if username or email have been used
-        user = users_coll.find_one(
-            {'un': request.form.get('un').lower()}
-            )
-        email = users_coll.find_one(
-            {'email': request.form.get('email1').lower()}
-            )
-        if user or email:
+        form_un = request.form.get('un').lower()
+        form_email = request.form.get('email1').lower()
+        user = users_coll.find_one({'un': form_un})
+        email = users_coll.find_one({'email': form_email})
+        if (
+            user == form_un.lower()) or (
+                email == form_email.lower()):
             if user:
-                flash(f'Username {user["un"]} already exists. Please choose a different username.', 'info')
+                flash(f'Username {user["un"]} already exists. '
+                      f'Choose a different username.', 'info')
             elif email:
-                flash(f'Email {email["email"]} already used. Please choose a different email.', 'info')
+                flash(f'Email {email["email"]} already exists. '
+                      f'Choose a different email.', 'info')
             return redirect(url_for('register'))
         new_user = {
             'role': request.form.get('role'),
@@ -135,26 +137,6 @@ def login():
             return redirect(url_for('login'))
 
     return render_template('login.html')
-
-
-def should_edit_role(
-        restaurant_manager_count: int,
-        session_role: str, user_role: str) -> bool:
-    """
-    Determines whether the user can edit the role of another user based on their session role,
-    the number of managers in the same restaurant, and the role of the user being edited.
-    Returns a boolean value.
-    """
-    if session_role == 'manager':
-        if restaurant_manager_count <= 1 and user_role == 'manager':
-            can_edit = False
-        else:
-            can_edit = True
-    elif session_role == 'admin':
-        can_edit = True
-    else:
-        can_edit = False
-    return can_edit
 
 
 @app.route('/edit_user/<user_id>', methods=['GET', 'POST'])
@@ -222,12 +204,15 @@ def edit_user(user_id):
 
 @app.route('/delete_user/<user_id>')
 def delete_user(user_id):
-    if (users_coll.find({'un': 'sysadmin'})):
+    # Prevent deleting System Administrator:
+    sys_admin_user = users_coll.find_one(
+        {'_id': ObjectId(user_id), 'un': 'sysadmin'})
+    if sys_admin_user is not None:
         flash('Can not delete System Administrator', 'danger')
         return redirect(url_for('users', role=session['role']))
-    # delete user from the database:
+    # Delete user from the database:
     users_coll.delete_one({'_id': ObjectId(user_id)})
-    # query the database if the user was deleted
+    # Query the database if the user was deleted
     user = users_coll.find_one(
             {'_id': ObjectId(user_id)}
             )
@@ -470,11 +455,6 @@ def delete_temp(temp_id):
     else:
         flash('Temperature Report deleted successfully!', 'success')
     return redirect(url_for('reports', report_type='temperatures'))
-
-
-def format_date(date_str):
-    date_obj = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S')
-    return date_obj.strftime('%Y-%m-%d %H:%M:%S')
 
 
 if __name__ == '__main__':
