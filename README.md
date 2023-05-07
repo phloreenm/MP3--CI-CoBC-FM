@@ -2,18 +2,14 @@
   <img src="./static/images/e_manager_logo_w_tb.png" width="600" title="eManager" alt="eManager Logo">
 </p>
 
-
+**eManager -  Data Centric Development Milestone Project 3**
 
 # **Project's links**
 - [Deployed project - Heroku](https://milestonemp3.herokuapp.com/)
 - [GitHub Project's Repository](https://github.com/phloreenm/MP3--CI-CoBC-FM)
 
 
-# **Agile methodology - Kanban**
-- [KanBan style Project board](https://github.com/users/phloreenm/projects/3/views/1)
-- For better organization of the project, I have used the GitHub Project Board with an Agile methodology and Kanban-style approach. The Project Board provides a visual representation of the project's progress and allows to track tasks and issues in a transparent and progressive manner.
-- The board is divided into columns that represent the various stages of the project, from 'Backlog' to 'Done', and I've used cards to represent individual tasks and issues. Each card contains a brief description of the task or issue, as well as any relevant labels, description, steps and assignee.
-- By using this approach, I could easily prioritize and schedule work, track progress, and identify any issues or roadblocks that needed to be addressed. This helped me to work more efficiently and effectively, and ensures that the project is moving forward smoothly and in a timely manner.
+
 
 
 # **The idea behind 'eManager'**
@@ -55,6 +51,14 @@ I designed three main levels of Role-based Access Control:
 
 ---
 
+# **Agile methodology - Kanban**
+- [KanBan style Project board](https://github.com/users/phloreenm/projects/3/views/1)
+- For better organization of the project, I have used the GitHub Project Board with an Agile methodology and Kanban-style approach. The Project Board provides a visual representation of the project's progress and allows to track tasks and issues in a transparent and progressive manner.
+- The board is divided into columns that represent the various stages of the project, from 'Backlog' to 'Done', and I've used cards to represent individual tasks and issues. Each card contains a brief description of the task or issue, as well as any relevant labels, description, steps and assignee.
+- By using this approach, I could easily prioritize and schedule work, track progress, and identify any issues or roadblocks that needed to be addressed. This helped me to work more efficiently and effectively, and ensures that the project is moving forward smoothly and in a timely manner.
+
+---
+
 # **Needed to be installed**
 - The ```env.py``` file is read using the ```dotenv``` library in Python. This library allows you to load environment variables from a file named .env located in the same directory as your Python script.
 ```pip install python-dotenv```
@@ -66,8 +70,20 @@ To install all dependencies listed in the requirements.txt type in terminal: ```
 
 ---
 
+---
+# **Database Schema**
+The two choices for a database were MongoDB and PostgreSQL. While I would have preferred the SQL, specifically for this project the MongoDB had some advantages that I needed more, so I decided to use it.
+
+---
+
 # **Code refactoring**
 - In a future release of the project's code, I shall approach the object oriented paradigm to represent the database persistence in objects/classes. This way the necessary code will be less.+
+
+---
+
+# **Issues**
+## Known Issues
+- When a Manager is being downgraded to an Employee or vice-versa, 
 
 ---
 

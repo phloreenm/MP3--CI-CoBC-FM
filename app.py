@@ -137,6 +137,27 @@ def login():
     return render_template('login.html')
 
 
+def should_edit_role(
+        restaurant_manager_count: int,
+        session_role: str, user_role: str) -> bool:
+    """
+    Determines whether the user can edit the role of another user based on their session role,
+    the number of managers in the same restaurant, and the role of the user being edited.
+    Returns a boolean value.
+    """
+    if session_role == 'manager':
+        if restaurant_manager_count <= 1 and user_role == 'manager':
+            can_edit = False
+        else:
+            can_edit = True
+    elif session_role == 'admin':
+        can_edit = True
+    else:
+        can_edit = False
+    return can_edit
+
+
+
 @app.route('/edit_user/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
     # query the database for the user to be edited
@@ -146,21 +167,13 @@ def edit_user(user_id):
     )
     roles = list(roles_coll.find())
     company = user['company']
-    can_edit_role = False
     restaurant_manager_count = users_coll.count_documents({
         'company': company,
         'role': 'manager',
     })
-
-    # Check if the user can edit the role
-    if session['role'] == 'admin':
-        can_edit_role = True
-    elif session['role'] == 'manager':
-        if user['role'] == 'employee' and restaurant_manager_count >= 1:
-            can_edit_role = True
-        elif user['role'] == 'manager' and restaurant_manager_count > 1:
-            can_edit_role = True
-
+    can_edit_role = should_edit_role(
+        restaurant_manager_count, session['role'], user['role'])
+    print("can_edit_role", can_edit_role)
     if request.method == "POST":
         if request.form.get('password'):
             # if password is NOT empty:
