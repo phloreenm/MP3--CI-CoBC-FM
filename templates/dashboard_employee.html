@@ -27,13 +27,38 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    </div>
-    <div class="row">
-        <div class="col s12">
-                <h3>Welcome to EMPLOYEE dashboard</h3>
-                <h5>Full acces to create new managers and assign them to new shops</h5>
-
+    
+        <div class="row">
+            <div class="col s12">
+                    <h3 style="text-align: center;">{{ session['user'].upper() }} dashboard</h3>
+            </div>
         </div>
+        <div class="row">
+            {% if users %}
+                {% for user in users %}
+                    {% if user['un'] == session['user'] %}
+                        <ul class="collection with-header">
+                            <li class="collection-header"><h4>User profile<a class="waves-effect waves-light btn modal-trigger right" href="{{ url_for('edit_user', user_id=user._id) }}">Edit</a></h4></li>
+                            <li class="collection-item"><div>Name<span class="secondary-content">{{ user['fname'].title() }} {{ user['lname'].title() }}</span></div></li>
+                            <li class="collection-item"><div>Username<span class="secondary-content">{{ user['un'].title() }}</span></div></li>
+                            <li class="collection-item"><div>Role<span class="secondary-content">{{ session['role'] }}</span></div></li>
+                            <li class="collection-item"><div>Company<span class="secondary-content">{{ user['company'].title() }}</span></div></li>
+                            <li class="collection-item"><div>Email<span class="secondary-content">{{ user['email'].lower() }}</span></div></li>
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+        
+                <ul class="collection with-header">
+                    <li class="collection-header"><h4>Other Employees<a class="waves-effect waves-light btn modal-trigger right" href="{{ url_for('users') }}"">View all</a></h4></li>
+                    {% for user in users %}
+                        {% if user['un'] != session['user'] %}
+                            <li class="collection-item">{{ user['fname'].title() }} {{ user['lname'].title() }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        
     </div>
 {% endblock %}
 
