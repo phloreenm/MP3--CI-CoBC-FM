@@ -78,13 +78,32 @@
         {% if my_reports %}
             <div class="row">
                 <ul class="collection">
-                    <li class="collection-header"><h4>My reports</h4></li>
+                    <li class="collection-header"><h4>My Daily Tasks Reports</h4></li>
+                    {% for rep in my_reports %}
+                        <p>{{ rep['t_ts_submit'] }}</p>
+                    {% endfor %}
                 </ul>
             </div>
         {% else %}
             <div class="row">
                 <ul class="collection">
                     <li class="collection-header"><h5>You have not submitted any reports.</h5></li>
+                </ul>
+            </div>
+        {% endif %}
+        {% if my_temps %}
+            <div class="row">
+                <ul class="collection">
+                    <li class="collection-header"><h4>My Temperature Measuments</h4></li>
+                    {% for temp in my_temps %}
+                        <p>{{ temp['timestamp'] }}</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <div class="row">
+                <ul class="collection">
+                    <li class="collection-header"><h5>You have not submitted any temperature measurements.</h5></li>
                 </ul>
             </div>
         {% endif %}

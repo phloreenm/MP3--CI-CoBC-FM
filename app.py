@@ -247,10 +247,19 @@ def logout():
 
 
 def show_user_reports(user):
-    reports = list(dt_reps_col.find(
-        {'un': user, }).sort('timestamp', -1))
+    reports = list(dt_reps_coll.find(
+        {'t_rp_un': user, }).sort('timestamp', -1))
     for report in reports:
         report['t_ts_submit'] = format_date(report['t_ts_submit'])
+    return reports
+
+
+def show_user_t_reports(user):
+    reports = list(temps_coll.find(
+        {'user': user, }).sort('timestamp', -1))
+    for report in reports:
+        print("report['timestamp']", report['timestamp'])
+        report['timestamp'] = format_date(report['timestamp'])
     return reports
 
 
@@ -284,12 +293,19 @@ def dashboard(role):
         return render_template(
             'dashboard_manager.html', users=list(filtered_users))
     else:
-        # filtered_users = filter_employee_users(
         filtered_users = filter_employee_users(
             users_list, logged_user_company)
+
+        my_reports = show_user_reports(logged_in_user)
+        my_temp = show_user_t_reports(logged_in_user)
+        for report in my_reports:
+            print("report: ", report['t_ts_submit'])
+
         return render_template(
             'dashboard_employee.html',
-            users=list(filtered_users))
+            users=list(filtered_users),
+            my_reports=my_reports,
+            my_temps=my_temp)
 
 
 @app.route('/users')
@@ -309,21 +325,6 @@ def users():
         return render_template('error.html', error_message=error_message)
 
 
-# @app.route('/procedures')
-# # @login_required
-# def procedures():
-#     # Check if user is logged in:
-#     if 'user' not in session:
-#         return redirect(url_for('login'))
-#     try:
-#         procedures = list(procedures_coll.find())
-#         return render_template('procedures.html', procedures=procedures)
-#     except Exception as e:
-#         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
-#         error_message = e
-#         return render_template('error.html', error_message=error_message)
-
-
 @app.route('/tasks')
 def tasks():
     tasks = list(daily_tasks_coll.find())
@@ -336,8 +337,7 @@ def tasks():
 def temps_form():
     if request.method == "POST":
         ts_str = request.form['timestamp_tf']
-        # ts_obj = format_date(ts_str)
-        ts_obj = datetime.strptime(ts_str, '%Y-%m-%d %H:%M')
+        ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
         iso_date = ts_obj.isoformat()
         user = users_coll.find_one(
             {'un': session['user'].lower()}
