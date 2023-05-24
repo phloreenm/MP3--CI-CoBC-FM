@@ -40,7 +40,6 @@
                 <!-- roles -->
                 <div class="input-field hoverable col s4">
                     <i class="material-icons prefix">contacts</i>
-                    <!-- <select id="role" name="role" class="validate" required {% if not can_edit_role %}disabled{% endif %}> -->
                     <select id="role" name="role" class="validate" required>
                         <!-- Employee may only edit himself -->
                         {% if session['role'] == 'employee' and session['user'] == user['un'] %}

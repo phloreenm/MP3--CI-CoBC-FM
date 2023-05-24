@@ -8,10 +8,10 @@ from flask import (
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
+from datetime import datetime
 from utils.utility_functions import (
     check_sysadmin_user,
     format_date,
-    process_form_data,
     should_edit_role,
     filter_admin_users,
     filter_manager_users,
@@ -246,18 +246,12 @@ def logout():
     return redirect(url_for('index'))
 
 
-# def filter_admin_users(users):
-#     return [user for user in users if user['role'] in ['admin', 'manager']]
-
-
-# def filter_manager_users(users, company):
-#     return [user for user in users if user['company'] == company]
-
-
-# def filter_employee_users(users, company):
-#     return [
-#         user for user in users if user[
-#             'company'] == company and user['role'] == 'employee']
+def show_user_reports(user):
+    reports = list(dt_reps_col.find(
+        {'un': user, }).sort('timestamp', -1))
+    for report in reports:
+        report['t_ts_submit'] = format_date(report['t_ts_submit'])
+    return reports
 
 
 @app.route('/dashboard/<role>')
@@ -274,12 +268,12 @@ def dashboard(role):
         return redirect(url_for('login'))
     # Get list of all users:
     users_list = list(users_coll.find().sort('role', 1))
-    print("users_list", users_list)
+    # print("users_list", users_list)
     logged_in_user = session['user']
-    print("logged_in_user", logged_in_user)
+    # print("logged_in_user", logged_in_user)
     logged_user_company = users_coll.find_one(
         {'un': logged_in_user})['company']
-    print("logged_user_company", logged_user_company)
+    # print("logged_user_company", logged_user_company)
     # Filter users list based on role:
     if role == 'admin':
         filtered_users = filter_admin_users(users_list)
@@ -290,10 +284,12 @@ def dashboard(role):
         return render_template(
             'dashboard_manager.html', users=list(filtered_users))
     else:
+        # filtered_users = filter_employee_users(
         filtered_users = filter_employee_users(
             users_list, logged_user_company)
         return render_template(
-            'dashboard_employee.html', users=list(filtered_users))
+            'dashboard_employee.html',
+            users=list(filtered_users))
 
 
 @app.route('/users')
@@ -361,6 +357,47 @@ def temps_form():
         flash('Temperature added successfully!', 'success')
         return redirect(url_for('reports', report_type='temperatures'))
     return render_template('temps_form.html')
+
+
+def process_form_data(form_data, dt, session_user):
+    """
+    This function is called from the app.py file
+    when processing the reports form data submitted by the user.
+    """
+    tasks = []
+    task_list_db = []
+    task_responses = {}
+    # get the form data:
+    ts_str = form_data['timestamp_tf']
+    ts_obj = datetime.strptime(ts_str, '%Y-%m-%dT%H:%M')
+    iso_date = ts_obj.isoformat()
+    # get tasks index and user's choices and pair them in a dict:
+    for key in form_data.keys():
+        if key.startswith('task_'):
+            task_number = int(key.split('_')[-1])
+            tasks.append(form_data[f'task_{task_number}'])
+            task_responses[task_number] = form_data[key]
+    # get tasks values from DB and append them to the task_list_db list
+    for d in dt:
+        for t in d['tasks']:
+            task_list_db.append(t)
+    # create a dict with list containg the tasks and the user's choices
+    tasks_answers_pairs = {
+        str(key): [task_list_db[key-1], task_responses[key]]
+        for key in task_responses.keys()}
+    # get the form data:
+    observations = form_data.get('obs')
+    if observations is None:
+        observations = ''
+    c_shift_rep = {
+        't_type': dt[0]['t_type'],
+        't_ts_submit': iso_date,
+        't_rp_un': session_user.lower(),
+        'answers': tasks_answers_pairs,
+        't_obs': observations.lower(),
+    }
+    dt_reps_coll.insert_one(c_shift_rep)
+    return c_shift_rep
 
 
 @app.route('/shift_form/<form_type>', methods=['GET', 'POST'])
