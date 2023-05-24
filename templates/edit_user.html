@@ -36,40 +36,12 @@
         </div>
     </div>
     <form class="col s12" method="POST" action="{{ url_for('edit_user', user_id=user['_id']) }}">
-        <!-- <div class="row">
-            <div class="input-field hoverable col s4">
-                <i class="material-icons prefix">contacts</i>
-                <select id="role" name="role" class="validate" required {% if not can_edit_role %}disabled{% endif %}>
-                    {% if session['role'] == 'employee' and session['user'] == user['un'] %}
-                        <option value="{{ user['role'].title() }}" readonly>{{ user['role'].title() }}</option>
-                    {% else %}
-                        <option value="{{ user['role'].title() }}" readonly>{{ user['role'].title() }}</option>
-                        {% for r in roles %}
-                            {% if session['role'] == 'admin' %}
-                                {% if user['role'] != r['role_name'] and r['role_name'] == 'admin' %}
-                                    <option value="{{ session['role'].title() }}" readonly>{{ session['role'].title() }}</option>
-                                {% endif %}
-                            {% elif session['role'] == 'manager' %}
-                                {% if user['role'] != r['role_name'] and r['role_name'] == 'manager' %}
-                                    {% if can_edit_role and r['role_name'] != 'admin' %}
-                                        <option value="{{ r['role_name'].title() }}">{{ r['role_name'].title() }}</option>
-                                    {% endif %}
-                                {% elif user['role'] != r['role_name'] and r['role_name'] == 'employee' %}
-                                    {% if session['user'] != user['un'] %}
-                                        <option value="{{ r['role_name'].title() }}">{{ r['role_name'].title() }}</option>
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </select>
-                <label for="role">Choose New Role</label>
-            </div> -->
             <div class="row">
                 <!-- roles -->
                 <div class="input-field hoverable col s4">
                     <i class="material-icons prefix">contacts</i>
-                    <select id="role" name="role" class="validate" required {% if not can_edit_role %}disabled{% endif %}>
+                    <!-- <select id="role" name="role" class="validate" required {% if not can_edit_role %}disabled{% endif %}> -->
+                    <select id="role" name="role" class="validate" required>
                         <!-- Employee may only edit himself -->
                         {% if session['role'] == 'employee' and session['user'] == user['un'] %}
                             <option value="{{ user['role'].title() }}" readonly>{{ user['role'].title() }}</option>
@@ -104,28 +76,6 @@
                     </select>
                     <label for="role">Choose New Role</label>
                 </div>
-            <!-- <div class="input-field hoverable col s4">
-                <i class="material-icons prefix">contacts</i>
-                <select id="role" name="role" class="validate" required>
-                    {% if session['role'] == 'employee' and session['user'] == user['un']   %}
-                        <option value="{{ user['role'].title() }}" readonly>{{ user['role'].title() }}</option>
-                    {% else %}
-                        <option value="{{ user['role'].title() }}" readonly>{{ user['role'].title() }}</option>
-                        {% for r in roles %}
-                            {% if session['role'] == 'admin' %}
-                                {% if user['role'] != r['role_name'] and r['role_name'] != 'employee' %}
-                                    <option value="{{ r['role_name'].title() }}">{{ r['role_name'].title() }}</option>
-                                {% endif %}
-                            {% elif session['role'] == 'manager' %}
-                                {% if user['role'] != r['role_name'] and r['role_name'] != 'admin' %}
-                                    <option value="{{ r['role_name'].title() }}">{{ r['role_name'].title() }}</option>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </select>
-                <label for="role">Choose New Role</label>
-            </div> -->
             <!-- company -->
             <div class="input-field hoverable col s4">
                 <i class="material-icons prefix">contacts</i>

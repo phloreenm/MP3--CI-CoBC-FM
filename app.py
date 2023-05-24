@@ -163,12 +163,14 @@ def edit_user(user_id):
     })
     can_edit_role = should_edit_role(
         restaurant_manager_count, session['role'], user['role'])
-    print("can_edit_role", can_edit_role)
+    # print("can_edit_role", can_edit_role)
     if request.method == "POST":
         if request.form.get('password'):
             # if password is NOT empty:
             if request.form.get('password1'):
                 # update user's info:
+                print("get_role_lower: ", request.form.get('role').lower())
+                print("get_role: ", request.form.get('role'))
                 users_coll.update_one(
                     {'_id': ObjectId(user_id)},
                     {
