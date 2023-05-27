@@ -8,8 +8,14 @@ from flask import (
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
+from datetime import datetime
 from utils.utility_functions import (
-    check_sysadmin_user, format_date, should_edit_role)
+    check_sysadmin_user,
+    format_date,
+    should_edit_role,
+    filter_admin_users,
+    filter_manager_users,
+    filter_employee_users)
 
 if os.path.exists('env.py'):
     import env
@@ -109,8 +115,11 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Check if user is already logged in and redirect him to first page:
-    # may be removed, as id user is session it's redirected to index and the login link is not shown anymore
+    '''
+    Check if user is already logged in and redirect him to first page:
+    may be removed, as id user is session it's redirected to index
+    and the login link is not shown anymore
+    '''
     if 'user' in session:
         return redirect(url_for('index'))
     if request.method == 'POST':
@@ -154,12 +163,14 @@ def edit_user(user_id):
     })
     can_edit_role = should_edit_role(
         restaurant_manager_count, session['role'], user['role'])
-    print("can_edit_role", can_edit_role)
+    # print("can_edit_role", can_edit_role)
     if request.method == "POST":
         if request.form.get('password'):
             # if password is NOT empty:
             if request.form.get('password1'):
                 # update user's info:
+                print("get_role_lower: ", request.form.get('role').lower())
+                print("get_role: ", request.form.get('role'))
                 users_coll.update_one(
                     {'_id': ObjectId(user_id)},
                     {
@@ -235,25 +246,66 @@ def logout():
     return redirect(url_for('index'))
 
 
+def show_user_reports(user):
+    reports = list(dt_reps_coll.find(
+        {'t_rp_un': user, }).sort('timestamp', -1))
+    for report in reports:
+        report['t_ts_submit'] = format_date(report['t_ts_submit'])
+    return reports
+
+
+def show_user_t_reports(user):
+    reports = list(temps_coll.find(
+        {'user': user, }).sort('timestamp', -1))
+    for report in reports:
+        print("report['timestamp']", report['timestamp'])
+        report['timestamp'] = format_date(report['timestamp'])
+    return reports
+
+
 @app.route('/dashboard/<role>')
 def dashboard(role):
-    # username = session['user']
     # Check if user is logged in:
     if 'user' not in session:
         return redirect(url_for('login'))
-    # set user's role in session:
+    # Set user's role in session:
     session['user_role'] = role
+    # company = users_coll.find_one({'un': logged_in_user})['company']
     # Check user's role and redirect if not logged in:
     if role not in ['admin', 'manager', 'employee']:
-        flash('You\'re not authorized to acces this page', 'danger')
+        flash('You\'re not authorized to access this page', 'danger')
         return redirect(url_for('login'))
-    # Render dashboard template based on users's role:
+    # Get list of all users:
+    users_list = list(users_coll.find().sort('role', 1))
+    # print("users_list", users_list)
+    logged_in_user = session['user']
+    # print("logged_in_user", logged_in_user)
+    logged_user_company = users_coll.find_one(
+        {'un': logged_in_user})['company']
+    # print("logged_user_company", logged_user_company)
+    # Filter users list based on role:
     if role == 'admin':
-        return render_template('dashboard_admin.html')
+        filtered_users = filter_admin_users(users_list)
+        return render_template(
+            'dashboard_admin.html', users=list(filtered_users))
     elif role == 'manager':
-        return render_template('dashboard_manager.html')
+        filtered_users = filter_manager_users(users_list, logged_user_company)
+        return render_template(
+            'dashboard_manager.html', users=list(filtered_users))
     else:
-        return render_template('dashboard_employee.html')
+        filtered_users = filter_employee_users(
+            users_list, logged_user_company)
+
+        my_reports = show_user_reports(logged_in_user)
+        my_temp = show_user_t_reports(logged_in_user)
+        for report in my_reports:
+            print("report: ", report['t_ts_submit'])
+
+        return render_template(
+            'dashboard_employee.html',
+            users=list(filtered_users),
+            my_reports=my_reports,
+            my_temps=my_temp)
 
 
 @app.route('/users')
@@ -271,22 +323,6 @@ def users():
         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
         error_message = e
         return render_template('error.html', error_message=error_message)
-
-
-
-# @app.route('/procedures')
-# # @login_required
-# def procedures():
-#     # Check if user is logged in:
-#     if 'user' not in session:
-#         return redirect(url_for('login'))
-#     try:
-#         procedures = list(procedures_coll.find())
-#         return render_template('procedures.html', procedures=procedures)
-#     except Exception as e:
-#         logging.error(f'Error accessing MongoDB: {e}', exc_info=True)
-#         error_message = e
-#         return render_template('error.html', error_message=error_message)
 
 
 @app.route('/tasks')
@@ -324,6 +360,10 @@ def temps_form():
 
 
 def process_form_data(form_data, dt, session_user):
+    """
+    This function is called from the app.py file
+    when processing the reports form data submitted by the user.
+    """
     tasks = []
     task_list_db = []
     task_responses = {}

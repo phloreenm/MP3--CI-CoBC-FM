@@ -65,3 +65,28 @@ def should_edit_role(
     else:
         can_edit = False
     return can_edit
+
+
+def filter_admin_users(users):
+    """
+    function to filter users displayed to the admin
+    """
+    return [user for user in users if user['role'] in ['admin', 'manager']]
+
+
+def filter_manager_users(users, company):
+    """
+    function to filter users displayed to the admin
+    """
+    return [user for user in users if user['company'] == company]
+
+
+def filter_employee_users(users, company):
+    """
+    function to filter users displayed to the admin
+    """
+    return [
+        user for user in users if user[
+            # 'company'] == company and user['role'] == 'employee']
+            'company'] == company]
+

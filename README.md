@@ -22,24 +22,25 @@ I designed three main levels of Role-based Access Control:
 - **System Administrator**
   - 'sysadmin'(super-user):
     - Is the owner of the app providing the services to its clients (restaurant owners in our case)
-    - As a backup solution, there is a special function called once at the application starting. This functions checks the database if this user exists. If not, it will be created with default credentials [hard-coded un: 'sysadmin, pw: '1111'], which may be updated at a later date.
     - This user can't be deleted.
+    - As a backup solution, there are two special ways of preventing removing this super-user:
+      - a function called once at the application starting. This functions checks the database if this super-user exists. If not, it will be created with default credentials [hard-coded un: 'sysadmin, pw: '1111'], which may be updated at a later date.
+      - in the users list, when deleting an existing user, there is a check and then a redirect to the Register page if trying to delete this user.
     - Has the right to C.R.U.D.:
+    - 
       - He can do 'admin' and 'manager' Users database operations
       - Can edit his details, except for the 'username' and 'role'.
-  - any other 'admin' can manipulate the Users' database (admins and managers)  but can't delete himself or 'sysadmin'.
+  - any other 'admin' can manipulate the Users' database (admins and managers), but can't delete himself or 'sysadmin'.
 
 - **Restaurant Manager** or 'manager' role:
   - Has the right to CRUD:
-    - Restaurant's employees
-    - Daily tasks
-    - Hazards procedures
+    - Restaurant's employees: managers and employees
+    - Daily tasks and access Dashboard
     - Create new forms
 - **Employee** or 'user' role:
   - Has the right to:
     - Read:
       - Daily Tasks
-      - Hazard Procedures
       - Submit/Fil Daily Tasks Predefined Forms
 
 - Obviously, the application has the potential to be developed even further to match other business models or to incorporate even more capabilities, but in future releases.
