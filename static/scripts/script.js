@@ -29,17 +29,8 @@ $(document).ready(function () {
   $('select').formSelect();
   $('.modal').modal();
   $('.datepicker').datepicker();
+  $('.parallax').parallax();
 
-  // // add active class for navigation menu items:
-  // let this_page = window.location.pathname.split("/").pop();
-  // // check if the current page is in NAV_ITEMS
-  // if (NAV_ITEMS.hasOwnProperty(this_page)) {
-  //   let activeNavItem = NAV_ITEMS[this_page];
-  //   if (activeNavItem) {
-  //     // if true add the active class to the navigation menu item:
-  //     $('#' + activeNavItem).addClass('current');
-  //   }
-  // } 
   // add active class for navigation menu items:
   let this_page = window.location.pathname.split("/").pop();
   // check if the current page is in NAV_ITEMS

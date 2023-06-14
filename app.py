@@ -327,6 +327,9 @@ def users():
 
 @app.route('/tasks')
 def tasks():
+    # Check if user is logged in:
+    if 'user' not in session:
+        return redirect(url_for('login'))
     tasks = list(daily_tasks_coll.find())
     t_reports = list(temps_coll.find(
             {}).sort('timestamp', -1).limit(20))

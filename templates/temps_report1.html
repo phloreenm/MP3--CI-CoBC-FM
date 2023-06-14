@@ -38,28 +38,36 @@
                 </h5>
             </div>
         </div>
-        <div class="row">
-            <div class="collection">
-            {% for tr in reports %}
-            <div class="collection-item col s12 m6 l4 xl4">
-                <div class="card">
-                  <div class="card-content">
-                    <span class="truncate">{{ tr['dish_name'].title() }}</span>
-                    <p>
-                      <strong>Date / Time:</strong> {{ tr['timestamp'] }}<br>
-                      <strong>RP:</strong> {{ tr['user'].title() }}<br>
-                      <strong>Probe:</strong> {{ tr['probe_used'].title() }}<br>
-                      <strong>Temperature:</strong> {{ tr['temperature'] }}<br>
-                      <strong>Unit:</strong> {{ tr['unit'].title() }}<br>
-                      {% if session['role'] == 'manager' %}
-                        <strong>Delete:</strong> <a class="waves-effect waves-light red accent-4 btn modal-trigger right" href="#modal_{{ session['user'] }}"><i class="fa-solid fa-square-minus fa-10x"></i></a>
-                      {% endif %}
-                    </p>
-                  </div>
-                </div>
-              </div>
-          
-          
+        <table class="responsive-table striped">
+            <thead>
+                <!-- SEE THIS FOR CHECKBOXES IN TABLE:https://www.oracle.com/webfolder/technetwork/jet-920/jetCookbook.html?component=selector&demo=checkboxSelectableTable -->
+                <!-- USE THE THREE VIEW BY DATE to list result by the date they were submitted -->
+                <tr>
+                    <th>Date / Time</th>
+                    <th>RP</th>
+                    <th>Dish Name</th>
+                    <th>Probe Used</th>
+                    <th>Temperature</th>
+                    <th>Unit</th>
+                    {% if session['role'] == 'manager' %}
+                        <th>Delete</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for tr in reports %}
+                <tr>
+                    <td>{{ tr['timestamp'] }}</td>
+                    <td>{{ tr['user'].title() }}</td>
+                    <td>{{ tr['dish_name'].title() }}</td>
+                    <td>{{ tr['probe_used'].title() }}</td>
+                    <td>{{ tr['temperature'] }}</td>
+                    <td>{{ tr['unit'].title() }}</td>
+
+                    {% if session['role'] == 'manager' %}
+                        <td><a class="waves-effect waves-light red accent-4 btn modal-trigger right" href="#modal_{{ session['user'] }}"><i class="fa-solid fa-square-minus fa-10x"></i></a></td>
+                    {% endif %}
+                </tr>
                 <!-- Modal base code SOURCE: https://materializecss.com/modals.html#! -->
                 <!-- Modal Structure -->
                 <div id="modal_{{ session['user'] }}" class="modal">
@@ -75,8 +83,8 @@
                 </div>
 
                 {% endfor %}
-            </div>
-        </div>
+            </tbody>
+        </table>
         
     {% else %}
         <h3>No reports found!</h3>
