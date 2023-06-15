@@ -78,7 +78,7 @@ The two choices for a database were MongoDB and PostgreSQL. While I would have p
 ---
 
 # **Code refactoring**
-- In a future release of the project's code, I shall approach the object oriented paradigm to represent the database persistence in objects/classes. This way the necessary code will be less.+
+- In the forthcoming release, my aim to this project is to transition towards the **object-oriented** paradigm and implement relevant **design patterns** to elevate code quality. By doing so, it would promote an improved code readability, maintainability, reusability, and scalability.
 
 ---
 
@@ -115,6 +115,10 @@ The two choices for a database were MongoDB and PostgreSQL. While I would have p
     - The older router and function which would keep the GET and POST methods requests, but on POST method request, there would be a call for the functions processing the form data.
 
 ---
+
+
+
+
 ---
 
 ## **Credits**
