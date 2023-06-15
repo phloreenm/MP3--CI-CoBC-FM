@@ -142,6 +142,11 @@ The two choices for a database were MongoDB and PostgreSQL. While I would have p
   - [Manager icon](https://cdn2.iconfinder.com/data/icons/business-finance-135/64/manager-1024.png)
   - [Administrator icon](https://icons.iconarchive.com/icons/aha-soft/free-large-boss/512/Admin-icon.png)
   - [Modal base code SOURCE](https://materializecss.com/modals.html#!)
+- Home page template layout
+  - [Parallax container, Section templates from MaterializeCSS examples](https://materializecss.com/templates/parallax-template/preview.html)
+- Images:
+  - [Responsive design bg image](https://www.pexels.com/ro-ro/fotografie/tabel-tehnologie-tableta-ceai-286565/)
+  - [Manager background](https://www.pexels.com/ro-ro/fotografie/expresie-faciala-conexiune-apropiere-tehnologie-3779677/)
 ### **Information**
 - Cards:
   - [Food Standards Agency UK](https://www.food.gov.uk/)
