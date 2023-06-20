@@ -21,12 +21,12 @@
     <!-- navigation bar -->
     <!-- SOURCE base code: https://materializecss.com/navbar.html -->
     <!-- Dropdown Structure -->
-    <ul id="dd_menu" class="dropdown-content grey darken-4">
+    <!-- <ul id="dd_menu" class="dropdown-content grey darken-4">
       <li><a href="{{ url_for('index') }}">Log In</a></li>
       <li><a href="{{ url_for('index') }}">Log Out</a></li>
       <li class="divider"></li>
       <li><a href="{{ url_for('index') }}">Register</a></li>
-    </ul>
+    </ul> -->
     <!-- main navigation -->
     <nav>
       <div class="nav-wrapper text-white grey darken-4">
@@ -54,7 +54,7 @@
             <li><a href="{{ url_for('login') }}" data-nav-item="login"  aria-label="Log In Registered user"><i class="fa-solid fa-right-to-bracket"></i> Log In</a></li>
           {% endif %}
         <!-- Dropdown Trigger -->
-        <li><a class="dropdown-trigger" href="#!" data-target="dd_menu"><i class="fa-solid fa-caret-down"></i>DropDown</a></li>
+        <!-- <li><a class="dropdown-trigger" href="#!" data-target="dd_menu"><i class="fa-solid fa-caret-down"></i>DropDown</a></li> -->
         </ul>
       </div>
     </nav>
@@ -80,16 +80,16 @@
         <li><a href="{{ url_for('index') }}" data-nav-item="home" aria-label="Home Page"><i class="fa-solid fa-house"></i> Home</a></li>
         <li><a href="{{ url_for('login') }}" data-nav-item="login"  aria-label="Log In Registered user"><i class="fa-solid fa-right-to-bracket"></i> Log In</a></li>
       {% endif %}
-      <li><a class="dropdown-trigger" href="#!" data-target="dd_menu"><i class="fa-solid fa-caret-down"></i>DropDown</a></li>
+      <!-- <li><a class="dropdown-trigger" href="#!" data-target="dd_menu"><i class="fa-solid fa-caret-down"></i>DropDown</a></li> -->
     </ul>
 
   </header>
 
-  <!-- <main class="container"> -->
+  <main>
     {% block content %}
 
     {% endblock %}
-  <!-- </main> -->
+  </main>
   <footer class="page-footer grey darken-2">
     <div class="container">
       <div class="row">

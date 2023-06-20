@@ -10,7 +10,7 @@ const NAV_ITEMS = {
   'register': 'register',
 };
 // JQuery for Materialize library initializations
-$(document).ready(function () {
+$(document).ready(function(){
   $('.sidenav').sidenav({
     draggable: 'true',
     inDuration: 250,
