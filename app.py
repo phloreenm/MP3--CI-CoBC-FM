@@ -246,6 +246,49 @@ def logout():
     return redirect(url_for('index'))
 
 
+def statistics_count():
+    """
+    Count the number of registered companies, users and reports
+    to be displayed on Admins dashboard
+    """
+    reg_companies = len(set(users_coll.distinct('company')))
+    reg_users = len(set(users_coll.distinct('un')))
+    reg_reports = len(set(dt_reps_coll.distinct('t_ts_submit')))
+
+    today_date = datetime.now().strftime("%Y-%m-%d")
+    start_of_day = today_date + "T00:00:00Z"
+    end_of_day = today_date + "T23:59:59Z"
+    reps_agg = [
+        {
+            "$match": {
+                "t_ts_submit": {
+                    "$gte": start_of_day,
+                    "$lt": end_of_day
+                }
+            }
+        },
+        {
+            "$count": "total_documents"
+        }
+            ]
+
+    reps = dt_reps_coll.aggregate(reps_agg)
+    count_result = next(reps, None)
+
+    if count_result is not None:
+        reps_count = count_result["total_documents"]
+    else:
+        reps_count = 0
+
+    stats_results = {
+        "registered_companies": reg_companies,
+        "registered_users": reg_users,
+        "registered_reports": reg_reports,
+        "today_reports": reps_count
+    }
+    return stats_results
+
+
 def show_user_reports(user):
     reports = list(dt_reps_coll.find(
         {'t_rp_un': user, }).sort('timestamp', -1))
@@ -270,24 +313,22 @@ def dashboard(role):
         return redirect(url_for('login'))
     # Set user's role in session:
     session['user_role'] = role
-    # company = users_coll.find_one({'un': logged_in_user})['company']
     # Check user's role and redirect if not logged in:
     if role not in ['admin', 'manager', 'employee']:
         flash('You\'re not authorized to access this page', 'danger')
         return redirect(url_for('login'))
     # Get list of all users:
     users_list = list(users_coll.find().sort('role', 1))
-    # print("users_list", users_list)
     logged_in_user = session['user']
-    # print("logged_in_user", logged_in_user)
     logged_user_company = users_coll.find_one(
         {'un': logged_in_user})['company']
-    # print("logged_user_company", logged_user_company)
     # Filter users list based on role:
     if role == 'admin':
         filtered_users = filter_admin_users(users_list)
+        stats_results = statistics_count()
         return render_template(
-            'dashboard_admin.html', users=list(filtered_users))
+            'dashboard_admin.html', users=list(
+                filtered_users), stats=stats_results)
     elif role == 'manager':
         filtered_users = filter_manager_users(users_list, logged_user_company)
         return render_template(

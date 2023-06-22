@@ -81,7 +81,7 @@ footer.page-footer {
 /* New cards */
 .container-fluid {
   width: 100%;
-  min-height: calc(100vh - 122px);
+  min-height: calc(100vh - 130px);
   padding: 25px 18px;
 }
 .card .card-content .card-title {

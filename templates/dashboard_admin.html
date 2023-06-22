@@ -31,399 +31,432 @@ Dashboard page
 <div class="container-fluid">
     <div class="row">
         <div class="col m12 s12 l12">
-            <h3>Dashboard</h3>
-            <h5 style="color: var(--secondary-text);">Welcome {user}</h5>
-
-
+            <h3 style="text-align: center;">Dashboard</h3>
+            <h5 style="color: var(--secondary-text); text-align: center;">Welcome {{ session['user'].upper() }}</h5>
         </div>
-       
-            <!-- ============================================================== -->
-            <!-- Sales Summery -->
-            <!-- ============================================================== -->
-            <div class="row">
-              <div class="col m6 s12 l3">
+        <!-- Mini-Cards section -->
+        <div class="row">
+            <div class="col m6 s12 l3">
                 <div class="card">
-                  <div class="cards-padding">
-                    <div class="disp-flex no-block alg-el-center">
-                      <div class="m-r-10 blue-text text-accent-4">
-                        <i class="fa-solid fa-briefcase db-icons"></i>
-                      </div>
-                      <div class="mini-cards">
-                        <span>Registered Companies</span>
-                        <h4 class="font-medium m-b-0">7</h4>
-                      </div>
+                    <div class="cards-padding">
+                        <div class="disp-flex no-block alg-el-center">
+                            <div class="m-r-10 blue-text text-accent-4">
+                                <i class="fa-solid fa-briefcase db-icons"></i>
+                            </div>
+                            <div class="mini-cards">
+                                <span>Registered Companies</span>
+                                <h4 class="font-medium m-b-0">{{ stats.registered_companies }}</h4>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="col m6 s12 l3">
-                <div class="card">
-                  <div class="cards-padding">
-                    <div class="disp-flex no-block alg-el-center">
-                      <div class="m-r-10 light-blue-text">
-                        <i class="fa-solid fa-users db-icons"></i>
-                      </div>
-                      <div class="mini-cards">
-                        <span class="mini-cards-title">Registered users</span>
-                        <h4 class="font-medium m-b-0">34</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col m6 s12 l3">
-                <div class="card">
-                  <div class="cards-padding">
-                    <div class="disp-flex no-block alg-el-center">
-                      <div class="m-r-10 orange-text text-darken-2 text-darken-1">
-                        <i class="fa-regular fa-clipboard db-icons"></i>
-                      </div>
-                      <div class="mini-cards">
-                        <span>Reports submitted</span>
-                        <h4 class="font-medium m-b-0">127</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col m6 s12 l3">
-                <div class="card">
-                  <div class="cards-padding">
-                    <div class="disp-flex no-block alg-el-center">
-                      <div class="m-r-10 orange-text text-darken-2 text-darken-1">
-                        <i class="fa-solid fa-calendar-day db-icons"></i>
-                      </div>
-                      <div class="mini-cards">
-                        <span>Submitted Today</span>
-                        <h4 class="font-medium m-b-0">3</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-
-            <!-- Users -->
-            <div class="row">
+            <div class="col m6 s12 l3">
+                <div class="card">
+                    <div class="cards-padding">
+                        <div class="disp-flex no-block alg-el-center">
+                            <div class="m-r-10 light-blue-text">
+                                <i class="fa-solid fa-users db-icons"></i>
+                            </div>
+                            <div class="mini-cards">
+                                <span class="mini-cards-title">Registered users</span>
+                                <h4 class="font-medium m-b-0">{{ stats.registered_users }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col m6 s12 l3">
+                <div class="card">
+                    <div class="cards-padding">
+                        <div class="disp-flex no-block alg-el-center">
+                            <div class="m-r-10 orange-text text-darken-2 text-darken-1">
+                                <i class="fa-regular fa-clipboard db-icons"></i>
+                            </div>
+                            <div class="mini-cards">
+                                <span>Reports submitted</span>
+                                <h4 class="font-medium m-b-0">{{ stats.registered_reports }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col m6 s12 l3">
+                <div class="card">
+                    <div class="cards-padding">
+                        <div class="disp-flex no-block alg-el-center">
+                            <div class="m-r-10 orange-text text-darken-2 text-darken-1">
+                                <i class="fa-solid fa-calendar-day db-icons"></i>
+                            </div>
+                            <div class="mini-cards">
+                                <span>Submitted Today</span>
+                                <h4 class="font-medium m-b-0">{{ stats.today_reports }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Users lists section -->
+        <!-- Users -->
+        <div class="row">
+            {% if users %}
                 <div class="col s12 l6">
                     <div class="card">
+                        <div class="card-content">
+                            <div class="d-flex alg-el-center">
+                                <div>
+                                    <h5 class="card-title">System Administrators</h5>
+                                    <h6 class="card-subtitle">Registered System Administrators</h6>
+                                </div>
+                                <div class="ml-auto">
+                                </div>
+                            </div>
+                            <div class="table-responsive m-b-20">
+                                <table class="">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Company</th>
+                                            <th>Super-User</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in users %}
+                                            {% if user['role'] == 'admin' %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex no-block alg-el-center">
+                                                            <div class="m-r-10">
+                                                                <img src="{{ url_for('static', filename='images/sysadmin.png') }}"
+                                                                    alt="user" class="circle" width="45">
+                                                            </div>
+                                                            <div class="">
+                                                                <h5 class="m-b-0 font-16 font-medium">{{ user['fname'].title() }} {{ user['lname'].title() }}</h5>
+                                                                <span>{{ user['email'].lower() }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="green-text">{{ user['company'].title() }}</td>
+                                                    {% if user['un'] == 'sysadmin' %}
+                                                        <td>Yes</td>
+                                                    {% else %}
+                                                        <td>No</td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a href="{{ url_for('users') }}"><i class="fas fa-angle-right"></i> View all users</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if users %}
+                <div class="col s12 l6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="d-flex alg-el-center">
+                                <div>
+                                    <h5 class="card-title">Restaurant Managers</h5>
+                                    <h6 class="card-subtitle">Registered businesses and managers</h6>
+                                </div>
+                                <div class="ml-auto">
+                                </div>
+                            </div>
+                            <div class="table-responsive m-b-20">
+                                <table class="">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Company</th>
+                                            <th>Username</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in users %}
+                                            {% if user['role'] == 'manager' %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex no-block alg-el-center">
+                                                            <div class="m-r-10">
+                                                                <img src="{{ url_for('static', filename='images/manager.png') }}"
+                                                                    alt="user" class="circle" width="45">
+                                                            </div>
+                                                            <div class="">
+                                                                <h5 class="m-b-0 font-16 font-medium">{{ user['fname'].title() }} {{ user['lname'].title() }}</h5>
+                                                                <span>{{ user['email'].lower() }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="green-text">{{ user['company'].title() }}</td>
+                                                    <td>{{ user['un'] }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a href="{{ url_for('users') }}"><i class="fas fa-angle-right"></i> View all users</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- <div class="col s12 l6">
+                <div class="card">
                     <div class="card-content">
-                        <div class="d-flex alg-el-center">
-                        <div>
-                            <h5 class="card-title">System Administrators</h5>
-                            <h6 class="card-subtitle">Registered System Administrators</h6>
-                        </div>
-                        <div class="ml-auto">
-                        </div>
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="card-title">Restaurant Managers</h5>
+                                <h6 class="card-subtitle">Registered businesses and managers</h6>
+                            </div>
+                            <div class="ml-auto">
+                            </div>
                         </div>
                         <div class="table-responsive m-b-20">
-                        <table class="">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Company</th>
-                                <th>Super-User</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                <div class="d-flex no-block alg-el-center">
-                                    <div class="m-r-10">
-                                    <img src="{{ url_for('static', filename='images/sysadmin.png') }}" alt="user" class="circle" width="45">
-                                    </div>
-                                    <div class="">
-                                    <h5 class="m-b-0 font-16 font-medium">System Administrator</h5><span>sysadmin@email.com</span>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="green-text"><i class="fa fa-arrow-up"></i> Company 1</td>
-                                <td>Yes</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div class="d-flex no-block alg-el-center">
-                                    <div class="m-r-10"><img src="{{ url_for('static', filename='images/manager.png') }}" alt="user" class="circle" width="45"></div>
-                                    <div class="">
-                                    <h5 class="m-b-0 font-16 font-medium">Sys Admin 2</h5><span>sysadmin2@email.com</span>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="green-text"><i class="fa fa-arrow-up"></i> Company 2</td>
-                                <td>No</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div class="d-flex no-block alg-el-center">
-                                    <div class="m-r-10"><img src="{{ url_for('static', filename='images/manager.png') }}" alt="user" class="circle" width="45"></div>
-                                    <div class="">
-                                    <h5 class="m-b-0 font-16 font-medium">Julian Josephs</h5><span>Josephs@gmail.com</span>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="orange-text"><i class="fa fa-arrow-up"></i> Company 2</td>
-                                <td>No</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div class="d-flex no-block alg-el-center">
-                                    <div class="m-r-10"><img src="{{ url_for('static', filename='images/manager.png') }}" alt="user" class="circle" width="45"></div>
-                                    <div class="">
-                                    <h5 class="m-b-0 font-16 font-medium">Jan Petrovic</h5><span>hgover@gmail.com</span>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="green-text"><i class="fa fa-arrow-up"></i> Company 2</td>
-                                <td>No</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                            <table class="">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>????</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex no-block align-items-center">
+                                                <div class="m-r-10">
+                                                    <img src="{{ url_for('static', filename='images/sysadmin.png') }}"
+                                                        alt="user" class="circle" width="45">
+                                                </div>
+                                                <div class="">
+                                                    <h5 class="m-b-0 font-16 font-medium">Manager 1</h5>
+                                                    <span>man1@email.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="green-text"><i class="fa fa-arrow-up"></i> Company 1</td>
+                                        <td>Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex no-block align-items-center">
+                                                <div class="m-r-10"><img
+                                                        src="{{ url_for('static', filename='images/manager.png') }}"
+                                                        alt="user" class="circle" width="45"></div>
+                                                <div class="">
+                                                    <h5 class="m-b-0 font-16 font-medium">Manager 2</h5>
+                                                    <span>man2@email.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="green-text"><i class="fa fa-arrow-up"></i> Company 2</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex no-block align-items-center">
+                                                <div class="m-r-10"><img
+                                                        src="{{ url_for('static', filename='images/manager.png') }}"
+                                                        alt="user" class="circle" width="45"></div>
+                                                <div class="">
+                                                    <h5 class="m-b-0 font-16 font-medium">Manager 3</h5>
+                                                    <span>man3@gmail.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="orange-text"><i class="fa fa-arrow-up"></i> Company 2</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex no-block align-items-center">
+                                                <div class="m-r-10"><img
+                                                        src="{{ url_for('static', filename='images/manager.png') }}"
+                                                        alt="user" class="circle" width="45"></div>
+                                                <div class="">
+                                                    <h5 class="m-b-0 font-16 font-medium">Manager 4</h5>
+                                                    <span>man4@gmail.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="green-text"><i class="fa fa-arrow-up"></i> Company 2</td>
+                                        <td>No</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <a href="{{ url_for('users') }}"><i class="fas fa-angle-right"></i> View all users</a>
                     </div>
-                    </div>
                 </div>
-                <div class="col s12 l6">
-                    <div class="card">
-                    <div class="card-content">
-                        <div class="d-flex align-items-center">
-                        <div>
-                            <h5 class="card-title">Restaurant Managers</h5>
-                            <h6 class="card-subtitle">Registered Managers</h6>
-                        </div>
-                        <div class="ml-auto">
-                        </div>
-                        </div>
-                        <div class="table-responsive m-b-20">
-                        <table class="">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Company</th>
-                                <th>????</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                <div class="d-flex no-block align-items-center">
-                                    <div class="m-r-10">
-                                    <img src="{{ url_for('static', filename='images/sysadmin.png') }}" alt="user" class="circle" width="45">
-                                    </div>
-                                    <div class="">
-                                    <h5 class="m-b-0 font-16 font-medium">Manager 1</h5><span>man1@email.com</span>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="green-text"><i class="fa fa-arrow-up"></i> Company 1</td>
-                                <td>Yes</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div class="d-flex no-block align-items-center">
-                                    <div class="m-r-10"><img src="{{ url_for('static', filename='images/manager.png') }}" alt="user" class="circle" width="45"></div>
-                                    <div class="">
-                                    <h5 class="m-b-0 font-16 font-medium">Manager 2</h5><span>man2@email.com</span>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="green-text"><i class="fa fa-arrow-up"></i> Company 2</td>
-                                <td>No</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div class="d-flex no-block align-items-center">
-                                    <div class="m-r-10"><img src="{{ url_for('static', filename='images/manager.png') }}" alt="user" class="circle" width="45"></div>
-                                    <div class="">
-                                    <h5 class="m-b-0 font-16 font-medium">Manager 3</h5><span>man3@gmail.com</span>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="orange-text"><i class="fa fa-arrow-up"></i> Company 2</td>
-                                <td>No</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div class="d-flex no-block align-items-center">
-                                    <div class="m-r-10"><img src="{{ url_for('static', filename='images/manager.png') }}" alt="user" class="circle" width="45"></div>
-                                    <div class="">
-                                    <h5 class="m-b-0 font-16 font-medium">Manager 4</h5><span>man4@gmail.com</span>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="green-text"><i class="fa fa-arrow-up"></i> Company 2</td>
-                                <td>No</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                        <a href="{{ url_for('users') }}"><i class="fas fa-angle-right"></i> View all users</a>
-                    </div>
-                    </div>
-                </div>
-                
-            </div>
-
-            <!-- Reports -->
-            <!-- <div class="row">         
-                <div class="col s12 l6">
-                    <div class="card">
-                      <div class="card-content">
-                        <div class="d-flex align-items-center">
-                          <div>
-                            <h5 class="card-title">Recent Sales</h5>
-                            <h6 class="card-subtitle">Sales on products we have</h6>
-                          </div>
-                          <div class="ml-auto">
-                            <div class="input-field dl support-select">
-                              <div class="select-wrapper"><input class="select-dropdown dropdown-trigger" type="text" readonly="true" data-target="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c"><ul id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c" class="dropdown-content select-dropdown" tabindex="0"><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c0" tabindex="0" class="selected"><span>10 Mar - 10 Apr</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c1" tabindex="0"><span>10 Apr - 10 May</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c2" tabindex="0"><span>10 May - 10 Jun</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c3" tabindex="0"><span>10 Jun - 10 Jul</span></li></ul><svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><select tabindex="-1">
-                                <option value="0" selected="">10 Mar - 10 Apr</option>
-                                <option value="1">10 Apr - 10 May</option>
-                                <option value="2">10 May - 10 Jun</option>
-                                <option value="3">10 Jun - 10 Jul</option>
-                              </select></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="table-responsive m-b-20 m-t-15">
-                          <table class="">
-                            <thead>
-                              <tr>
-                                <th>Product</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                                <th>Price</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <p class="">Elite Admin</p>
-                                </td>
-                                <td><span class="label label-info">Sale</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">$96K</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <p class="">Real Homes WP Theme</p>
-                                </td>
-                                <td><span class="label cyan">Extended</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">$85K</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <p class="">MedicalPro WP Theme</p>
-                                </td>
-                                <td><span class="label label-primary">Multiple</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">$81K</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <p class="">HostinPress Html</p>
-                                </td>
-                                <td><span class="label label-warning">Tax</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">-$30K</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <p class="">Materialx Admin</p>
-                                </td>
-                                <td><span class="label label-info">Sale</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">$80K</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <a href="javascript: void(0)"><i class="fas fa-angle-right"></i> View Complete Report</a>
-                      </div>
-                    </div>
-                  </div>
-                <div class="col s12 l6">
-                    <div class="card">
-                      <div class="card-content">
-                        <div class="d-flex align-items-center">
-                          <div>
-                            <h5 class="card-title">Recent Sales</h5>
-                            <h6 class="card-subtitle">Sales on products we have</h6>
-                          </div>
-                          <div class="ml-auto">
-                            <div class="input-field dl support-select">
-                              <div class="select-wrapper"><input class="select-dropdown dropdown-trigger" type="text" readonly="true" data-target="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c"><ul id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c" class="dropdown-content select-dropdown" tabindex="0"><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c0" tabindex="0" class="selected"><span>10 Mar - 10 Apr</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c1" tabindex="0"><span>10 Apr - 10 May</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c2" tabindex="0"><span>10 May - 10 Jun</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c3" tabindex="0"><span>10 Jun - 10 Jul</span></li></ul><svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><select tabindex="-1">
-                                <option value="0" selected="">10 Mar - 10 Apr</option>
-                                <option value="1">10 Apr - 10 May</option>
-                                <option value="2">10 May - 10 Jun</option>
-                                <option value="3">10 Jun - 10 Jul</option>
-                              </select></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="table-responsive m-b-20 m-t-15">
-                          <table class="">
-                            <thead>
-                              <tr>
-                                <th>Product</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                                <th>Price</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <p class="">Elite Admin</p>
-                                </td>
-                                <td><span class="label label-info">Sale</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">$96K</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <p class="">Real Homes WP Theme</p>
-                                </td>
-                                <td><span class="label cyan">Extended</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">$85K</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <p class="">MedicalPro WP Theme</p>
-                                </td>
-                                <td><span class="label label-primary">Multiple</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">$81K</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <p class="">HostinPress Html</p>
-                                </td>
-                                <td><span class="label label-warning">Tax</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">-$30K</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <p class="">Materialx Admin</p>
-                                </td>
-                                <td><span class="label label-info">Sale</span></td>
-                                <td>May 23, 2018</td>
-                                <td class="blue-grey-text text-darken-4 font-medium">$80K</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <a href="javascript: void(0)"><i class="fas fa-angle-right"></i> View Complete Report</a>
-                      </div>
-                    </div>
-                  </div>
-                
             </div> -->
 
+        </div>
+
+        <!-- Reports -->
+        <!-- <div class="row">         
+            <div class="col s12 l6">
+                <div class="card">
+                    <div class="card-content">
+                    <div class="d-flex align-items-center">
+                        <div>
+                        <h5 class="card-title">Recent Sales</h5>
+                        <h6 class="card-subtitle">Sales on products we have</h6>
+                        </div>
+                        <div class="ml-auto">
+                        <div class="input-field dl support-select">
+                            <div class="select-wrapper"><input class="select-dropdown dropdown-trigger" type="text" readonly="true" data-target="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c"><ul id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c" class="dropdown-content select-dropdown" tabindex="0"><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c0" tabindex="0" class="selected"><span>10 Mar - 10 Apr</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c1" tabindex="0"><span>10 Apr - 10 May</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c2" tabindex="0"><span>10 May - 10 Jun</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c3" tabindex="0"><span>10 Jun - 10 Jul</span></li></ul><svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><select tabindex="-1">
+                            <option value="0" selected="">10 Mar - 10 Apr</option>
+                            <option value="1">10 Apr - 10 May</option>
+                            <option value="2">10 May - 10 Jun</option>
+                            <option value="3">10 Jun - 10 Jul</option>
+                            </select></div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive m-b-20 m-t-15">
+                        <table class="">
+                        <thead>
+                            <tr>
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>
+                                <p class="">Elite Admin</p>
+                            </td>
+                            <td><span class="label label-info">Sale</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">$96K</td>
+                            </tr>
+                            <tr>
+                            <td>
+                                <p class="">Real Homes WP Theme</p>
+                            </td>
+                            <td><span class="label cyan">Extended</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">$85K</td>
+                            </tr>
+                            <tr>
+                            <td>
+                                <p class="">MedicalPro WP Theme</p>
+                            </td>
+                            <td><span class="label label-primary">Multiple</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">$81K</td>
+                            </tr>
+                            <tr>
+                            <td>
+                                <p class="">HostinPress Html</p>
+                            </td>
+                            <td><span class="label label-warning">Tax</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">-$30K</td>
+                            </tr>
+                            <tr>
+                            <td>
+                                <p class="">Materialx Admin</p>
+                            </td>
+                            <td><span class="label label-info">Sale</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">$80K</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <a href="javascript: void(0)"><i class="fas fa-angle-right"></i> View Complete Report</a>
+                    </div>
+                </div>
+                </div>
+            <div class="col s12 l6">
+                <div class="card">
+                    <div class="card-content">
+                    <div class="d-flex align-items-center">
+                        <div>
+                        <h5 class="card-title">Recent Sales</h5>
+                        <h6 class="card-subtitle">Sales on products we have</h6>
+                        </div>
+                        <div class="ml-auto">
+                        <div class="input-field dl support-select">
+                            <div class="select-wrapper"><input class="select-dropdown dropdown-trigger" type="text" readonly="true" data-target="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c"><ul id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c" class="dropdown-content select-dropdown" tabindex="0"><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c0" tabindex="0" class="selected"><span>10 Mar - 10 Apr</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c1" tabindex="0"><span>10 Apr - 10 May</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c2" tabindex="0"><span>10 May - 10 Jun</span></li><li id="select-options-c30e5792-b440-ea59-7198-b9feb5ac715c3" tabindex="0"><span>10 Jun - 10 Jul</span></li></ul><svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><select tabindex="-1">
+                            <option value="0" selected="">10 Mar - 10 Apr</option>
+                            <option value="1">10 Apr - 10 May</option>
+                            <option value="2">10 May - 10 Jun</option>
+                            <option value="3">10 Jun - 10 Jul</option>
+                            </select></div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive m-b-20 m-t-15">
+                        <table class="">
+                        <thead>
+                            <tr>
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>
+                                <p class="">Elite Admin</p>
+                            </td>
+                            <td><span class="label label-info">Sale</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">$96K</td>
+                            </tr>
+                            <tr>
+                            <td>
+                                <p class="">Real Homes WP Theme</p>
+                            </td>
+                            <td><span class="label cyan">Extended</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">$85K</td>
+                            </tr>
+                            <tr>
+                            <td>
+                                <p class="">MedicalPro WP Theme</p>
+                            </td>
+                            <td><span class="label label-primary">Multiple</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">$81K</td>
+                            </tr>
+                            <tr>
+                            <td>
+                                <p class="">HostinPress Html</p>
+                            </td>
+                            <td><span class="label label-warning">Tax</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">-$30K</td>
+                            </tr>
+                            <tr>
+                            <td>
+                                <p class="">Materialx Admin</p>
+                            </td>
+                            <td><span class="label label-info">Sale</span></td>
+                            <td>May 23, 2018</td>
+                            <td class="blue-grey-text text-darken-4 font-medium">$80K</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <a href="javascript: void(0)"><i class="fas fa-angle-right"></i> View Complete Report</a>
+                    </div>
+                </div>
+                </div>
             
+        </div> -->
+
+
     </div>
 </div>
 {% endblock %}
