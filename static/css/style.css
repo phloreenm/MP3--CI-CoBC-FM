@@ -1,4 +1,8 @@
 body {
+    --main-text: #15141A;
+    --secondary-text: #5B5B66;
+    /* --cards-subtitle: #9098ac; */
+    font-family: "Nunito Sans", sans-serif;
     min-width: 330px;
     display: flex;
     flex-direction: column;
@@ -73,6 +77,63 @@ footer.page-footer {
 .page-footer {
     margin-top: auto;
 }
+/* -------------------------------------------------------------------- */
+/* New cards */
+.container-fluid {
+  width: 100%;
+  min-height: calc(100vh - 122px);
+  padding: 25px 18px;
+}
+.card .card-content .card-title {
+  line-height: 24px;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+.card .card-title {
+  font-weight: 700;
+  font-size: 18px;
+}
+.card .card-content .card-subtitle {
+  margin-bottom: 15px;
+  margin-top: -5px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #9098ac;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #414755;
+}
+
+.db-icons {
+  font-size: 3rem;
+  margin-right: 10px;
+  /* color: #9098ac; */
+}
+.cards-padding {
+  padding: 15px;
+}
+.alg-el-center {
+  align-items: center;
+}
+.mini-cards {
+  /* border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+  border: 1px solid #e0e0e0; */
+  text-align: center;
+  width: 100%;
+}
+.disp-flex {
+  display: flex;
+}
+.mini-cards-title {
+  color: var(--secondary-text);
+
+}
+/* -------------------------------------------------------------------- */
 
 .parallax-container {
     min-height: 380px;
