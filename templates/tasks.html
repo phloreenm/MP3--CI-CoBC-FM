@@ -50,13 +50,15 @@
                             {% elif task.t_type == 'temperatures' %}
                             <br><a href="{{ url_for('reports', report_type=task.t_type) }}""><span> View reports </span><i class="fa-solid fa-list-check"></i>
                             {% endif %}
-
-                            {% if task.t_type == 'begin' %}
-                                <a href="{{ url_for('shift_form', form_type='begin')}}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
-                            {% elif task.t_type == 'finish' %}
-                                <a href="{{ url_for('shift_form', form_type='finish')}}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
-                            {% elif task.t_type == 'temperatures' %}
-                                <a href="{{ url_for('temps_form') }}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                            
+                            {% if session['role'] != 'admin' %}
+                                {% if task.t_type == 'begin' %}
+                                    <a href="{{ url_for('shift_form', form_type='begin')}}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                                {% elif task.t_type == 'finish' %}
+                                    <a href="{{ url_for('shift_form', form_type='finish')}}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                                {% elif task.t_type == 'temperatures' %}
+                                    <a href="{{ url_for('temps_form') }}" class="secondary-content"><span class="hide_it"> Add new </span><i class="fa-solid fa-list-check"></i>
+                                {% endif %}
                             {% endif %}
                         </a>
                     </li>
