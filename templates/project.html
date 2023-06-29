@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block meta %}
+Privacy Policy page
+{% endblock %}
+{% block title %}Privacy Policy - eManager{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <h2>Project Purpose</h2>
+
+      <p>This eManager app is developed as part of my Milestone Project 3 for my Web Development studies. The main
+        purpose of this project is to apply the knowledge and skills I have acquired during my studies and to showcase
+        my understanding of web development concepts.</p>
+
+      <p>Please note that this app is created for educational purposes and intended to demonstrate my abilities as a web
+        developer. It may not have all the functionalities or security measures of a fully commercialized application.
+      </p>
+
+      <p>I am dedicated to continuously improving and enhancing this project based on feedback and learning
+        opportunities. Your understanding and support are greatly appreciated as I embark on this learning journey.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+  $('#tos').toggleClass('current');
+</script>
+{% endblock %}

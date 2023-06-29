@@ -549,6 +549,11 @@ def pp():
     return render_template('pp.html')
 
 
+@app.route('/project')
+def project():
+    return render_template('project.html')
+
+
 if __name__ == '__main__':
     app.run(
         host=app.config['IP'],
