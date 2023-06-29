@@ -144,6 +144,8 @@ The two choices for a database were MongoDB and PostgreSQL. While I would have p
   - [Modal base code SOURCE](https://materializecss.com/modals.html#!)
 - Home page template layout
   - [Parallax container, Section templates from MaterializeCSS examples](https://materializecss.com/templates/parallax-template/preview.html)
+- Admin template elements:
+  - [Admin Template by By MARUTI](https://themeforest.net/item/materialart-powerful-material-admin-template/22511427)
 - Images:
   - [Responsive design bg image](https://www.pexels.com/ro-ro/fotografie/tabel-tehnologie-tableta-ceai-286565/)
   - [Manager background](https://www.pexels.com/ro-ro/fotografie/expresie-faciala-conexiune-apropiere-tehnologie-3779677/)
