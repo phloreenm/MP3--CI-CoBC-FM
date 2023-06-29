@@ -331,17 +331,15 @@ def dashboard(role):
                 filtered_users), stats=stats_results)
     elif role == 'manager':
         filtered_users = filter_manager_users(users_list, logged_user_company)
+        stats_results = statistics_count()
         return render_template(
-            'dashboard_manager.html', users=list(filtered_users))
+            'dashboard_manager.html', users=list(filtered_users),
+            stats=stats_results)
     else:
         filtered_users = filter_employee_users(
             users_list, logged_user_company)
-
         my_reports = show_user_reports(logged_in_user)
         my_temp = show_user_t_reports(logged_in_user)
-        for report in my_reports:
-            print("report: ", report['t_ts_submit'])
-
         return render_template(
             'dashboard_employee.html',
             users=list(filtered_users),
