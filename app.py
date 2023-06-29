@@ -539,6 +539,16 @@ def delete_temp(temp_id):
     return redirect(url_for('reports', report_type='temperatures'))
 
 
+@app.route('/tos')
+def tos():
+    return render_template('tos.html')
+
+
+@app.route('/pp')
+def pp():
+    return render_template('pp.html')
+
+
 if __name__ == '__main__':
     app.run(
         host=app.config['IP'],

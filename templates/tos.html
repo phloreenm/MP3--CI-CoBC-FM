@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block meta %}
+    Terms of Service page
+{% endblock %}
+{% block title %}Terms of Service - eManager{% endblock %}
+
+{% block content %}
+
+<h1>Terms of Service</h1>
+
+<p>Welcome to eManager! These terms and conditions outline the rules and regulations for the use of our application.</p>
+
+<p>By accessing or using our app, you agree to comply with these terms. If you disagree with any part of the terms, you may not access the app.</p>
+
+<h2>1. Intellectual Property</h2>
+
+<p>The eManager app and its original content, features, and functionality are owned by [Your Company Name] and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</p>
+
+<h2>2. User Accounts</h2>
+
+<p>In order to access certain features of the app, you may be required to create a user account. You are responsible for maintaining the confidentiality of your account information, including your username and password. You agree to accept responsibility for all activities that occur under your account.</p>
+
+<h2>3. Prohibited Conduct</h2>
+
+<p>When using the eManager app, you must not:</p>
+
+<ul>
+  <li>Violate any applicable laws or regulations.</li>
+  <li>Engage in unauthorized access, use, or distribution of other users' data.</li>
+  <li>Attempt to interfere with the proper functioning of the app.</li>
+  <li>Submit false or misleading information.</li>
+  <li>Engage in any activity that may harm or compromise the security or integrity of the app.</li>
+</ul>
+
+<h2>4. Limitation of Liability</h2>
+
+<p>The eManager app is provided on an "as is" and "as available" basis. [Your Company Name] shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
+
+<h2>5. Modifications</h2>
+
+<p>[Your Company Name] reserves the right to modify or replace these terms at any time. We will provide notice of any material changes through the app or by other means. Your continued use of the app following the posting of any changes constitutes acceptance of those changes.</p>
+
+<p>Please review these terms periodically for any updates or changes.</p>
+
+<h2>6. Governing Law</h2>
+
+<p>These terms shall be governed by and construed in accordance with the laws of [Your Country], without regard to its conflict of law provisions.</p>
+
+<p>If any provision of these terms is held to be invalid or unenforceable by a court, the remaining provisions of these terms will remain in effect.</p>
+
+<p>For any questions or concerns regarding these terms, please contact us at [contact email address].</p>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('#tos').toggleClass('current');
+</script>
+{% endblock %}

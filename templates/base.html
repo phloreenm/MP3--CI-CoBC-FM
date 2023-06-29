@@ -90,7 +90,19 @@
 
     {% endblock %}
   </main>
-  <footer class="page-footer grey darken-2">
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <p>&copy; 2023 Restaurant eManager. All rights reserved.</p>
+          <p><a href="{{ url_for('tos') }}">Terms of Service</a> | <a href="{{ url_for('pp') }}">Privacy Policy</a></p>
+          <p>For support or inquiries, please contact us at <a href="mailto:admin@restaurant-manager.app">admin@restaurant-manager.app</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- <footer class="page-footer grey darken-2">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
@@ -114,7 +126,7 @@
         <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
       </div>
     </div>
-  </footer>
+  </footer> -->
   <!-- jquery CDN link -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
     integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
