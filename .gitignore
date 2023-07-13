@@ -8,6 +8,7 @@ node_modules/
 .github/
 cloudinary_python.txt
 .vscode/
+.vscode/settings.json
 old/
 certificates/
 *.pem
