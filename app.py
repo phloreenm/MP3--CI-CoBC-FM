@@ -349,6 +349,9 @@ def dashboard(role):
 
 @app.route('/users')
 def users():
+    # Check if user is logged in:
+    if 'user' not in session:
+        return redirect(url_for('login'))
     try:
         logged_in_user = session['user']
         user_role = session['role']
