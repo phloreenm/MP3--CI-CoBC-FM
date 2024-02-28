@@ -131,8 +131,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 .mini-cards-title {
   color: var(--secondary-text);
-
 }
+
+.brand-logo-text {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.login-container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.login-container > p {
+  font-size: 16px; 
+  line-height: 1.5; 
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
 /* -------------------------------------------------------------------- */
 
 .parallax-container::before {
