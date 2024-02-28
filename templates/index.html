@@ -9,7 +9,7 @@ features like shift reports, inventory management, and employee scheduling today
 {% block content %}
 <div id="index-banner" class="parallax-container" style="position: relative;">
   <div style="position: relative; z-index: 2;">
-    <div class="section no-pad-bot">
+    <div class="section">
       <div class="container">
         <br><br>
         <h1 class="header center teal-text text-lighten-1">Welcome!</h1>
@@ -29,19 +29,6 @@ features like shift reports, inventory management, and employee scheduling today
   <div class="parallax"><img src="{{ url_for('static', filename='images/bg-manager.jpg') }}" alt="Manager holding a tablet"></div>
 </div>
 
-<!-- <div class="container">
-    <div class="section">
-        <div class="row">
-            <div class="col s12">
-                <h4 style="text-align: center;">Welcome to eManager</h4>
-                <h6>This is the right solution for restaurant owners and managers to efficiently manage their daily
-                    operations. Our web application was developed with the goal of streamlining the workflow and making it
-                    more organized for your restaurant.</h6>
-
-            </div>
-        </div>
-    </div>
-</div> -->
 <div class="container">
   <div class="section">
     <div class="row">
@@ -103,10 +90,10 @@ features like shift reports, inventory management, and employee scheduling today
   </div>
 </div>
 <div class="parallax-container valign-wrapper">
-  <div class="section no-pad-bot">
+  <div class="section text-overlay-index">
     <div class="container">
       <div class="row center">
-        <h5 class="header col s12 light">A modern responsive User Interface</h5>
+        <h5 class="header col s12 light" style="color: white; font-weight: bold; font-size: 24px; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);">A modern responsive User Interface</h5>
       </div>
     </div>
   </div>
@@ -153,69 +140,13 @@ features like shift reports, inventory management, and employee scheduling today
           <h2 class="center brown-text"><i class="fa-solid fa-mobile-screen"></i></h2>
           <h5 class="center">Small displays</h5>
 
-          <p class="light">Our user-friendly web app is also accesible on smartphones and compact tablets, optimized for
+          <p class="light">Our user-friendly web app is also accessible on smartphones and compact tablets, optimized for
             small screen sizes.</p>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- <div class="row">
-        <div class="col s12">
-            <h4 style="text-align: center;">Welcome to eManager</h4>
-            <h6>This is the right solution for restaurant owners and managers to efficiently manage their daily
-                operations. Our web application was developed with the goal of streamlining the workflow and making it
-                more organized for your restaurant.</h6>
-
-        </div>
-    </div> -->
-<!-- <div class="row">
-        <div class="col s12">
-            <div class="card blue darken-4">
-                <div class="card-content white-text">
-                    <span class="card-title col s12">Our Story</span>
-                    <p>At the heart of this project is a real-world need identified by a business owner who was seeking
-                        a tool to manage their restaurant's activity flow. Through collaborative brainstorming and idea
-                        sketching, we developed a robust yet uncomplicated application that serves the needs of both
-                        employees and managers alike.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col s12">
-            <div class="card blue darken-4">
-                <div class="card-content white-text">
-                    <span class="card-title col s12">A look into our role-based access control system</span>
-                    <p>Our application features a robust role-based access control system that enables various levels of
-                        user permissions. </p>
-                    <p> With different levels of access, users can perform actions ranging from basic tasks to more
-                        advanced actions:</p>
-                    <ol role="list" style="list-style: circle;">
-                        <li>The system administrator is the eManager owner. </li>
-                        <li>The restaurant Managers have intermediate access to manage various aspects of the
-                            restaurant's workflow.</li>
-                        <li>Employees have basic access, which allows them to read relevant information and submit
-                            predefined forms.</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-        <div class="col s12">
-            <div class="card blue darken-4">
-                <div class="card-content white-text">
-                    <span class="card-title col s12">Web application</span>
-                    <p>Our web application can be accessed easily from any smartphone, tablet, or laptop, making it
-                        accessible to all employees. To access the dashboard, simply login to the application.</p>
-                </div>
-                {% if not session['user'] %}
-                <div class="card-action">
-                    <a href="{{ url_for('login') }}" title="Log In existing user">Log In</a>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div> -->
-
-<!-- </div> -->
 
 {% endblock %}
 

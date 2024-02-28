@@ -181,6 +181,11 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
+.text-overlay-index {
+  position: relative;
+  z-index: 2;
+}
+
 .parallax-container {
     min-height: 380px;
     line-height: 0;
