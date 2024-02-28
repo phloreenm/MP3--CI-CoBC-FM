@@ -7,28 +7,28 @@ features like shift reports, inventory management, and employee scheduling today
 {% block title %}Home - eManager{% endblock %}
 
 {% block content %}
-<div id="index-banner" class="parallax-container">
-  <div class="section no-pad-bot">
-    <div class="container">
-      <br><br>
-      <h1 class="header center teal-text text-lighten-2">Welcome!</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">This is the right solution for restaurant owners and managers to efficiently
-          manage their daily
-          operations. Our web application was developed with the goal of streamlining the workflow and making it
-          more organized for your restaurant.</h5>
+<div id="index-banner" class="parallax-container" style="position: relative;">
+  <div style="position: relative; z-index: 2;">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-1">Welcome!</h1>
+        <div class="row center">
+          <h5 class="header col s12 light" style="color: white;">This is the right solution for restaurant owners and managers to efficiently
+            manage their daily
+            operations. Our web application was developed with the goal of streamlining the workflow and making it
+            more organized for your restaurant.</h5>
+        </div>
+        <div class="row center">
+          <a href="{{ url_for('login') }}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Log In</a>
+        </div>
+        <br><br>
       </div>
-      <div class="row center">
-        <a href="{{ url_for('login') }}" id="download-button"
-          class="btn-large waves-effect waves-light teal lighten-1">Log In</a>
-      </div>
-      <br><br>
-
     </div>
   </div>
-  <div class="parallax"><img src="{{ url_for('static', filename='images/bg-manager.jpg') }}"
-      alt="Manager holding a tablet"></div>
+  <div class="parallax"><img src="{{ url_for('static', filename='images/bg-manager.jpg') }}" alt="Manager holding a tablet"></div>
 </div>
+
 <!-- <div class="container">
     <div class="section">
         <div class="row">
@@ -61,7 +61,7 @@ features like shift reports, inventory management, and employee scheduling today
     <div class="row">
       <div class="col s12 center">
         <h3><i class="mdi-content-send brown-text"></i></h3>
-        <h4>Role-based acces</h4>
+        <h4>Role-based access</h4>
         <p class="left-align light">Our application features a robust role-based access control system that enables
           various levels of user permissions.
           With different levels of access, users can perform actions ranging from basic tasks to more advanced actions:
